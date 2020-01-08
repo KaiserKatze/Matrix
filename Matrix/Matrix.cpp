@@ -17,25 +17,51 @@ int main()
         0, 0, 1,
     };
 
+    std::cout << "m1 = " << m1.ToString() << std::endl;
+
     Matrix<int, 3, 3> m2{
         1, 2, 3,
         2, 4, 7,
         3, 7, 14,
     };
 
+    std::cout << "m2 = " << m2.ToString() << std::endl;
+
     auto m3 = Matrix(m1);
+
+    std::cout << "m3 = " << m3.ToString() << std::endl;
 
     auto m4 = m3.Transpose();
 
-    IdentityMatrix<int, 5> m5;
-    IdentityMatrix<int, 2> m6;
-    IdentityMatrix<int, 6> m7;
+    std::cout << "m4 = " << m4.ToString() << std::endl;
+
+    IdentityMatrix<int, 4> m5;
+
+    std::cout << "m5 = " << m5.ToString() << std::endl;
+
+    IdentityMatrix<int, 6> m6;
+
+    std::cout << "m6 = " << m6.ToString() << std::endl;
 
     m1 *= 40;
+
+    std::cout << "m1 = " << m1.ToString() << std::endl;
+
     m1 /= 2;
+
+    std::cout << "m1 = " << m1.ToString() << std::endl;
+
     m1 -= m2;
+
+    std::cout << "m1 = " << m1.ToString() << std::endl;
+
     m2 += m1;
+
+    std::cout << "m2 = " << m2.ToString() << std::endl;
+
     m2 = m1 * 3 + m2 / 2 - m1;
+
+    std::cout << "m2 = " << m2.ToString() << std::endl;
 
     if (m4 == m3)
     {
