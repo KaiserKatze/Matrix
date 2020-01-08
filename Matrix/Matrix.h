@@ -4,6 +4,8 @@
 #include <exception>
 #include <initializer_list>
 #include <iterator>
+#include <sstream>
+#include <string>
 
 namespace MatrixMath
 {
@@ -60,6 +62,7 @@ namespace MatrixMath
         Matrix operator/(const _Ty&) const;
         bool operator==(const Matrix&) const;
         const Transposed Transpose() const;
+        const std::string ToString() const;
     };
 
     template <typename _Ty, int N, StorageOrder order = StorageOrder::ROW_MAJOR>
@@ -330,6 +333,28 @@ Transpose() const
     }
 
     return result;
+}
+
+template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
+const std::string
+MatrixMath::Matrix<_Ty, Height, Width, order>::
+ToString() const
+{
+    std::stringstream ss;
+
+    for (int row = 0; row < Height; row++)
+    {
+        ss << "| ";
+        for (int column = 0; column < Width; column++)
+        {
+            ss << GetData(row, column)
+                << " ";
+        }
+        ss << "|"
+            << std::endl;
+    }
+
+    return ss.str();
 }
 
 template <typename _Ty, int M, int P, int N, MatrixMath::StorageOrder order>
