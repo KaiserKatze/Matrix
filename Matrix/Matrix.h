@@ -71,6 +71,12 @@ namespace MatrixMath
     template <typename _Ty, int N, StorageOrder order = StorageOrder::ROW_MAJOR>
     using Vector = Matrix<_Ty, N, 1, order>;
 
+    template <typename _Ty, StorageOrder order>
+    class Matrix<_Ty, 1, 1, order>;
+
+    template <typename _Ty, StorageOrder order = StorageOrder::ROW_MAJOR>
+    using Scalar = Matrix<_Ty, 1, 1, order>;
+
     template <typename _Ty, int N, StorageOrder order = StorageOrder::ROW_MAJOR>
     class IdentityMatrix
         : public MatrixQ<_Ty, N, order>
@@ -504,4 +510,176 @@ operator*(const MatrixQ<_Ty, 4, order>& first, const MatrixQ<_Ty, 4, order>& sec
         return MatrixQ<_Ty, 4, order>{ c11, c12, c13, c14, c21, c22, c23, c24, c31, c32, c33, c34, c41, c42, c43, c44 };
     else
         return MatrixQ<_Ty, 4, order>{ c11, c21, c31, c41, c12, c22, c32, c42, c13, c23, c33, c43, c14, c24, c34, c44 };
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+class MatrixMath::Matrix<_Ty, 1, 1, order>
+{
+private:
+    _Ty data;
+
+public:
+    Matrix();
+    Matrix(const _Ty&);
+    virtual ~Matrix() {}
+
+    void SetData(const _Ty& value);
+    const _Ty& GetData() const;
+    constexpr bool IsVector() const;
+    constexpr bool IsSquare() const;
+    constexpr int GetWidth() const;
+    constexpr int GetHeight() const;
+    void operator+=(const Matrix&);
+    void operator-=(const Matrix&);
+    void operator*=(const _Ty&);
+    void operator/=(const _Ty&);
+    Matrix operator+(const Matrix&) const;
+    Matrix operator-(const Matrix&) const;
+    Matrix operator*(const _Ty&) const;
+    Matrix operator/(const _Ty&) const;
+    bool operator==(const Matrix&) const;
+    const Matrix Transpose() const;
+    const std::string ToString() const;
+};
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+Matrix()
+    : data{ 0 }
+{
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+Matrix(const _Ty& value)
+    : data{ value }
+{
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+void
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+SetData(const _Ty& value)
+{
+    this->data = value;
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+const _Ty&
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+GetData() const
+{
+    return this->data;
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+constexpr bool
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+IsVector() const
+{
+    return false;
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+constexpr bool
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+IsSquare() const
+{
+    return false;
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+constexpr int
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+GetWidth() const
+{
+    return 1;
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+constexpr int
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+GetHeight() const
+{
+    return 1;
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+void
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+operator+=(const Matrix& other)
+{
+    this->data += other.data;
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+void
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+operator-=(const Matrix& other)
+{
+    this->data -= other.data;
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+void
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+operator*=(const _Ty& multiplier)
+{
+    this->data *= multiplier;
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+void
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+operator/=(const _Ty& divider)
+{
+    this->data /= divider;
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+MatrixMath::Matrix<_Ty, 1, 1, order>
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+operator+(const Matrix& other) const
+{
+    Matrix result(*this);
+    result += other;
+    return result;
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+MatrixMath::Matrix<_Ty, 1, 1, order>
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+operator-(const Matrix& other) const
+{
+    Matrix result(*this);
+    result -= other;
+    return result;
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+MatrixMath::Matrix<_Ty, 1, 1, order>
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+operator*(const _Ty& multiplier) const
+{
+    Matrix result(*this);
+    result *= multiplier;
+    return result;
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+MatrixMath::Matrix<_Ty, 1, 1, order>
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+operator/(const _Ty& divider) const
+{
+    Matrix result(*this);
+    result /= divider;
+    return result;
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+bool
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+operator==(const Matrix& other) const
+{
+    return this->data == other.data;
 }
