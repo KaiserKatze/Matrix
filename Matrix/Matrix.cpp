@@ -3,9 +3,50 @@
 
 #include <iostream>
 
+#include "Matrix.h"
+
+using namespace MatrixMath;
+
 int main()
 {
-    std::cout << "Hello World!\n";
+    std::cout << "Hello World!" << std::endl;
+
+    Matrix<int, 3, 3> m1{
+        1, 0, 0,
+        0, 1, 0,
+        0, 0, 1,
+    };
+
+    Matrix<int, 3, 3> m2{
+        1, 2, 3,
+        2, 4, 7,
+        3, 7, 14,
+    };
+
+    auto m3 = Matrix(m1);
+
+    auto m4 = m3.Transpose();
+
+    IdentityMatrix<int, 5> m5;
+    IdentityMatrix<int, 2> m6;
+    IdentityMatrix<int, 6> m7;
+
+    m1 *= 40;
+    m1 /= 2;
+    m1 -= m2;
+    m2 += m1;
+    m2 = m1 * 3 + m2 / 2 - m1;
+
+    if (m4 == m3)
+    {
+        std::cout << "m4 == m3" << std::endl;
+    }
+    else
+    {
+        std::cout << "m4 != m3" << std::endl;
+    }
+
+    return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
