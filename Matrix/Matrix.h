@@ -60,7 +60,7 @@ namespace MatrixMath
         Matrix operator-(const Matrix&) const;
         Matrix operator/(const _Ty&) const;
         bool operator==(const Matrix&) const;
-        const Transposed Transpose() const;
+        Transposed Transpose() const;
         const std::string ToString() const;
     };
 
@@ -330,7 +330,7 @@ operator==(const Matrix& other) const
 }
 
 template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
-const typename MatrixMath::Matrix<_Ty, Height, Width, order>::Transposed
+typename MatrixMath::Matrix<_Ty, Height, Width, order>::Transposed
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 Transpose() const
 {
