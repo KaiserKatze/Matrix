@@ -74,9 +74,11 @@ int main()
 
     Scalar<int> s1 = 1;
 
-    auto m9 = s1 * m1 + m1 * s1;
+    MatrixQ<int, 3> m9 = s1 * m1 + m1 * s1;
 
-    auto i1 = s1 * 2 + 2 * s1;
+    int i1 = s1 * 2 + 2 * s1;
+
+    int i2 = s1.Transpose();
 
     return 0;
 }
