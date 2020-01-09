@@ -530,6 +530,7 @@ operator*(const MatrixQ<_Ty, 4, order>& first, const MatrixQ<_Ty, 4, order>& sec
         return MatrixQ<_Ty, 4, order>{ c11, c21, c31, c41, c12, c22, c32, c42, c13, c23, c33, c43, c14, c24, c34, c44 };
 }
 
+// Scalar de facto
 template <typename _Ty, MatrixMath::StorageOrder order>
 class MatrixMath::Matrix<_Ty, 1, 1, order>
 {
