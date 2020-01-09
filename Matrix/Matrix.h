@@ -58,7 +58,6 @@ namespace MatrixMath
         void operator/=(const _Ty&);
         Matrix operator+(const Matrix&) const;
         Matrix operator-(const Matrix&) const;
-        Matrix operator*(const _Ty&) const;
         Matrix operator/(const _Ty&) const;
         bool operator==(const Matrix&) const;
         const Transposed Transpose() const;
@@ -89,6 +88,12 @@ namespace MatrixMath
                 this->SetData(i, i, 1);
         }
     };
+
+    template <typename _Ty, int Height, int Width, StorageOrder order>
+    Matrix<_Ty, Height, Width, order> operator*(const Matrix<_Ty, Height, Width, order>&, const _Ty&);
+
+    template <typename _Ty, int Height, int Width, StorageOrder order>
+    Matrix<_Ty, Height, Width, order> operator*(const _Ty&, const Matrix<_Ty, Height, Width, order>&);
 
     // multiplying a (M x P) matrix and a (P x N) matrix,
     // result: a (M x N) matrix
@@ -301,16 +306,6 @@ operator-(const Matrix& other) const
 template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
 MatrixMath::Matrix<_Ty, Height, Width, order>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
-operator*(const _Ty& multiplier) const
-{
-    Matrix result(*this);
-    result *= multiplier;
-    return result;
-}
-
-template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
-MatrixMath::Matrix<_Ty, Height, Width, order>
-MatrixMath::Matrix<_Ty, Height, Width, order>::
 operator/(const _Ty& divider) const
 {
     Matrix result(*this);
@@ -366,6 +361,24 @@ ToString() const
     }
 
     return ss.str();
+}
+
+template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
+MatrixMath::Matrix<_Ty, Height, Width, order>
+MatrixMath::
+operator*(const MatrixMath::Matrix<_Ty, Height, Width, order>& first, const _Ty& second)
+{
+    Matrix result(first);
+    result *= second;
+    return result;
+}
+
+template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
+MatrixMath::Matrix<_Ty, Height, Width, order>
+MatrixMath::
+operator*(const _Ty& first, const MatrixMath::Matrix<_Ty, Height, Width, order>& second)
+{
+    return second * first;
 }
 
 template <typename _Ty, int M, int P, int N, MatrixMath::StorageOrder order>
