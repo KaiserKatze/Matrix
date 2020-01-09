@@ -72,6 +72,12 @@ int main()
         std::cout << "m4 != m3" << std::endl;
     }
 
+    Scalar<int> s1 = 1;
+
+    auto m9 = s1 * m1 + m1 * s1;
+
+    auto i1 = s1 * 2 + 2 * s1;
+
     return 0;
 }
 
