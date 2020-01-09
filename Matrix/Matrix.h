@@ -127,6 +127,11 @@ namespace MatrixMath
 #   undef MakeIdentityMatrix
 #endif
 
+    template <typename _Ty, int Height, int Width, StorageOrder order>
+    Matrix<_Ty, Height, Width, order> operator*(const Matrix<_Ty, Height, Width, order>&, const Scalar<_Ty, order>&);
+
+    template <typename _Ty, int Height, int Width, StorageOrder order>
+    Matrix<_Ty, Height, Width, order> operator*(const Scalar<_Ty, order>&, const Matrix<_Ty, Height, Width, order>&);
 } /* NAMESPACE: MatrixMath */
 
 
@@ -682,4 +687,22 @@ MatrixMath::Matrix<_Ty, 1, 1, order>::
 operator==(const Matrix& other) const
 {
     return this->data == other.data;
+}
+
+template<typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
+MatrixMath::Matrix<_Ty, Height, Width, order>
+MatrixMath::
+operator*(const Matrix<_Ty, Height, Width, order>& first, const Scalar<_Ty, order>& second)
+{
+    Matrix<_Ty, Height, Width, order> result(first);
+    result *= second.GetData();
+    return result;
+}
+
+template<typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
+MatrixMath::Matrix<_Ty, Height, Width, order>
+MatrixMath::
+operator*(const Scalar<_Ty, order>& first, const Matrix<_Ty, Height, Width, order>& second)
+{
+    return second * first;
 }
