@@ -95,6 +95,12 @@ namespace MatrixMath
     template <typename _Ty, int Height, int Width, StorageOrder order>
     Matrix<_Ty, Height, Width, order> operator*(const _Ty&, const Matrix<_Ty, Height, Width, order>&);
 
+    template <typename _Ty, StorageOrder order>
+    _Ty operator*(const Scalar<_Ty, order>&, const _Ty&);
+
+    template <typename _Ty, StorageOrder order>
+    _Ty operator*(const _Ty&, const Scalar<_Ty, order>&);
+
     // multiplying a (M x P) matrix and a (P x N) matrix,
     // result: a (M x N) matrix
     // no optimization is applied in the following function
@@ -381,6 +387,22 @@ operator*(const _Ty& first, const MatrixMath::Matrix<_Ty, Height, Width, order>&
     return second * first;
 }
 
+template <typename _Ty, MatrixMath::StorageOrder order>
+_Ty
+MatrixMath::
+operator*(const Scalar<_Ty, order>& first, const _Ty& second)
+{
+    return first.GetData() * second;
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+_Ty
+MatrixMath::
+operator*(const _Ty& first, const Scalar<_Ty, order>& second)
+{
+    return first * second.GetData();
+}
+
 template <typename _Ty, int M, int P, int N, MatrixMath::StorageOrder order>
 MatrixMath::Matrix<_Ty, M, N, order>
 MatrixMath::
@@ -554,7 +576,6 @@ public:
     void operator/=(const _Ty&);
     Matrix operator+(const Matrix&) const;
     Matrix operator-(const Matrix&) const;
-    Matrix operator*(const _Ty&) const;
     Matrix operator/(const _Ty&) const;
     bool operator==(const Matrix&) const;
     const Matrix Transpose() const;
@@ -672,16 +693,6 @@ operator-(const Matrix& other) const
 {
     Matrix result(*this);
     result -= other;
-    return result;
-}
-
-template <typename _Ty, MatrixMath::StorageOrder order>
-MatrixMath::Matrix<_Ty, 1, 1, order>
-MatrixMath::Matrix<_Ty, 1, 1, order>::
-operator*(const _Ty& multiplier) const
-{
-    Matrix result(*this);
-    result *= multiplier;
     return result;
 }
 
