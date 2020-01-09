@@ -586,7 +586,7 @@ public:
     _Ty operator/(const _Ty&) const;
     bool operator==(const Matrix&) const;
     bool operator==(const _Ty&) const;
-    const Matrix Transpose() const;
+    _Ty Transpose() const;
     const std::string ToString() const;
 };
 
@@ -778,6 +778,14 @@ MatrixMath::Matrix<_Ty, 1, 1, order>::
 operator==(const _Ty& other) const
 {
     return this->data == other;
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+_Ty
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+Transpose() const
+{
+    return this->data;
 }
 
 template<typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
