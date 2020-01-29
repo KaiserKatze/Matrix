@@ -34,7 +34,7 @@ namespace MatrixMath
         int convert2index(const int& row, const int& column) const;
 
         Matrix(const _Ty* pSrc, const _Ty* pDst);
-        Matrix(const std::array<_Ty, Width * Height>& other);
+        Matrix(const std::array<_Ty, Matrix::Size>& other);
 
     public:
         using Transposed = Matrix<_Ty, Width, Height, order>;
@@ -179,7 +179,7 @@ Matrix(const _Ty* src, const _Ty* dst)
 
 template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
-Matrix(const std::array<_Ty, Width * Height>& other)
+Matrix(const std::array<_Ty, Matrix::Size>& other)
 {
     std::copy(std::begin(other), std::end(other), std::begin(data));
 }
