@@ -29,7 +29,7 @@ namespace MatrixMath
 
     private:
         constexpr static int Size{ Width * Height };
-        std::array<_Ty, Width * Height> data;
+        std::array<_Ty, Size> data;
 
         int convert2index(const int& row, const int& column) const;
 
