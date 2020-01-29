@@ -55,8 +55,8 @@ namespace MatrixMath
 
         // Access data
         void SetData(const int& row, const int& column, const _Ty& value);
-        // Access data
         const _Ty& GetData(const int& row, const int& column) const;
+
         void operator+=(const Matrix&);
         void operator-=(const Matrix&);
         void operator*=(const _Ty&);
