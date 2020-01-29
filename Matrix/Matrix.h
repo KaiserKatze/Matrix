@@ -258,7 +258,7 @@ void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 operator+=(const Matrix& other)
 {
-    for (int i = 0; i < Width * Height; i++)
+    for (int i = 0; i < Matrix::Size; i++)
     {
         this->data[i] += other.data[i];
     }
@@ -269,7 +269,7 @@ void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 operator-=(const Matrix& other)
 {
-    for (int i = 0; i < Width * Height; i++)
+    for (int i = 0; i < Matrix::Size; i++)
     {
         this->data[i] -= other.data[i];
     }
@@ -280,7 +280,7 @@ void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 operator*=(const _Ty& multiplier)
 {
-    for (int i = 0; i < Width * Height; i++)
+    for (int i = 0; i < Matrix::Size; i++)
     {
         this->data[i] *= multiplier;
     }
@@ -291,7 +291,7 @@ void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 operator/=(const _Ty& divider)
 {
-    for (int i = 0; i < Width * Height; i++)
+    for (int i = 0; i < Matrix::Size; i++)
     {
         this->data[i] /= divider;
     }
