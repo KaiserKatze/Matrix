@@ -81,12 +81,7 @@ namespace MatrixMath
         : public MatrixQ<_Ty, N, order>
     {
     public:
-        IdentityMatrix()
-            : MatrixQ<_Ty, N>()
-        {
-            for (int i = 0; i < N; i++)
-                this->SetData(i, i, 1);
-        }
+        IdentityMatrix();
     };
 
     template <typename _Ty, int Height, int Width, StorageOrder order>
@@ -367,6 +362,15 @@ ToString() const
     }
 
     return ss.str();
+}
+
+template <typename _Ty, int N, MatrixMath::StorageOrder order>
+MatrixMath::IdentityMatrix<_Ty, N, order>::
+IdentityMatrix()
+    : MatrixQ<_Ty, N, order>()
+{
+    for (int i = 0; i < N; i++)
+        this->SetData(i, i, 1);
 }
 
 template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
