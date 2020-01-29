@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <array>
 #include <exception>
 #include <initializer_list>
 #include <iterator>
@@ -27,10 +28,12 @@ namespace MatrixMath
         static_assert(Height > 0, "Template argument 'Height' has negative value!");
 
     private:
-        _Ty data[Width * Height];
+        std::array<_Ty, Width * Height> data;
 
         int convert2index(const int& row, const int& column) const;
-        Matrix(const _Ty*, const _Ty*);
+
+        Matrix(const _Ty* pSrc, const _Ty* pDst);
+        Matrix(const std::array<_Ty, Width * Height>& other);
 
     public:
         using Transposed = Matrix<_Ty, Width, Height, order>;
@@ -169,20 +172,27 @@ MatrixMath::Matrix<_Ty, Height, Width, order>::
 Matrix(const _Ty* src, const _Ty* dst)
     : Matrix()
 {
-    std::copy(src, dst, this->data);
+    std::copy(src, dst, std::begin(data));
+}
+
+template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
+MatrixMath::Matrix<_Ty, Height, Width, order>::
+Matrix(const std::array<_Ty, Width * Height>& other)
+{
+    std::copy(std::begin(other), std::end(other), std::begin(data));
 }
 
 template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 Matrix()
-    : data{ 0 }
+    : data{ 0 } // initialize std::array with 0
 {
 }
 
 template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 Matrix(const Matrix& other)
-    : Matrix(other.data, other.data + Width * Height)
+    : Matrix(other.data)
 {
 }
 
