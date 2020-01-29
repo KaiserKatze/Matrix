@@ -152,20 +152,20 @@ MatrixMath::Matrix<_Ty, Height, Width, order>::
 convert2index(const int& row, const int& column) const
 {
     if (row < 0)
-        throw std::domain_error("Invalid argument: row < 0!");
+        throw std::out_of_range("Invalid argument: row < 0!");
     if (row >= Height)
-        throw std::domain_error("Invalid argument: row >= Height!");
+        throw std::out_of_range("Invalid argument: row >= Height!");
     if (column < 0)
-        throw std::domain_error("Invalid argument: column < 0!");
+        throw std::out_of_range("Invalid argument: column < 0!");
     if (column >= Width)
-        throw std::domain_error("Invalid argument: column >= Width!");
+        throw std::out_of_range("Invalid argument: column >= Width!");
 
     if constexpr (order == MatrixMath::StorageOrder::COLUMN_MAJOR)
         return row + column * Height;
     else if constexpr (order == MatrixMath::StorageOrder::ROW_MAJOR)
         return column + row * Width;
     else
-        throw std::exception("Unsupported exception!");
+        throw std::invalid_argument("Invalid template argument 'order'!");
 }
 
 template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
