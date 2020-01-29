@@ -64,6 +64,7 @@ namespace MatrixMath
         Matrix operator-(const Matrix&) const;
         Matrix operator/(const _Ty&) const;
         bool operator==(const Matrix&) const;
+        bool operator!=(const Matrix&) const;
         Transposed Transpose() const;
         const std::string ToString() const;
     };
@@ -332,6 +333,14 @@ operator==(const Matrix& other) const
 {
     return this == &other
         || this->data == other.data;
+}
+
+template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
+bool
+MatrixMath::Matrix<_Ty, Height, Width, order>::
+operator!=(const Matrix& other) const
+{
+    return !this->operator==(other);
 }
 
 template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
