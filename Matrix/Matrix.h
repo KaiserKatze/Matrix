@@ -44,14 +44,15 @@ namespace MatrixMath
         // Deconstructor
         virtual ~Matrix() {}
 
-        // Access data
-        void SetData(const int& row, const int& column, const _Ty& value);
-        // Access data
-        const _Ty& GetData(const int& row, const int& column) const;
         constexpr bool IsVector() const;
         constexpr bool IsSquare() const;
         constexpr int GetWidth() const;
         constexpr int GetHeight() const;
+
+        // Access data
+        void SetData(const int& row, const int& column, const _Ty& value);
+        // Access data
+        const _Ty& GetData(const int& row, const int& column) const;
         void operator+=(const Matrix&);
         void operator-=(const Matrix&);
         void operator*=(const _Ty&);
@@ -568,12 +569,13 @@ public:
     Matrix(const _Ty&);
     virtual ~Matrix() {}
 
-    void SetData(const _Ty& value);
-    const _Ty& GetData() const;
     constexpr bool IsVector() const;
     constexpr bool IsSquare() const;
     constexpr int GetWidth() const;
     constexpr int GetHeight() const;
+
+    void SetData(const _Ty& value);
+    const _Ty& GetData() const;
     void operator+=(const Matrix&);
     void operator+=(const _Ty&);
     void operator-=(const Matrix&);
