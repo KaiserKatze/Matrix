@@ -118,17 +118,17 @@ namespace MatrixMath
 #else
 #   define MakeIdentityMatrix(_Ty, N, initializer) template <StorageOrder order> \
     class IdentityMatrix<_Ty, N, order> : public MatrixQ<_Ty, N, order> \
-    { public: IdentityMatrix() : MatrixQ<_Ty, N, order>initializer {} };
+    { public: IdentityMatrix() : MatrixQ<_Ty, N, order>initializer {} }
 
-    MakeIdentityMatrix(int, 2, ({ 1,0,0,1 }))
-    MakeIdentityMatrix(int, 3, ({ 1,0,0,0,1,0,0,0,1 }))
-    MakeIdentityMatrix(int, 4, ({ 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1 }))
-    MakeIdentityMatrix(float, 2, ({ 1.0f,0.0f,0.0f,1.0f }))
-    MakeIdentityMatrix(float, 3, ({ 1.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,1.0f }))
-    MakeIdentityMatrix(float, 4, ({ 1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f }))
-    MakeIdentityMatrix(double, 2, ({ 1.0,0.0,0.0,1.0 }))
-    MakeIdentityMatrix(double, 3, ({ 1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0 }))
-    MakeIdentityMatrix(double, 4, ({ 1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0 }))
+    MakeIdentityMatrix(int, 2, ({ 1,0,0,1 }));
+    MakeIdentityMatrix(int, 3, ({ 1,0,0,0,1,0,0,0,1 }));
+    MakeIdentityMatrix(int, 4, ({ 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1 }));
+    MakeIdentityMatrix(float, 2, ({ 1.0f,0.0f,0.0f,1.0f }));
+    MakeIdentityMatrix(float, 3, ({ 1.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,1.0f }));
+    MakeIdentityMatrix(float, 4, ({ 1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f }));
+    MakeIdentityMatrix(double, 2, ({ 1.0,0.0,0.0,1.0 }));
+    MakeIdentityMatrix(double, 3, ({ 1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0 }));
+    MakeIdentityMatrix(double, 4, ({ 1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0 }));
 
 #   undef MakeIdentityMatrix
 #endif
