@@ -28,6 +28,7 @@ namespace MatrixMath
         static_assert(Height > 0, "Template argument 'Height' has negative value!");
 
     private:
+        constexpr static int Size{ Width * Height };
         std::array<_Ty, Width * Height> data;
 
         int convert2index(const int& row, const int& column) const;
