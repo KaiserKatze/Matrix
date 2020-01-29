@@ -9,7 +9,7 @@
 
 namespace MatrixMath
 {
-    enum StorageOrder : unsigned char
+    enum class StorageOrder : unsigned char
     {
         ROW_MAJOR = 1,
         COLUMN_MAJOR = 2,
