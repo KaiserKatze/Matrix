@@ -147,7 +147,7 @@ namespace MatrixMath
 
 
 template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
-int 
+int
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 convert2index(const int& row, const int& column) const
 {
