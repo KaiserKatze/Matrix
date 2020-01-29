@@ -331,8 +331,7 @@ MatrixMath::Matrix<_Ty, Height, Width, order>::
 operator==(const Matrix& other) const
 {
     return this == &other
-        || std::equal(std::begin(data), std::end(data),
-            std::begin(other.data), std::end(other.data));
+        || this->data == other.data;
 }
 
 template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
