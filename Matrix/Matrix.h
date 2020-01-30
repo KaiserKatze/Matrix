@@ -48,6 +48,11 @@ namespace MatrixMath
         ProtoMatrix(const std::initializer_list<_Ty>& init);
         virtual ~ProtoMatrix() {};
 
+    public:
+        constexpr bool IsVector() const;
+        constexpr bool IsSquare() const;
+        inline constexpr int GetWidth() const;
+        inline constexpr int GetHeight() const;
     };
 
     // the entries in this class are stored in column-major order
