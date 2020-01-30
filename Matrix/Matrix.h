@@ -666,7 +666,7 @@ operator*(const MatrixQ<_Ty, 4, order>& first, const MatrixQ<_Ty, 4, order>& sec
 // Vector de facto
 template <typename _Ty, int N, typename order>
 class MatrixMath::Matrix<_Ty, N, 1, order>
-    : public MatrixMath::ProtoMatrix<_Ty, N, 1, order>
+    : public MatrixMath::ProtoMatrixData<_Ty, N, 1, order>
 {
 };
 
