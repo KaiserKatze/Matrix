@@ -49,8 +49,8 @@ namespace MatrixMath
         virtual ~ProtoMatrix() {};
 
     public:
-        constexpr bool IsVector() const;
-        constexpr bool IsSquare() const;
+        inline constexpr bool IsVector() const;
+        inline constexpr bool IsSquare() const;
         inline constexpr int GetWidth() const;
         inline constexpr int GetHeight() const;
     };
