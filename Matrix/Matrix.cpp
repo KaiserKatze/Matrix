@@ -221,6 +221,8 @@ int main()
 
     //================================================
 
+    Matrix4f<> m4f{ IdentityMatrix<float, 4>() };
+
     return 0;
 }
 

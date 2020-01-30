@@ -86,6 +86,35 @@ namespace MatrixMath
     template <typename _Ty, StorageOrder order = StorageOrder::ROW_MAJOR>
     using Scalar = Matrix<_Ty, 1, 1, order>;
 
+
+    template <StorageOrder order = StorageOrder::ROW_MAJOR>
+    using Matrix2i = MatrixQ<int, 2, order>;
+
+    template <StorageOrder order = StorageOrder::ROW_MAJOR>
+    using Matrix3i = MatrixQ<int, 3, order>;
+
+    template <StorageOrder order = StorageOrder::ROW_MAJOR>
+    using Matrix4i = MatrixQ<int, 4, order>;
+
+    template <StorageOrder order = StorageOrder::ROW_MAJOR>
+    using Matrix2f = MatrixQ<float, 2, order>;
+
+    template <StorageOrder order = StorageOrder::ROW_MAJOR>
+    using Matrix3f = MatrixQ<float, 3, order>;
+
+    template <StorageOrder order = StorageOrder::ROW_MAJOR>
+    using Matrix4f = MatrixQ<float, 4, order>;
+
+    template <StorageOrder order = StorageOrder::ROW_MAJOR>
+    using Matrix2d = MatrixQ<double, 2, order>;
+
+    template <StorageOrder order = StorageOrder::ROW_MAJOR>
+    using Matrix3d = MatrixQ<double, 3, order>;
+
+    template <StorageOrder order = StorageOrder::ROW_MAJOR>
+    using Matrix4d = MatrixQ<double, 4, order>;
+
+
     template <typename _Ty, int N, StorageOrder order = StorageOrder::ROW_MAJOR>
     class IdentityMatrix
         : public MatrixQ<_Ty, N, order>
