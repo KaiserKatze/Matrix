@@ -54,6 +54,9 @@ namespace MatrixMath
         inline constexpr bool IsScalar() const;
         inline constexpr int GetWidth() const;
         inline constexpr int GetHeight() const;
+
+        const std::array<_Ty, Width * Height>& GetData() const;
+        std::array<_Ty, Width * Height>& GetData();
     };
 
     // the entries in this class are stored in column-major order
