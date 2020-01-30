@@ -675,6 +675,9 @@ public:
     Matrix(const Matrix& other);
     Matrix(const std::initializer_list<_Ty>& init);
     virtual ~Matrix() {}
+
+    void SetData(const int& index, const _Ty& value);
+    const _Ty& GetData(const int& index) const;
 };
 
 // Scalar de facto
