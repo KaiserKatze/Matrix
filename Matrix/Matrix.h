@@ -57,30 +57,16 @@ namespace MatrixMath
     //  - matrix
     template <typename _Ty, int Height, int Width, typename order = StorageOrder::RowMajor>
     class Matrix
+        : public ProtoMatrix<_Ty, Height, Width, order>
     {
-        static_assert(Width > 0, "Template argument 'Width' has negative value!");
-        static_assert(Height > 0, "Template argument 'Height' has negative value!");
-
     private:
         constexpr static int Size{ Width * Height };
-        std::array<_Ty, Width * Height> data; // 'Width * Height' here cannot be replaced by 'Size',
-                                              // otherwise a compiler error (C2244) will be thrown at compile time
-                                              // if the project is compiled with Microsoft VC++
 
         Matrix(const _Ty* pSrc, const _Ty* pDst);
         Matrix(const std::array<_Ty, Width * Height>& other);
 
     public:
         using Transposed = Matrix<_Ty, Width, Height, order>;
-
-        // Default constructor, initialize its inner array with '0'
-        Matrix();
-        // Copy data
-        Matrix(const Matrix&);
-        // The elements of std::initializer_list is guaranteed to be contiguous
-        Matrix(const std::initializer_list<_Ty>&);
-        // Deconstructor
-        virtual ~Matrix() {}
 
         constexpr bool IsVector() const;
         constexpr bool IsSquare() const;
@@ -218,9 +204,23 @@ namespace MatrixMath
 
 
 template <typename _Ty, int Height, int Width, typename order>
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-Matrix(const _Ty* src, const _Ty* dst)
-    : Matrix()
+MatrixMath::ProtoMatrix<_Ty, Height, Width, order>::
+ProtoMatrix()
+    : data{ 0 } // initialize std::array with 0
+{
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+MatrixMath::ProtoMatrix<_Ty, Height, Width, order>::
+ProtoMatrix(const ProtoMatrix& other)
+    : ProtoMatrix(other.data)
+{
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+MatrixMath::ProtoMatrix<_Ty, Height, Width, order>::
+ProtoMatrix(const _Ty* src, const _Ty* dst)
+    : ProtoMatrix()
 {
     // prevent buffer overflow attack
     const _Ty* end{ src + std::min<ptrdiff_t>(dst - src, Width * Height) };
@@ -228,30 +228,16 @@ Matrix(const _Ty* src, const _Ty* dst)
 }
 
 template <typename _Ty, int Height, int Width, typename order>
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-Matrix(const std::array<_Ty, Width * Height>& other)
+MatrixMath::ProtoMatrix<_Ty, Height, Width, order>::
+ProtoMatrix(const std::array<_Ty, Width * Height>& other)
 {
     std::copy(std::begin(other), std::end(other), std::begin(data));
 }
 
 template <typename _Ty, int Height, int Width, typename order>
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-Matrix()
-    : data{ 0 } // initialize std::array with 0
-{
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-Matrix(const Matrix& other)
-    : Matrix(other.data)
-{
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-Matrix(const std::initializer_list<_Ty>& init)
-    : Matrix(init.begin(), init.end())
+MatrixMath::ProtoMatrix<_Ty, Height, Width, order>::
+ProtoMatrix(const std::initializer_list<_Ty>& init)
+    : ProtoMatrix(init.begin(), init.end())
 {
 }
 
