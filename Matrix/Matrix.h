@@ -615,6 +615,7 @@ public:
 
     void SetData(const _Ty& value);
     const _Ty& GetData() const;
+    operator _Ty() const;
     void operator+=(const Matrix&);
     void operator+=(const _Ty&);
     void operator-=(const Matrix&);
@@ -663,6 +664,13 @@ template <typename _Ty, MatrixMath::StorageOrder order>
 const _Ty&
 MatrixMath::Matrix<_Ty, 1, 1, order>::
 GetData() const
+{
+    return this->data;
+}
+
+template <typename _Ty, MatrixMath::StorageOrder order>
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+operator _Ty() const
 {
     return this->data;
 }
