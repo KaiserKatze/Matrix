@@ -10,10 +10,10 @@
 
 namespace MatrixMath
 {
-    enum class StorageOrder : unsigned char
+    struct StorageOrder
     {
-        ROW_MAJOR = 1,
-        COLUMN_MAJOR = 2,
+        struct RowMajor;
+        struct ColumnMajor;
     };
 
     // the entries in this class are stored in column-major order
