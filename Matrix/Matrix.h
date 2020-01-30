@@ -378,10 +378,8 @@ void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 operator/=(const _Ty& divider)
 {
-    for (int i = 0; i < Size; i++)
-    {
-        this->data[i] /= divider;
-    }
+    for (_Ty& x : this->data)
+        x /= divider;
 }
 
 template <typename _Ty, int Height, int Width, typename order>
