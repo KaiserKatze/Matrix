@@ -59,11 +59,6 @@ namespace MatrixMath
         std::array<_Ty, Width * Height>& GetData();
     };
 
-    // the entries in this class are stored in column-major order
-    // template argument 'typename _Ty' can be one of the following:
-    //  - real number (such as int, float, double, etc.)
-    //  - complex number (std::complex<double>, etc.)
-    //  - matrix
     template <typename _Ty, int Height, int Width, typename order = StorageOrder::RowMajor>
     class Matrix
         : public ProtoMatrix<_Ty, Height, Width, order>
