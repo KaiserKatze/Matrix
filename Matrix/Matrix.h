@@ -42,9 +42,6 @@ namespace MatrixMath
         inline constexpr bool IsScalar() const;
         inline constexpr int GetWidth() const;
         inline constexpr int GetHeight() const;
-
-        const std::array<_Ty, Width * Height>& GetData() const;
-        std::array<_Ty, Width * Height>& GetData();
     };
 
     template <typename _Ty, int Height, int Width, typename order = StorageOrder::RowMajor>
