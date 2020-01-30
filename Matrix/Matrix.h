@@ -44,9 +44,30 @@ namespace MatrixMath
         inline constexpr int GetHeight() const;
     };
 
+    template <typename _Ty, int Height, int Width, typename order>
+    class ProtoMatrixData
+        : public ProtoMatrixData<_Ty, Height, Width, order>
+    {
+    protected:
+        std::array<_Ty, Width * Height> data; // 'Width * Height' here cannot be replaced by 'Size',
+                                              // otherwise a compiler error (C2244) will be thrown at compile time
+                                              // if the project is compiled with Microsoft VC++
+
+        ProtoMatrixData();
+        ProtoMatrixData(const ProtoMatrixData& other);
+        ProtoMatrixData(const _Ty* pSrc, const _Ty* pDst);
+        ProtoMatrixData(const std::array<_Ty, Width * Height>& other);
+        ProtoMatrixData(const std::initializer_list<_Ty>& init);
+        virtual ~ProtoMatrixData() {};
+
+    public:
+        const std::array<_Ty, Width * Height>& GetData() const;
+        std::array<_Ty, Width * Height>& GetData();
+    };
+
     template <typename _Ty, int Height, int Width, typename order = StorageOrder::RowMajor>
     class Matrix
-        : public ProtoMatrix<_Ty, Height, Width, order>
+        : public ProtoMatrixData<_Ty, Height, Width, order>
     {
     private:
         constexpr static int Size{ Width * Height };
@@ -228,6 +249,59 @@ GetHeight() const
     return Height;
 }
 
+template <typename _Ty, int Height, int Width, typename order>
+MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
+ProtoMatrixData()
+    : data{ 0 } // initialize std::array with 0
+{
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
+ProtoMatrixData(const ProtoMatrixData& other)
+    : ProtoMatrixData(other.data)
+{
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
+ProtoMatrixData(const _Ty* src, const _Ty* dst)
+    : ProtoMatrixData()
+{
+    // prevent buffer overflow attack
+    const _Ty* end{ src + std::min<ptrdiff_t>(dst - src, Width * Height) };
+    std::copy(src, end, std::begin(data));
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
+ProtoMatrixData(const std::array<_Ty, Width * Height>& other)
+{
+    std::copy(std::begin(other), std::end(other), std::begin(data));
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
+ProtoMatrixData(const std::initializer_list<_Ty>& init)
+    : ProtoMatrixData(init.begin(), init.end())
+{
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+const std::array<_Ty, Width * Height>&
+MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
+GetData() const
+{
+    return this->data;
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+std::array<_Ty, Width * Height>&
+MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
+GetData()
+{
+    return this->data;
+}
 
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
