@@ -184,6 +184,18 @@ int main()
 
     //================================================
 
+    Scalar<int> s2{ 100 };
+    int i3 = s2;
+
+    std::cout << "i3 = " << i3 << std::endl;
+    if (i3 == 100)
+        std::cout << "Succeed" << std::endl;
+    else
+        std::cout << "Failed" << std::endl;
+    std::cout << std::endl;
+
+    //================================================
+
     return 0;
 }
 
