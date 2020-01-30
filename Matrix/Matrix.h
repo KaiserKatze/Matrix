@@ -51,6 +51,7 @@ namespace MatrixMath
     public:
         inline constexpr bool IsVector() const;
         inline constexpr bool IsSquare() const;
+        inline constexpr bool IsScalar() const;
         inline constexpr int GetWidth() const;
         inline constexpr int GetHeight() const;
     };
