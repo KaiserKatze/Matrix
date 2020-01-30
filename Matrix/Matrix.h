@@ -7,6 +7,7 @@
 #include <iterator>
 #include <sstream>
 #include <string>
+#include <type_traits>
 
 namespace MatrixMath
 {
@@ -26,6 +27,27 @@ namespace MatrixMath
     {
         template <int Height, int Width>
         static int convert2index(const int& row, const int& column);
+    };
+
+    template <typename _Ty, int Height, int Width, typename order>
+    class ProtoMatrix
+    {
+        static_assert(Width > 0, "Template argument 'Width' has negative value!");
+        static_assert(Height > 0, "Template argument 'Height' has negative value!");
+        static_assert(std::is_same_v<StorageOrder::RowMajor, order> || std::is_same_v<StorageOrder::ColumnMajor, order>, "Template argument 'order' is invalid type!");
+
+    protected:
+        std::array<_Ty, Width * Height> data; // 'Width * Height' here cannot be replaced by 'Size',
+                                              // otherwise a compiler error (C2244) will be thrown at compile time
+                                              // if the project is compiled with Microsoft VC++
+
+        ProtoMatrix();
+        ProtoMatrix(const ProtoMatrix& other);
+        ProtoMatrix(const _Ty* pSrc, const _Ty* pDst);
+        ProtoMatrix(const std::array<_Ty, Width * Height>& other);
+        ProtoMatrix(const std::initializer_list<_Ty>& init);
+        virtual ~ProtoMatrix() {};
+
     };
 
     // the entries in this class are stored in column-major order
