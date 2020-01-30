@@ -683,7 +683,6 @@ public:
     Matrix(const _Ty&);
     virtual ~Matrix() {}
 
-    constexpr bool IsVector() const;
     constexpr bool IsSquare() const;
     constexpr int GetWidth() const;
     constexpr int GetHeight() const;
@@ -748,14 +747,6 @@ MatrixMath::Matrix<_Ty, 1, 1, order>::
 operator _Ty() const
 {
     return this->data;
-}
-
-template <typename _Ty, typename order>
-constexpr bool
-MatrixMath::Matrix<_Ty, 1, 1, order>::
-IsVector() const
-{
-    return false;
 }
 
 template <typename _Ty, typename order>
