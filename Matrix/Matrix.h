@@ -369,10 +369,8 @@ void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 operator*=(const _Ty& multiplier)
 {
-    for (int i = 0; i < Size; i++)
-    {
-        this->data[i] *= multiplier;
-    }
+    for (_Ty& x : this->data)
+        x *= multiplier;
 }
 
 template <typename _Ty, int Height, int Width, typename order>
