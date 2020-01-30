@@ -69,6 +69,10 @@ namespace MatrixMath
     public:
         using Transposed = Matrix<_Ty, Width, Height, order>;
 
+        Matrix();
+        Matrix(const Matrix& other);
+        Matrix(const std::initializer_list<_Ty>& init);
+
         // Access data
         void SetData(const int& row, const int& column, const _Ty& value);
         const _Ty& GetData(const int& row, const int& column) const;
@@ -291,6 +295,27 @@ GetData()
     return this->data;
 }
 
+
+template <typename _Ty, int Height, int Width, typename order>
+MatrixMath::Matrix<_Ty, Height, Width, order>::
+Matrix()
+    : ProtoMatrix<_Ty, Height, Width, order>()
+{
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+MatrixMath::Matrix<_Ty, Height, Width, order>::
+Matrix(const Matrix& other)
+    : ProtoMatrix<_Ty, Height, Width, order>(other)
+{
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+MatrixMath::Matrix<_Ty, Height, Width, order>::
+Matrix(const std::initializer_list<_Ty>& init)
+    : ProtoMatrix<_Ty, Height, Width, order>(init)
+{
+}
 
 template <typename _Ty, int Height, int Width, typename order>
 void
