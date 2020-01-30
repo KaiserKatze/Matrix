@@ -668,6 +668,13 @@ template <typename _Ty, int N, typename order>
 class MatrixMath::Matrix<_Ty, N, 1, order>
     : public MatrixMath::ProtoMatrixData<_Ty, N, 1, order>
 {
+public:
+    using Transposed = Matrix<_Ty, 1, N, order>;
+
+    Matrix();
+    Matrix(const Matrix& other);
+    Matrix(const std::initializer_list<_Ty>& init);
+    virtual ~Matrix() {}
 };
 
 // Scalar de facto
