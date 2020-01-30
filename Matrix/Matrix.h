@@ -683,7 +683,6 @@ public:
     Matrix(const _Ty&);
     virtual ~Matrix() {}
 
-    constexpr int GetWidth() const;
     constexpr int GetHeight() const;
 
     void SetData(const _Ty& value);
@@ -746,14 +745,6 @@ MatrixMath::Matrix<_Ty, 1, 1, order>::
 operator _Ty() const
 {
     return this->data;
-}
-
-template <typename _Ty, typename order>
-constexpr int
-MatrixMath::Matrix<_Ty, 1, 1, order>::
-GetWidth() const
-{
-    return 1;
 }
 
 template <typename _Ty, typename order>
