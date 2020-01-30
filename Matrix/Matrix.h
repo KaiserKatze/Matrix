@@ -207,7 +207,9 @@ MatrixMath::Matrix<_Ty, Height, Width, order>::
 Matrix(const _Ty* src, const _Ty* dst)
     : Matrix()
 {
-    std::copy(src, dst, std::begin(data));
+    // prevent buffer overflow attack
+    const _Ty* end{ src + std::min<ptrdiff_t>(dst - src, Width * Height) };
+    std::copy(src, end, std::begin(data));
 }
 
 template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
