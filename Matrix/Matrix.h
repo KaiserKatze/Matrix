@@ -701,6 +701,22 @@ Matrix(const std::initializer_list<_Ty>& init)
 {
 }
 
+template <typename _Ty, int N, typename order>
+void
+MatrixMath::Matrix<_Ty, N, 1, order>::
+SetData(const int& index, const _Ty& value)
+{
+    this->data[index] = value;
+}
+
+template <typename _Ty, int N, typename order>
+const _Ty&
+MatrixMath::Matrix<_Ty, N, 1, order>::
+GetData(const int& index) const
+{
+    return this->data[index];
+}
+
 
 // Scalar de facto
 template <typename _Ty, typename order>
