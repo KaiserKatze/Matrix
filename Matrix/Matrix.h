@@ -680,6 +680,28 @@ public:
     const _Ty& GetData(const int& index) const;
 };
 
+template <typename _Ty, int N, typename order>
+MatrixMath::Matrix<_Ty, N, 1, order>::
+Matrix()
+    : ProtoMatrixData<_Ty, N, 1, order>()
+{
+}
+
+template <typename _Ty, int N, typename order>
+MatrixMath::Matrix<_Ty, N, 1, order>::
+Matrix(const Matrix& other)
+    : ProtoMatrixData<_Ty, N, 1, order>(other)
+{
+}
+
+template <typename _Ty, int N, typename order>
+MatrixMath::Matrix<_Ty, N, 1, order>::
+Matrix(const std::initializer_list<_Ty>& init)
+    : ProtoMatrixData<_Ty, N, 1, order>(init)
+{
+}
+
+
 // Scalar de facto
 template <typename _Ty, typename order>
 class MatrixMath::Matrix<_Ty, 1, 1, order>
