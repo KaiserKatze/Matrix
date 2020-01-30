@@ -237,6 +237,79 @@ int main()
 
     auto mi24{ mi23 * mi34 };
 
+    std::cout
+        << "mi23 = " << std::endl
+        << mi23.ToString();
+    if (mi23.GetData() == std::array<int, 6>{1, 2, 3, 3, 2, 1})
+        std::cout << "Succeed" << std::endl;
+    else
+        std::cout << "Failed" << std::endl;
+    std::cout << std::endl;
+
+    std::cout
+        << "mi34 = " << std::endl
+        << mi34.ToString();
+    if (mi34.GetData() == std::array<int, 12>{ 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, })
+        std::cout << "Succeed" << std::endl;
+    else
+        std::cout << "Failed" << std::endl;
+    std::cout << std::endl;
+
+    std::cout
+        << "mi24 = mi23 * mi34 = " << std::endl
+        << mi24.ToString();
+    if (mi24.GetData() == std::array<int, 8>{ 6, 12, 18, 24, 6, 12, 18, 24, })
+        std::cout << "Succeed" << std::endl;
+    else
+        std::cout << "Failed" << std::endl;
+    std::cout << std::endl;
+
+    Matrix<int, 2, 3, StorageOrder::COLUMN_MAJOR> mi23c {
+        1, 3,
+        2, 2,
+        3, 1,
+    };
+    Matrix<int, 3, 2, StorageOrder::COLUMN_MAJOR> mi32c{
+        1, 2, 3,
+        2, 2, 2,
+        3, 2, 1, // intended buffer overflow attack
+    };
+    auto mi22c{ mi23c * mi32c };
+
+    std::cout
+        << "mi23c = " << std::endl
+        << mi23c.ToString();
+    if (mi23c.GetData() == std::array<int, 6>{ 1, 2, 3, 3, 2, 1, })
+        std::cout << "Succeed" << std::endl;
+    else
+        std::cout << "Failed" << std::endl;
+    {
+        for (auto& x : mi23c.GetData())
+        {
+            std::cout << x << ", ";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
+
+    std::cout
+        << "mi32c = " << std::endl
+        << mi32c.ToString();
+    if (mi32c.GetData() == std::array<int, 6>{ 1, 2, 2, 2, 3, 2, })
+        std::cout << "Succeed" << std::endl;
+    else
+        std::cout << "Failed" << std::endl;
+    std::cout << std::endl;
+
+    std::cout
+        << "mi22c = mi23c * mi32c = " << std::endl
+        << mi22c.ToString();
+    if (mi22c.GetData() == std::array<int, 4>{ 14, 12, 10, 12 })
+        std::cout << "Succeed" << std::endl;
+    else
+        std::cout << "Failed" << std::endl;
+    std::cout << std::endl;
+
     return 0;
 }
 
