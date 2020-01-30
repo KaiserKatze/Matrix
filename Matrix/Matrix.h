@@ -492,7 +492,7 @@ operator*(const MatrixMath::Matrix<_Ty, M, P, order>& first, const MatrixMath::M
             for (int k = 0; k < P; k++)
                 sum += first.GetData(i, k) * second.GetData(k, j);
 
-            result.setData(i, j, sum);
+            result.SetData(i, j, sum);
         }
     }
 
