@@ -269,9 +269,10 @@ int main()
         3, 2, 1,
     };
     MatrixMath::Matrix<int, 3, 2, StorageOrder::ColumnMajor> mi32c{
-        1, 2, 3,
-        2, 2, 2,
-        3, 2, 1, // intended buffer overflow attack
+        1, 2,
+        2, 2,
+        3, 2,
+        1, // intended buffer overflow attack
     };
     auto mi22c{ mi23c * mi32c };
 
@@ -282,13 +283,6 @@ int main()
         std::cout << "Succeed" << std::endl;
     else
         std::cout << "Failed" << std::endl;
-    {
-        for (auto& x : mi23c.GetData())
-        {
-            std::cout << x << ", ";
-        }
-        std::cout << std::endl;
-    }
     std::cout << std::endl;
 
     std::cout
