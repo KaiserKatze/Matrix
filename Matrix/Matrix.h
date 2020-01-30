@@ -37,6 +37,8 @@ namespace MatrixMath
         static_assert(std::is_same_v<StorageOrder::RowMajor, order> || std::is_same_v<StorageOrder::ColumnMajor, order>, "Template argument 'order' is invalid type!");
 
     public:
+        using ElementType = _Ty;
+
         inline constexpr bool IsVector() const;
         inline constexpr bool IsSquare() const;
         inline constexpr bool IsScalar() const;
