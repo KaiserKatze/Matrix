@@ -144,6 +144,34 @@ namespace MatrixMath
     using Matrix4d = MatrixQ<double, 4, order>;
 
 
+    template <typename order = StorageOrder::RowMajor>
+    using Vector2i = Vector<int, 2, order>;
+
+    template <typename order = StorageOrder::RowMajor>
+    using Vector3i = Vector<int, 3, order>;
+
+    template <typename order = StorageOrder::RowMajor>
+    using Vector4i = Vector<int, 4, order>;
+
+    template <typename order = StorageOrder::RowMajor>
+    using Vector2f = Vector<float, 2, order>;
+
+    template <typename order = StorageOrder::RowMajor>
+    using Vector3f = Vector<float, 3, order>;
+
+    template <typename order = StorageOrder::RowMajor>
+    using Vector4f = Vector<float, 4, order>;
+
+    template <typename order = StorageOrder::RowMajor>
+    using Vector2d = Vector<double, 2, order>;
+
+    template <typename order = StorageOrder::RowMajor>
+    using Vector3d = Vector<double, 3, order>;
+
+    template <typename order = StorageOrder::RowMajor>
+    using Vector4d = Vector<double, 4, order>;
+
+
     template <typename _Ty, int N, typename order = StorageOrder::RowMajor>
     class IdentityMatrix
         : public MatrixQ<_Ty, N, order>
