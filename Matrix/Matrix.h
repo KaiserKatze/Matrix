@@ -73,11 +73,6 @@ namespace MatrixMath
     public:
         using Transposed = Matrix<_Ty, Width, Height, order>;
 
-        constexpr bool IsVector() const;
-        constexpr bool IsSquare() const;
-        constexpr int GetWidth() const;
-        constexpr int GetHeight() const;
-
         // Access data
         void SetData(const int& row, const int& column, const _Ty& value);
         const _Ty& GetData(const int& row, const int& column) const;
