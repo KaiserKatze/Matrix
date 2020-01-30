@@ -29,12 +29,14 @@ namespace MatrixMath
 
     private:
         constexpr static int Size{ Width * Height };
-        std::array<_Ty, Size> data;
+        std::array<_Ty, Width * Height> data; // 'Width * Height' here cannot be replaced by 'Size',
+                                              // otherwise a compiler error (C2244) will be thrown at compile time
+                                              // if the project is compiled with Microsoft VC++
 
         int convert2index(const int& row, const int& column) const;
 
         Matrix(const _Ty* pSrc, const _Ty* pDst);
-        Matrix(const std::array<_Ty, Matrix::Size>& other);
+        Matrix(const std::array<_Ty, Width * Height>& other);
 
     public:
         using Transposed = Matrix<_Ty, Width, Height, order>;
@@ -179,7 +181,7 @@ Matrix(const _Ty* src, const _Ty* dst)
 
 template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
-Matrix(const std::array<_Ty, Matrix::Size>& other)
+Matrix(const std::array<_Ty, Width * Height>& other)
 {
     std::copy(std::begin(other), std::end(other), std::begin(data));
 }
@@ -258,7 +260,7 @@ void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 operator+=(const Matrix& other)
 {
-    for (int i = 0; i < Matrix::Size; i++)
+    for (int i = 0; i < Size; i++)
     {
         this->data[i] += other.data[i];
     }
@@ -269,7 +271,7 @@ void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 operator-=(const Matrix& other)
 {
-    for (int i = 0; i < Matrix::Size; i++)
+    for (int i = 0; i < Size; i++)
     {
         this->data[i] -= other.data[i];
     }
@@ -280,7 +282,7 @@ void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 operator*=(const _Ty& multiplier)
 {
-    for (int i = 0; i < Matrix::Size; i++)
+    for (int i = 0; i < Size; i++)
     {
         this->data[i] *= multiplier;
     }
@@ -291,7 +293,7 @@ void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 operator/=(const _Ty& divider)
 {
-    for (int i = 0; i < Matrix::Size; i++)
+    for (int i = 0; i < Size; i++)
     {
         this->data[i] /= divider;
     }
