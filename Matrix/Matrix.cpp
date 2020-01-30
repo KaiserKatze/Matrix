@@ -11,7 +11,7 @@ int main()
 {
     std::cout << "Hello World!" << std::endl;
 
-    Matrix<int, 3, 3> m1{
+    MatrixMath::Matrix<int, 3, 3> m1{
         1, 0, 0,
         0, 1, 0,
         0, 0, 1,
@@ -37,7 +37,7 @@ int main()
 
     //================================================
 
-    Matrix<int, 3, 3> m2{
+    MatrixMath::Matrix<int, 3, 3> m2{
         1, 2, 3,
         4, 5, 6,
         7, 8, 9,
@@ -69,7 +69,7 @@ int main()
 
     //================================================
 
-    auto m3 = Matrix(m1);
+    auto m3 = MatrixMath::Matrix(m1);
 
     std::cout << "m3 = " << std::endl
         << m3.ToString();
@@ -172,7 +172,7 @@ int main()
 
     //================================================
 
-    MatrixQ<int, 3> m9 = s1 * m1 + m1 * s1;
+    MatrixMath::MatrixQ<int, 3> m9 = s1 * m1 + m1 * s1;
 
     //================================================
 
@@ -221,15 +221,15 @@ int main()
 
     //================================================
 
-    Matrix4f<> m4f{ IdentityMatrix<float, 4>() };
+    MatrixMath::Matrix4f<> m4f{ IdentityMatrix<float, 4>() };
 
     //================================================
 
-    Matrix<int, 2, 3> mi23 {
+    MatrixMath::Matrix<int, 2, 3> mi23 {
         1, 2, 3,
         3, 2, 1,
     };
-    Matrix<int, 3, 4> mi34{
+    MatrixMath::Matrix<int, 3, 4> mi34{
         1, 2, 3, 4,
         1, 2, 3, 4,
         1, 2, 3, 4,
@@ -264,12 +264,12 @@ int main()
         std::cout << "Failed" << std::endl;
     std::cout << std::endl;
 
-    Matrix<int, 2, 3, StorageOrder::COLUMN_MAJOR> mi23c {
+    MatrixMath::Matrix<int, 2, 3, StorageOrder::COLUMN_MAJOR> mi23c {
         1, 3,
         2, 2,
         3, 1,
     };
-    Matrix<int, 3, 2, StorageOrder::COLUMN_MAJOR> mi32c{
+    MatrixMath::Matrix<int, 3, 2, StorageOrder::COLUMN_MAJOR> mi32c{
         1, 2, 3,
         2, 2, 2,
         3, 2, 1, // intended buffer overflow attack
