@@ -144,6 +144,8 @@ namespace MatrixMath
         IdentityMatrix();
     };
 
+    // Multiplication algorithms
+
     template <typename _Ty, int Height, int Width, typename order>
     Matrix<_Ty, Height, Width, order> operator*(const Matrix<_Ty, Height, Width, order>&, const _Ty&);
 
