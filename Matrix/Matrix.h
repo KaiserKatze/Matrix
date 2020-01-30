@@ -89,6 +89,9 @@ namespace MatrixMath
     template <typename _Ty, int N, typename order = StorageOrder::RowMajor>
     using MatrixQ = Matrix<_Ty, N, N, order>;
 
+    template <typename _Ty, int N, typename order>
+    class Matrix<_Ty, N, 1, order>;
+
     template <typename _Ty, int N, typename order = StorageOrder::RowMajor>
     using Vector = Matrix<_Ty, N, 1, order>;
 
