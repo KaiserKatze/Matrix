@@ -16,6 +16,18 @@ namespace MatrixMath
         struct ColumnMajor;
     };
 
+    struct StorageOrder::RowMajor : StorageOrder
+    {
+        template <int Height, int Width>
+        static int convert2index(const int& row, const int& column) { return column + row * Width; }
+    };
+
+    struct StorageOrder::ColumnMajor : StorageOrder
+    {
+        template <int Height, int Width>
+        static int convert2index(const int& row, const int& column) { return row + column * Height; }
+    };
+
     // the entries in this class are stored in column-major order
     // template argument 'typename _Ty' can be one of the following:
     //  - real number (such as int, float, double, etc.)
