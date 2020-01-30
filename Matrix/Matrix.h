@@ -71,9 +71,6 @@ namespace MatrixMath
     private:
         constexpr static int Size{ Width * Height };
 
-        Matrix(const _Ty* pSrc, const _Ty* pDst);
-        Matrix(const std::array<_Ty, Width * Height>& other);
-
     public:
         using Transposed = Matrix<_Ty, Width, Height, order>;
 
