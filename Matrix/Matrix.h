@@ -639,14 +639,14 @@ operator*(const MatrixQ<_Ty, 4, order>& first, const MatrixQ<_Ty, 4, order>& sec
 // Vector de facto
 template <typename _Ty, int N, typename order>
 class MatrixMath::Matrix<_Ty, N, 1, order>
-    : public ProtoMatrix<_Ty, N, 1, order>
+    : public MatrixMath::ProtoMatrix<_Ty, N, 1, order>
 {
 };
 
 // Scalar de facto
 template <typename _Ty, typename order>
 class MatrixMath::Matrix<_Ty, 1, 1, order>
-    : public ProtoMatrix<_Ty, 1, 1, order>
+    : public MatrixMath::ProtoMatrix<_Ty, 1, 1, order>
 {
 private:
     _Ty data;
