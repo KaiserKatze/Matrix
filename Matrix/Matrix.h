@@ -59,6 +59,7 @@ namespace MatrixMath
         void SetData(const int& row, const int& column, const _Ty& value);
         const _Ty& GetData(const int& row, const int& column) const;
         const std::array<_Ty, Width * Height>& GetData() const;
+        std::array<_Ty, Width * Height>& GetData();
 
         void operator+=(const Matrix&);
         void operator-=(const Matrix&);
@@ -228,6 +229,14 @@ template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
 const std::array<_Ty, Width * Height>&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 GetData() const
+{
+    return this->data;
+}
+
+template <typename _Ty, int Height, int Width, MatrixMath::StorageOrder order>
+std::array<_Ty, Width * Height>&
+MatrixMath::Matrix<_Ty, Height, Width, order>::
+GetData()
 {
     return this->data;
 }
