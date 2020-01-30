@@ -223,6 +223,13 @@ int main()
 
     Matrix4f<> m4f{ IdentityMatrix<float, 4>() };
 
+    //================================================
+
+    Matrix<int, 2, 3> mi23;
+    Matrix<int, 3, 4> mi34;
+
+    auto mi24{ mi23 * mi34 };
+
     return 0;
 }
 
