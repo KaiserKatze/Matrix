@@ -283,6 +283,22 @@ GetHeight() const
     return Height;
 }
 
+template <typename _Ty, int Height, int Width, typename order>
+const std::array<_Ty, Width * Height>&
+MatrixMath::ProtoMatrix<_Ty, Height, Width, order>::
+GetData() const
+{
+    return this->data;
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+std::array<_Ty, Width * Height>&
+MatrixMath::ProtoMatrix<_Ty, Height, Width, order>::
+GetData()
+{
+    return this->data;
+}
+
 
 template <typename _Ty, int Height, int Width, typename order>
 void
