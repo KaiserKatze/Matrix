@@ -81,6 +81,8 @@ namespace MatrixMath
         bool operator==(const Matrix&) const;
         bool operator!=(const Matrix&) const;
         Transposed Transpose() const;
+
+        // Always output a string representing the matrix in row-major order
         const std::string ToString() const;
     };
 
