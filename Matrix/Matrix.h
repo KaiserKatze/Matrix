@@ -19,13 +19,13 @@ namespace MatrixMath
     struct StorageOrder::RowMajor : StorageOrder
     {
         template <int Height, int Width>
-        static int convert2index(const int& row, const int& column) { return column + row * Width; }
+        static int convert2index(const int& row, const int& column);
     };
 
     struct StorageOrder::ColumnMajor : StorageOrder
     {
         template <int Height, int Width>
-        static int convert2index(const int& row, const int& column) { return row + column * Height; }
+        static int convert2index(const int& row, const int& column);
     };
 
     // the entries in this class are stored in column-major order
@@ -894,4 +894,21 @@ MatrixMath::
 operator*(const Scalar<_Ty, order>& first, const Matrix<_Ty, Height, Width, order>& second)
 {
     return second * first;
+}
+
+
+template <int Height, int Width>
+static int
+MatrixMath::StorageOrder::RowMajor::
+convert2index(const int& row, const int& column)
+{
+    return column + row * Width;
+}
+
+template <int Height, int Width>
+static int
+MatrixMath::StorageOrder::ColumnMajor::
+convert2index(const int& row, const int& column)
+{
+    return row + column * Height;
 }
