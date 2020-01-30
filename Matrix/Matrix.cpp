@@ -264,12 +264,12 @@ int main()
         std::cout << "Failed" << std::endl;
     std::cout << std::endl;
 
-    MatrixMath::Matrix<int, 2, 3, StorageOrder::COLUMN_MAJOR> mi23c {
+    MatrixMath::Matrix<int, 2, 3, StorageOrder::ColumnMajor> mi23c {
         1, 3,
         2, 2,
         3, 1,
     };
-    MatrixMath::Matrix<int, 3, 2, StorageOrder::COLUMN_MAJOR> mi32c{
+    MatrixMath::Matrix<int, 3, 2, StorageOrder::ColumnMajor> mi32c{
         1, 2, 3,
         2, 2, 2,
         3, 2, 1, // intended buffer overflow attack
