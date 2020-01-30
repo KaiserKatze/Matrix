@@ -2,3 +2,6 @@
 
 #include "Matrix.h"
 
+namespace MatrixMath
+{
+}

@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "Matrix.h"
+#include "Geometry.h"
 
 using namespace MatrixMath;
 
