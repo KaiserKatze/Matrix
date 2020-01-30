@@ -686,6 +686,7 @@ public:
     void SetData(const _Ty& value);
     const _Ty& GetData() const;
     operator _Ty() const;
+
     void operator+=(const Matrix&);
     void operator+=(const _Ty&);
     void operator-=(const Matrix&);
@@ -705,6 +706,7 @@ public:
     bool operator==(const _Ty&) const;
     bool operator!=(const _Ty&) const;
     _Ty Transpose() const;
+
     const std::string ToString() const;
 };
 
