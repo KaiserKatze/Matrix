@@ -46,7 +46,7 @@ namespace MatrixMath
 
     template <typename _Ty, int Height, int Width, typename order>
     class ProtoMatrixData
-        : public ProtoMatrixData<_Ty, Height, Width, order>
+        : public ProtoMatrix<_Ty, Height, Width, order>
     {
     protected:
         std::array<_Ty, Width * Height> data; // 'Width * Height' here cannot be replaced by 'Size',
