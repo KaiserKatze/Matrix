@@ -80,8 +80,6 @@ namespace MatrixMath
         // Access data
         void SetData(const int& row, const int& column, const _Ty& value);
         const _Ty& GetData(const int& row, const int& column) const;
-        const std::array<_Ty, Width * Height>& GetData() const;
-        std::array<_Ty, Width * Height>& GetData();
 
         void operator+=(const Matrix&);
         void operator-=(const Matrix&);
@@ -300,22 +298,6 @@ MatrixMath::Matrix<_Ty, Height, Width, order>::
 GetData(const int& row, const int& column) const
 {
     return this->data[order::convert2index<Height, Width>(row, column)];
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-const std::array<_Ty, Width * Height>&
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-GetData() const
-{
-    return this->data;
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-std::array<_Ty, Width * Height>&
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-GetData()
-{
-    return this->data;
 }
 
 template <typename _Ty, int Height, int Width, typename order>
