@@ -265,9 +265,8 @@ int main()
     std::cout << std::endl;
 
     MatrixMath::Matrix<int, 2, 3, StorageOrder::ColumnMajor> mi23c {
-        1, 3,
-        2, 2,
-        3, 1,
+        1, 2, 3,
+        3, 2, 1,
     };
     MatrixMath::Matrix<int, 3, 2, StorageOrder::ColumnMajor> mi32c{
         1, 2, 3,
