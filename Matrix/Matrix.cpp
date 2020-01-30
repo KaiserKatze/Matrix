@@ -178,9 +178,34 @@ int main()
 
     int i1 = s1 * 2 + 2 * s1;
 
+    std::cout << "i1 = " << i1 << std::endl;
+    if (i1 == 4)
+        std::cout << "Succeed" << std::endl;
+    else
+        std::cout << "Failed" << std::endl;
+    std::cout << std::endl;
+
+    //================================================
+
+    s1 = 100;
+
+    std::cout << "s1 = " << s1 << std::endl;
+    if (s1 == 100)
+        std::cout << "Succeed" << std::endl;
+    else
+        std::cout << "Failed" << std::endl;
+    std::cout << std::endl;
+
     //================================================
 
     int i2 = s1.Transpose();
+
+    std::cout << "i2 = " << i2 << std::endl;
+    if (i2 == 100)
+        std::cout << "Succeed" << std::endl;
+    else
+        std::cout << "Failed" << std::endl;
+    std::cout << std::endl;
 
     //================================================
 
