@@ -243,6 +243,47 @@ ProtoMatrix(const std::initializer_list<_Ty>& init)
 }
 
 template <typename _Ty, int Height, int Width, typename order>
+inline constexpr bool
+MatrixMath::ProtoMatrix<_Ty, Height, Width, order>::
+IsVector() const
+{
+    return (Height == 1 && Width > 1) || (Width == 1 && Height > 1);
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+inline constexpr bool
+MatrixMath::ProtoMatrix<_Ty, Height, Width, order>::
+IsSquare() const
+{
+    return Height == Width && Height > 1;
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+inline constexpr bool
+MatrixMath::ProtoMatrix<_Ty, Height, Width, order>::
+IsScalar() const
+{
+    return Height == 1 && Width == 1;
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+inline constexpr int
+MatrixMath::ProtoMatrix<_Ty, Height, Width, order>::
+GetWidth() const
+{
+    return Width;
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+inline constexpr int
+MatrixMath::ProtoMatrix<_Ty, Height, Width, order>::
+GetHeight() const
+{
+    return Height;
+}
+
+
+template <typename _Ty, int Height, int Width, typename order>
 void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 SetData(const int& row, const int& column, const _Ty& value)
