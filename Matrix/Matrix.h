@@ -275,38 +275,6 @@ GetData()
 }
 
 template <typename _Ty, int Height, int Width, typename order>
-constexpr bool
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-IsVector() const
-{
-    return (Height == 1 && Width > 1) || (Width == 1 && Height > 1);
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-constexpr bool
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-IsSquare() const
-{
-    return Height == Width && Height > 1;
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-constexpr int
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-GetWidth() const
-{
-    return Width;
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-constexpr int
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-GetHeight() const
-{
-    return Height;
-}
-
-template <typename _Ty, int Height, int Width, typename order>
 void 
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 operator+=(const Matrix& other)
