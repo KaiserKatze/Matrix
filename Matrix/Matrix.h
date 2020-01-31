@@ -364,21 +364,21 @@ GetData()
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 Matrix()
-    : ProtoMatrixData<_Ty, Height, Width, order>()
+    : DataType()
 {
 }
 
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 Matrix(const Matrix& other)
-    : ProtoMatrixData<_Ty, Height, Width, order>(other)
+    : DataType(other)
 {
 }
 
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 Matrix(const std::initializer_list<_Ty>& init)
-    : ProtoMatrixData<_Ty, Height, Width, order>(init)
+    : DataType(init)
 {
 }
 
