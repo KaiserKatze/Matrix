@@ -824,7 +824,9 @@ public:
     ~Matrix() {}
 
     void SetElement(const _Ty& value);
+    const _Ty& GetElement() const;
     const _Ty& GetData() const;
+    _Ty& GetData();
     operator _Ty() const;
 
     void operator+=(const Matrix&);
@@ -877,7 +879,23 @@ SetElement(const _Ty& value)
 template <typename _Ty, typename order>
 const _Ty&
 MatrixMath::Matrix<_Ty, 1, 1, order>::
+GetElement() const
+{
+    return this->data;
+}
+
+template <typename _Ty, typename order>
+const _Ty&
+MatrixMath::Matrix<_Ty, 1, 1, order>::
 GetData() const
+{
+    return this->data;
+}
+
+template <typename _Ty, typename order>
+_Ty&
+MatrixMath::Matrix<_Ty, 1, 1, order>::
+GetData()
 {
     return this->data;
 }
