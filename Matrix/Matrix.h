@@ -388,6 +388,14 @@ GetElement(const int& index)
 }
 
 template <typename _Ty, int Height, int Width, typename order>
+_Ty&
+MatrixMath::Matrix<_Ty, Height, Width, order>::
+GetElement(const int& row, const int& column)
+{
+    return this->GetElement(order::convert2index<Height, Width>(row, column));
+}
+
+template <typename _Ty, int Height, int Width, typename order>
 typename MatrixMath::Matrix<_Ty, Height, Width, order>::Transposed
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 Transpose() const
