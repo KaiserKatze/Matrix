@@ -21,12 +21,16 @@ namespace MatrixMath
     {
         template <int Height, int Width>
         inline static int convert2index(const int& row, const int& column);
+        inline static constexpr bool IsRowMajor();
+        inline static constexpr bool IsColumnMajor();
     };
 
     struct StorageOrder::ColumnMajor : StorageOrder
     {
         template <int Height, int Width>
         inline static int convert2index(const int& row, const int& column);
+        inline static constexpr bool IsRowMajor();
+        inline static constexpr bool IsColumnMajor();
     };
 
     template <typename _Ty, int Height, int Width, typename order>
@@ -640,7 +644,7 @@ operator*(const MatrixQ<_Ty, 2, order>& lhs, const MatrixQ<_Ty, 2, order>& rhs)
     const _Ty c21 = a21 * b11 + a22 * b21;
     const _Ty c22 = a21 * b12 + a22 * b22;
 
-    if constexpr (order == MatrixMath::StorageOrder::ROW_MAJOR)
+    if constexpr (order::IsRowMajor())
         return MatrixQ<_Ty, 2, order>{ c11, c12, c21, c22 };
     else
         return MatrixQ<_Ty, 2, order>{ c11, c21, c12, c22 };
@@ -680,7 +684,7 @@ operator*(const MatrixQ<_Ty, 3, order>& lhs, const MatrixQ<_Ty, 3, order>& rhs)
     const _Ty c32 = a31 * b12 + a32 * b22 + a33 * b32;
     const _Ty c33 = a31 * b13 + a32 * b23 + a33 * b33;
 
-    if constexpr (order == MatrixMath::StorageOrder::ROW_MAJOR)
+    if constexpr (order::IsRowMajor())
         return MatrixQ<_Ty, 2, order>{ c11, c12, c13, c21, c22, c23, c31, c32, c33 };
     else
         return MatrixQ<_Ty, 2, order>{ c11, c21, c31, c12, c22, c32, c13, c23, c33 };
@@ -741,7 +745,7 @@ operator*(const MatrixQ<_Ty, 4, order>& lhs, const MatrixQ<_Ty, 4, order>& rhs)
     const _Ty c43 = a41 * b13 + a42 * b23 + a43 * b33 + a44 * b43;
     const _Ty c44 = a41 * b14 + a42 * b24 + a43 * b34 + a44 * b44;
 
-    if constexpr (order == MatrixMath::StorageOrder::ROW_MAJOR)
+    if constexpr (order::IsRowMajor())
         return MatrixQ<_Ty, 4, order>{ c11, c12, c13, c14, c21, c22, c23, c24, c31, c32, c33, c34, c41, c42, c43, c44 };
     else
         return MatrixQ<_Ty, 4, order>{ c11, c21, c31, c41, c12, c22, c32, c42, c13, c23, c33, c43, c14, c24, c34, c44 };
@@ -1126,10 +1130,38 @@ convert2index(const int& row, const int& column)
     return column + row * Width;
 }
 
+inline constexpr bool
+MatrixMath::StorageOrder::RowMajor::
+IsRowMajor()
+{
+    return true;
+}
+
+inline constexpr bool
+MatrixMath::StorageOrder::RowMajor::
+IsColumnMajor()
+{
+    return false;
+}
+
 template <int Height, int Width>
 inline static int
 MatrixMath::StorageOrder::ColumnMajor::
 convert2index(const int& row, const int& column)
 {
     return row + column * Height;
+}
+
+inline constexpr bool
+MatrixMath::StorageOrder::ColumnMajor::
+IsRowMajor()
+{
+    return false;
+}
+
+inline constexpr bool
+MatrixMath::StorageOrder::ColumnMajor::
+IsColumnMajor()
+{
+    return true;
 }
