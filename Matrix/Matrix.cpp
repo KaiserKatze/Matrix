@@ -8,26 +8,71 @@
 
 int main()
 {
+    //==============================================
+    // Scalar
+
     // Test: Scalar initialization
     MatrixMath::Scalar<int> s1;
     MatrixMath::Scalar<int> s2{ 100 };
     MatrixMath::Scalar<int> s3(s2);
 
     std::cout
-        << "s1 -> " << s1 << std::endl
-        << "s2 -> " << s2 << std::endl
-        << "s3 -> " << s3 << std::endl;
+        << "s1 -> " << s1 << " "
+        << (s1 == 0 ? "[Succeed]" : "[Fail]")
+        << std::endl
+        << "s2 -> " << s2 << " "
+        << (s2 == 100 ? "[Succeed]" : "[Fail]")
+        << std::endl
+        << "s3 -> " << s3 << " "
+        << (s3 == s2 ? "[Succeed]" : "[Fail]")
+        << std::endl;
+
+    // Test: Scalar data direct access
+    s1.SetElement(1453);
+    std::cout << "s1.SetElement(1453) == 1453 -> "
+        << (s1 == 1453 ? "[Succeed]" : "[Fail]")
+        << std::endl;
 
     // Test: Scalar user-defined conversion
     int is1{ s2 };
 
-    // Test: Scalar multiplication
+    // Test: Scalar calculation
+    s1 += 12;
+    std::cout << "s1 += 12 == 1465 -> "
+        << (s1 == 1465 ? "[Succeed]" : "[Fail]")
+        << std::endl;
+
+    s1 -= 45;
+    std::cout << "s1 -= 44 == 1420 -> "
+        << (s1 == 1420 ? "[Succeed]" : "[Fail]")
+        << std::endl;
+
+    s1 /= 2;
+    std::cout << "s1 /= 2 == 710 -> "
+        << (s1 == 710 ? "[Succeed]" : "[Fail]")
+        << std::endl;
+
+    s1 = -s2;
+    std::cout << "s1 = -s2 -> -100 -> "
+        << (s1 == -100 ? "[Succeed]" : "[Fail]")
+        << std::endl;
+
     s2 *= s2;
+    std::cout
+        << "s2 = (s2 * s2) -> " << s2
+        << " " << (s2 == 10000 ? "[Succeed]" : "[Fail]")
+        << std::endl;
+
     s3 *= 20;
+    std::cout
+        << "s3 = (s3 * 20) -> " << s3
+        << " " << (s3 == 2000 ? "[Succeed]" : "[Fail]")
+        << std::endl;
 
     std::cout
-        << "s2 = (s2 * s2) -> " << s2 << std::endl
-        << "s3 = (s3 * 20) -> " << s3 << std::endl;
+        << "s1 == s1.Transpose() -> "
+        << (s1 == s1.Transpose() ? "[Succeed]" : "[Fail]")
+        << std::endl;
 
     return 0;
 }
