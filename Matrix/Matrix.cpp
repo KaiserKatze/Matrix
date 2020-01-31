@@ -74,6 +74,14 @@ int main()
         << (s1 == s1.Transpose() ? "[Succeed]" : "[Fail]")
         << std::endl;
 
+    // Test: Scalar with float
+    MatrixMath::Scalar<float> s4{ 3.14f };
+    std::cout
+        << "s4 -> " << s4 << std::endl
+        << "s4 != 3 -> "
+        << (s4 != 3 ? "[Succeed]" : "[Fail]")
+        << std::endl;
+
     return 0;
 }
 
