@@ -85,6 +85,7 @@ namespace MatrixMath
         void SetElement(const int& row, const int& column, const _Ty& value);
         const _Ty& GetElement(const int& row, const int& column) const;
         _Ty& GetElement(const int& index);
+        _Ty& GetElement(const int& row, const int& column);
 
         Transposed Transpose() const;
 
