@@ -85,15 +85,6 @@ namespace MatrixMath
         void SetData(const int& row, const int& column, const _Ty& value);
         const _Ty& GetData(const int& row, const int& column) const;
 
-        void operator+=(const Matrix&);
-        void operator-=(const Matrix&);
-        void operator*=(const _Ty&);
-        void operator/=(const _Ty&);
-        Matrix operator+(const Matrix&) const;
-        Matrix operator-(const Matrix&) const;
-        Matrix operator/(const _Ty&) const;
-        bool operator==(const Matrix&) const;
-        bool operator!=(const Matrix&) const;
         Transposed Transpose() const;
 
         // Always output a string representing the matrix in row-major order
@@ -368,93 +359,6 @@ MatrixMath::Matrix<_Ty, Height, Width, order>::
 GetData(const int& row, const int& column) const
 {
     return this->data[order::convert2index<Height, Width>(row, column)];
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-void 
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-operator+=(const Matrix& other)
-{
-    for (int i = 0; i < Size; i++)
-    {
-        this->data[i] += other.data[i];
-    }
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-void
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-operator-=(const Matrix& other)
-{
-    for (int i = 0; i < Size; i++)
-    {
-        this->data[i] -= other.data[i];
-    }
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-void
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-operator*=(const _Ty& multiplier)
-{
-    for (_Ty& x : this->data)
-        x *= multiplier;
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-void
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-operator/=(const _Ty& divider)
-{
-    for (_Ty& x : this->data)
-        x /= divider;
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-MatrixMath::Matrix<_Ty, Height, Width, order>
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-operator+(const Matrix& other) const
-{
-    Matrix result(*this);
-    result += other;
-    return result;
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-MatrixMath::Matrix<_Ty, Height, Width, order>
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-operator-(const Matrix& other) const
-{
-    Matrix result(*this);
-    result -= other;
-    return result;
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-MatrixMath::Matrix<_Ty, Height, Width, order>
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-operator/(const _Ty& divider) const
-{
-    Matrix result(*this);
-    result /= divider;
-    return result;
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-bool
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-operator==(const Matrix& other) const
-{
-    return this == &other
-        || this->data == other.data;
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-bool
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-operator!=(const Matrix& other) const
-{
-    return !this->operator==(other);
 }
 
 template <typename _Ty, int Height, int Width, typename order>
