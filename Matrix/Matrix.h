@@ -379,6 +379,14 @@ GetElement(const int& row, const int& column) const
 }
 
 template <typename _Ty, int Height, int Width, typename order>
+_Ty&
+MatrixMath::Matrix<_Ty, Height, Width, order>::
+GetElement(const int& index)
+{
+    return this->data[index];
+}
+
+template <typename _Ty, int Height, int Width, typename order>
 typename MatrixMath::Matrix<_Ty, Height, Width, order>::Transposed
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 Transpose() const
