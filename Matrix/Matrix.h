@@ -348,6 +348,14 @@ Matrix(const std::initializer_list<_Ty>& init)
 template <typename _Ty, int Height, int Width, typename order>
 void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
+SetElement(const int& index, const _Ty& value)
+{
+    this->data[index] = value;
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+void
+MatrixMath::Matrix<_Ty, Height, Width, order>::
 SetElement(const int& row, const int& column, const _Ty& value)
 {
     this->data[order::convert2index<Height, Width>(row, column)] = value;
