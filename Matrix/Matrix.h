@@ -20,13 +20,13 @@ namespace MatrixMath
     struct StorageOrder::RowMajor : StorageOrder
     {
         template <int Height, int Width>
-        static int convert2index(const int& row, const int& column);
+        inline static int convert2index(const int& row, const int& column);
     };
 
     struct StorageOrder::ColumnMajor : StorageOrder
     {
         template <int Height, int Width>
-        static int convert2index(const int& row, const int& column);
+        inline static int convert2index(const int& row, const int& column);
     };
 
     template <typename _Ty, int Height, int Width, typename order>
@@ -1050,7 +1050,7 @@ operator*(const Scalar<_Ty, order>& lhs, const Matrix<_Ty, Height, Width, order>
 
 
 template <int Height, int Width>
-static int
+inline static int
 MatrixMath::StorageOrder::RowMajor::
 convert2index(const int& row, const int& column)
 {
@@ -1058,7 +1058,7 @@ convert2index(const int& row, const int& column)
 }
 
 template <int Height, int Width>
-static int
+inline static int
 MatrixMath::StorageOrder::ColumnMajor::
 convert2index(const int& row, const int& column)
 {
