@@ -759,8 +759,8 @@ public:
     Matrix(const std::initializer_list<_Ty>& init);
     ~Matrix() {}
 
-    void SetElement(const int& index, const _Ty& value);
-    const _Ty& GetElement(const int& index) const;
+    inline void SetElement(const int& index, const _Ty& value);
+    inline const _Ty& GetElement(const int& index) const;
 };
 
 template <typename _Ty, int N, typename order>
@@ -785,7 +785,7 @@ Matrix(const std::initializer_list<_Ty>& init)
 }
 
 template <typename _Ty, int N, typename order>
-void
+inline void
 MatrixMath::Matrix<_Ty, N, 1, order>::
 SetElement(const int& index, const _Ty& value)
 {
@@ -793,7 +793,7 @@ SetElement(const int& index, const _Ty& value)
 }
 
 template <typename _Ty, int N, typename order>
-const _Ty&
+inline const _Ty&
 MatrixMath::Matrix<_Ty, N, 1, order>::
 GetElement(const int& index) const
 {
