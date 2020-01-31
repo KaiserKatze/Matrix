@@ -21,15 +21,15 @@ int main()
     std::cout << "m1 = " << std::endl
         << m1.ToString();
 
-    if (m1.GetData(0, 0) == 1
-        && m1.GetData(0, 1) == 0
-        && m1.GetData(0, 2) == 0
-        && m1.GetData(1, 0) == 0
-        && m1.GetData(1, 1) == 1
-        && m1.GetData(1, 2) == 0
-        && m1.GetData(2, 0) == 0
-        && m1.GetData(2, 1) == 0
-        && m1.GetData(2, 2) == 1)
+    if (m1.GetElement(0, 0) == 1
+        && m1.GetElement(0, 1) == 0
+        && m1.GetElement(0, 2) == 0
+        && m1.GetElement(1, 0) == 0
+        && m1.GetElement(1, 1) == 1
+        && m1.GetElement(1, 2) == 0
+        && m1.GetElement(2, 0) == 0
+        && m1.GetElement(2, 1) == 0
+        && m1.GetElement(2, 2) == 1)
         std::cout << "Succeed" << std::endl;
     else
         std::cout << "Failed" << std::endl;
@@ -47,15 +47,15 @@ int main()
     std::cout << "m2 = " << std::endl
         << m2.ToString();
 
-    if (m2.GetData(0, 0) == 1
-        && m2.GetData(0, 1) == 2
-        && m2.GetData(0, 2) == 3
-        && m2.GetData(1, 0) == 4
-        && m2.GetData(1, 1) == 5
-        && m2.GetData(1, 2) == 6
-        && m2.GetData(2, 0) == 7
-        && m2.GetData(2, 1) == 8
-        && m2.GetData(2, 2) == 9)
+    if (m2.GetElement(0, 0) == 1
+        && m2.GetElement(0, 1) == 2
+        && m2.GetElement(0, 2) == 3
+        && m2.GetElement(1, 0) == 4
+        && m2.GetElement(1, 1) == 5
+        && m2.GetElement(1, 2) == 6
+        && m2.GetElement(2, 0) == 7
+        && m2.GetElement(2, 1) == 8
+        && m2.GetElement(2, 2) == 9)
         std::cout << "Succeed" << std::endl;
     else
         std::cout << "Failed" << std::endl;
@@ -75,15 +75,15 @@ int main()
     std::cout << "m3 = " << std::endl
         << m3.ToString();
 
-    if (m3.GetData(0, 0) == 1
-        && m3.GetData(0, 1) == 0
-        && m3.GetData(0, 2) == 0
-        && m3.GetData(1, 0) == 0
-        && m3.GetData(1, 1) == 1
-        && m3.GetData(1, 2) == 0
-        && m3.GetData(2, 0) == 0
-        && m3.GetData(2, 1) == 0
-        && m3.GetData(2, 2) == 1)
+    if (m3.GetElement(0, 0) == 1
+        && m3.GetElement(0, 1) == 0
+        && m3.GetElement(0, 2) == 0
+        && m3.GetElement(1, 0) == 0
+        && m3.GetElement(1, 1) == 1
+        && m3.GetElement(1, 2) == 0
+        && m3.GetElement(2, 0) == 0
+        && m3.GetElement(2, 1) == 0
+        && m3.GetElement(2, 2) == 1)
         std::cout << "Succeed" << std::endl;
     else
         std::cout << "Failed" << std::endl;
@@ -103,15 +103,15 @@ int main()
     std::cout << "m4 = " << std::endl
         << m4.ToString();
 
-    if (m4.GetData(0, 0) == 1
-        && m4.GetData(0, 1) == 0
-        && m4.GetData(0, 2) == 0
-        && m4.GetData(1, 0) == 0
-        && m4.GetData(1, 1) == 1
-        && m4.GetData(1, 2) == 0
-        && m4.GetData(2, 0) == 0
-        && m4.GetData(2, 1) == 0
-        && m4.GetData(2, 2) == 1)
+    if (m4.GetElement(0, 0) == 1
+        && m4.GetElement(0, 1) == 0
+        && m4.GetElement(0, 2) == 0
+        && m4.GetElement(1, 0) == 0
+        && m4.GetElement(1, 1) == 1
+        && m4.GetElement(1, 2) == 0
+        && m4.GetElement(2, 0) == 0
+        && m4.GetElement(2, 1) == 0
+        && m4.GetElement(2, 2) == 1)
         std::cout << "Succeed" << std::endl;
     else
         std::cout << "Failed" << std::endl;

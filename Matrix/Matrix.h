@@ -81,7 +81,7 @@ namespace MatrixMath
         // Access data
 
         void SetElement(const int& row, const int& column, const _Ty& value);
-        const _Ty& GetData(const int& row, const int& column) const;
+        const _Ty& GetElement(const int& row, const int& column) const;
 
         Transposed Transpose() const;
 
@@ -354,7 +354,7 @@ SetElement(const int& row, const int& column, const _Ty& value)
 template <typename _Ty, int Height, int Width, typename order>
 const _Ty&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
-GetData(const int& row, const int& column) const
+GetElement(const int& row, const int& column) const
 {
     return this->data[order::convert2index<Height, Width>(row, column)];
 }
@@ -370,7 +370,7 @@ Transpose() const
     {
         for (int column = 0; column < Height; column++)
         {
-            result.SetElement(row, column, this->GetData(column, row));
+            result.SetElement(row, column, this->GetElement(column, row));
         }
     }
 
@@ -389,7 +389,7 @@ ToString() const
         ss << "| ";
         for (int column = 0; column < Width; column++)
         {
-            ss << GetData(row, column)
+            ss << GetElement(row, column)
                 << " ";
         }
         ss << "|"
@@ -456,7 +456,7 @@ operator*(const MatrixMath::Matrix<_Ty, M, P, order>& first, const MatrixMath::M
             _Ty sum = 0;
 
             for (int k = 0; k < P; k++)
-                sum += first.GetData(i, k) * second.GetData(k, j);
+                sum += first.GetElement(i, k) * second.GetElement(k, j);
 
             result.SetElement(i, j, sum);
         }
@@ -470,14 +470,14 @@ MatrixMath::MatrixQ<_Ty, 2, order>
 MatrixMath::
 operator*(const MatrixQ<_Ty, 2, order>& first, const MatrixQ<_Ty, 2, order>& second)
 {
-    const _Ty& a11 = first.GetData(0, 0);
-    const _Ty& a12 = first.GetData(0, 1);
-    const _Ty& a21 = first.GetData(1, 0);
-    const _Ty& a22 = first.GetData(1, 1);
-    const _Ty& b11 = second.GetData(0, 0);
-    const _Ty& b12 = second.GetData(0, 1);
-    const _Ty& b21 = second.GetData(1, 0);
-    const _Ty& b22 = second.GetData(1, 1);
+    const _Ty& a11 = first.GetElement(0, 0);
+    const _Ty& a12 = first.GetElement(0, 1);
+    const _Ty& a21 = first.GetElement(1, 0);
+    const _Ty& a22 = first.GetElement(1, 1);
+    const _Ty& b11 = second.GetElement(0, 0);
+    const _Ty& b12 = second.GetElement(0, 1);
+    const _Ty& b21 = second.GetElement(1, 0);
+    const _Ty& b22 = second.GetElement(1, 1);
 
     const _Ty c11 = a11 * b11 + a12 * b21;
     const _Ty c12 = a11 * b12 + a12 * b22;
@@ -495,24 +495,24 @@ MatrixMath::MatrixQ<_Ty, 3, order>
 MatrixMath::
 operator*(const MatrixQ<_Ty, 3, order>& first, const MatrixQ<_Ty, 3, order>& second)
 {
-    const _Ty& a11 = first.GetData(0, 0);
-    const _Ty& a12 = first.GetData(0, 1);
-    const _Ty& a13 = first.GetData(0, 2);
-    const _Ty& a21 = first.GetData(1, 0);
-    const _Ty& a22 = first.GetData(1, 1);
-    const _Ty& a23 = first.GetData(1, 2);
-    const _Ty& a31 = first.GetData(2, 0);
-    const _Ty& a32 = first.GetData(2, 1);
-    const _Ty& a33 = first.GetData(2, 2);
-    const _Ty& b11 = second.GetData(0, 0);
-    const _Ty& b12 = second.GetData(0, 1);
-    const _Ty& b13 = second.GetData(0, 2);
-    const _Ty& b21 = second.GetData(1, 0);
-    const _Ty& b22 = second.GetData(1, 1);
-    const _Ty& b23 = second.GetData(1, 2);
-    const _Ty& b31 = second.GetData(2, 0);
-    const _Ty& b32 = second.GetData(2, 1);
-    const _Ty& b33 = second.GetData(2, 2);
+    const _Ty& a11 = first.GetElement(0, 0);
+    const _Ty& a12 = first.GetElement(0, 1);
+    const _Ty& a13 = first.GetElement(0, 2);
+    const _Ty& a21 = first.GetElement(1, 0);
+    const _Ty& a22 = first.GetElement(1, 1);
+    const _Ty& a23 = first.GetElement(1, 2);
+    const _Ty& a31 = first.GetElement(2, 0);
+    const _Ty& a32 = first.GetElement(2, 1);
+    const _Ty& a33 = first.GetElement(2, 2);
+    const _Ty& b11 = second.GetElement(0, 0);
+    const _Ty& b12 = second.GetElement(0, 1);
+    const _Ty& b13 = second.GetElement(0, 2);
+    const _Ty& b21 = second.GetElement(1, 0);
+    const _Ty& b22 = second.GetElement(1, 1);
+    const _Ty& b23 = second.GetElement(1, 2);
+    const _Ty& b31 = second.GetElement(2, 0);
+    const _Ty& b32 = second.GetElement(2, 1);
+    const _Ty& b33 = second.GetElement(2, 2);
 
     const _Ty c11 = a11 * b11 + a12 * b21 + a13 * b31;
     const _Ty c12 = a11 * b12 + a12 * b22 + a13 * b32;
@@ -535,38 +535,38 @@ MatrixMath::MatrixQ<_Ty, 4, order>
 MatrixMath::
 operator*(const MatrixQ<_Ty, 4, order>& first, const MatrixQ<_Ty, 4, order>& second)
 {
-    const _Ty& a11 = first.GetData(0, 0);
-    const _Ty& a12 = first.GetData(0, 1);
-    const _Ty& a13 = first.GetData(0, 2);
-    const _Ty& a14 = first.GetData(0, 3);
-    const _Ty& a21 = first.GetData(1, 0);
-    const _Ty& a22 = first.GetData(1, 1);
-    const _Ty& a23 = first.GetData(1, 2);
-    const _Ty& a24 = first.GetData(1, 3);
-    const _Ty& a31 = first.GetData(2, 0);
-    const _Ty& a32 = first.GetData(2, 1);
-    const _Ty& a33 = first.GetData(2, 2);
-    const _Ty& a34 = first.GetData(2, 3);
-    const _Ty& a41 = first.GetData(3, 0);
-    const _Ty& a42 = first.GetData(3, 1);
-    const _Ty& a43 = first.GetData(3, 2);
-    const _Ty& a44 = first.GetData(3, 3);
-    const _Ty& b11 = second.GetData(0, 0);
-    const _Ty& b12 = second.GetData(0, 1);
-    const _Ty& b13 = second.GetData(0, 2);
-    const _Ty& b14 = second.GetData(0, 3);
-    const _Ty& b21 = second.GetData(1, 0);
-    const _Ty& b22 = second.GetData(1, 1);
-    const _Ty& b23 = second.GetData(1, 2);
-    const _Ty& b24 = second.GetData(1, 3);
-    const _Ty& b31 = second.GetData(2, 0);
-    const _Ty& b32 = second.GetData(2, 1);
-    const _Ty& b33 = second.GetData(2, 2);
-    const _Ty& b34 = second.GetData(2, 3);
-    const _Ty& b41 = second.GetData(3, 0);
-    const _Ty& b42 = second.GetData(3, 1);
-    const _Ty& b43 = second.GetData(3, 2);
-    const _Ty& b44 = second.GetData(3, 3);
+    const _Ty& a11 = first.GetElement(0, 0);
+    const _Ty& a12 = first.GetElement(0, 1);
+    const _Ty& a13 = first.GetElement(0, 2);
+    const _Ty& a14 = first.GetElement(0, 3);
+    const _Ty& a21 = first.GetElement(1, 0);
+    const _Ty& a22 = first.GetElement(1, 1);
+    const _Ty& a23 = first.GetElement(1, 2);
+    const _Ty& a24 = first.GetElement(1, 3);
+    const _Ty& a31 = first.GetElement(2, 0);
+    const _Ty& a32 = first.GetElement(2, 1);
+    const _Ty& a33 = first.GetElement(2, 2);
+    const _Ty& a34 = first.GetElement(2, 3);
+    const _Ty& a41 = first.GetElement(3, 0);
+    const _Ty& a42 = first.GetElement(3, 1);
+    const _Ty& a43 = first.GetElement(3, 2);
+    const _Ty& a44 = first.GetElement(3, 3);
+    const _Ty& b11 = second.GetElement(0, 0);
+    const _Ty& b12 = second.GetElement(0, 1);
+    const _Ty& b13 = second.GetElement(0, 2);
+    const _Ty& b14 = second.GetElement(0, 3);
+    const _Ty& b21 = second.GetElement(1, 0);
+    const _Ty& b22 = second.GetElement(1, 1);
+    const _Ty& b23 = second.GetElement(1, 2);
+    const _Ty& b24 = second.GetElement(1, 3);
+    const _Ty& b31 = second.GetElement(2, 0);
+    const _Ty& b32 = second.GetElement(2, 1);
+    const _Ty& b33 = second.GetElement(2, 2);
+    const _Ty& b34 = second.GetElement(2, 3);
+    const _Ty& b41 = second.GetElement(3, 0);
+    const _Ty& b42 = second.GetElement(3, 1);
+    const _Ty& b43 = second.GetElement(3, 2);
+    const _Ty& b44 = second.GetElement(3, 3);
 
     const _Ty c11 = a11 * b11 + a12 * b21 + a13 * b31 + a14 * b41;
     const _Ty c12 = a11 * b12 + a12 * b22 + a13 * b32 + a14 * b42;
