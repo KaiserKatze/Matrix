@@ -134,6 +134,9 @@ int main()
         << std::endl
         << std::endl;
 
+    MatrixMath::MatrixQ<float, 4> m4f1{ mi4f1 };
+    MatrixMath::MatrixQ<float, 4> m4f2{ m4f1 * m4f1 };
+
     return 0;
 }
 
