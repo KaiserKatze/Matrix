@@ -180,6 +180,27 @@ namespace MatrixMath
         IdentityMatrix();
     };
 
+    // Conduct template instantiation of IdentityMatrix
+#ifdef MakeIdentityMatrix
+#   error "Failed to conduct template instantiation of IdentityMatrix!"
+#else
+#   define MakeIdentityMatrix(_Ty, N, initializer) template <typename order> \
+    class IdentityMatrix<_Ty, N, order> : public MatrixQ<_Ty, N, order> \
+    { public: IdentityMatrix() : MatrixQ<_Ty, N, order>initializer {} }
+
+    MakeIdentityMatrix(int, 2, ({ 1,0,0,1 }));
+    MakeIdentityMatrix(int, 3, ({ 1,0,0,0,1,0,0,0,1 }));
+    MakeIdentityMatrix(int, 4, ({ 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1 }));
+    MakeIdentityMatrix(float, 2, ({ 1.0f,0.0f,0.0f,1.0f }));
+    MakeIdentityMatrix(float, 3, ({ 1.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,1.0f }));
+    MakeIdentityMatrix(float, 4, ({ 1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f }));
+    MakeIdentityMatrix(double, 2, ({ 1.0,0.0,0.0,1.0 }));
+    MakeIdentityMatrix(double, 3, ({ 1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0 }));
+    MakeIdentityMatrix(double, 4, ({ 1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0 }));
+
+#   undef MakeIdentityMatrix
+#endif
+
     // Multiplication algorithms
 
     template <typename _Ty, int Height, int Width, typename order>
@@ -209,27 +230,6 @@ namespace MatrixMath
 
     template <typename _Ty, typename order>
     MatrixQ<_Ty, 4, order> operator*(const MatrixQ<_Ty, 4, order>&, const MatrixQ<_Ty, 4, order>&);
-
-    // Conduct template instantiation of IdentityMatrix
-#ifdef MakeIdentityMatrix
-#   error "Failed to conduct template instantiation of IdentityMatrix!"
-#else
-#   define MakeIdentityMatrix(_Ty, N, initializer) template <typename order> \
-    class IdentityMatrix<_Ty, N, order> : public MatrixQ<_Ty, N, order> \
-    { public: IdentityMatrix() : MatrixQ<_Ty, N, order>initializer {} }
-
-    MakeIdentityMatrix(int, 2, ({ 1,0,0,1 }));
-    MakeIdentityMatrix(int, 3, ({ 1,0,0,0,1,0,0,0,1 }));
-    MakeIdentityMatrix(int, 4, ({ 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1 }));
-    MakeIdentityMatrix(float, 2, ({ 1.0f,0.0f,0.0f,1.0f }));
-    MakeIdentityMatrix(float, 3, ({ 1.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,1.0f }));
-    MakeIdentityMatrix(float, 4, ({ 1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f }));
-    MakeIdentityMatrix(double, 2, ({ 1.0,0.0,0.0,1.0 }));
-    MakeIdentityMatrix(double, 3, ({ 1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0 }));
-    MakeIdentityMatrix(double, 4, ({ 1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0 }));
-
-#   undef MakeIdentityMatrix
-#endif
 
     template <typename _Ty, int Height, int Width, typename order>
     Matrix<_Ty, Height, Width, order> operator*(const Matrix<_Ty, Height, Width, order>&, const Scalar<_Ty, order>&);
