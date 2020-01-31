@@ -124,17 +124,20 @@ int main()
     std::cout
         << "mi4f1 =" << std::endl
         << mi4f1.ToString()
-        << std::endl
         << std::endl;
 
     MatrixMath::IdentityMatrix<float, 6> mi4f2;
     std::cout
         << "mi4f2 =" << std::endl
         << mi4f2.ToString()
-        << std::endl
         << std::endl;
 
     MatrixMath::MatrixQ<float, 4> m4f1{ mi4f1 * mi4f1 };
+    std::cout
+        << "m4f1 == mi4f1 -> "
+        << std::boolalpha << (m4f1 == mi4f1) << std::noboolalpha << " "
+        << (m4f1 == mi4f1 ? "[Succeed]" : "[Fail]")
+        << std::endl;
 
     return 0;
 }
