@@ -71,9 +71,6 @@ namespace MatrixMath
     class Matrix
         : public ProtoMatrixData<_Ty, Height, Width, order>
     {
-    private:
-        constexpr static int Size{ Width * Height };
-
     public:
         using Transposed = Matrix<_Ty, Width, Height, order>;
 
