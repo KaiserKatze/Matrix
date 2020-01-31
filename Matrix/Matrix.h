@@ -72,6 +72,7 @@ namespace MatrixMath
         : public ProtoMatrixData<_Ty, Height, Width, order>
     {
     public:
+        using DataType = ProtoMatrixData<_Ty, Height, Width, order>;
         using Transposed = Matrix<_Ty, Width, Height, order>;
 
         Matrix();
