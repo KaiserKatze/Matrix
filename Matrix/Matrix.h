@@ -811,6 +811,23 @@ GetElement(const int& index)
     return this->data[index];
 }
 
+template <typename _Ty, int N, typename order>
+const std::string
+MatrixMath::Matrix<_Ty, N, 1, order>::
+ToString() const
+{
+    std::stringstream ss;
+
+    ss << "| ";
+    for (const auto& x : this->data)
+    {
+        ss << x << " ";
+    }
+    ss << "|T";
+
+    return ss.str();
+}
+
 
 // Scalar de facto
 template <typename _Ty, typename order>
