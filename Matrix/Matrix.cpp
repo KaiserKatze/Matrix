@@ -22,12 +22,19 @@ int main()
         << "v4i1 =" << std::endl
         << v4i1.ToString()
         << std::endl
+        << " -> "
         << (v4i1.GetElement(0) == 1
             && v4i1.GetElement(1) == 2
             && v4i1.GetElement(2) == 3
             && v4i1.GetElement(3) == 4
             ? "[Succeed]" : "[Fail]")
         << std::endl
+        << std::endl;
+
+    MatrixMath::Vector4i<> v4i2(v4i1);
+    std::cout
+        << "v4i1 == v4i2 -> "
+        << (v4i1 == v4i2 ? "[Succeed]" : "[Fail]")
         << std::endl;
 
     //==============================================
