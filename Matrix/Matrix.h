@@ -93,21 +93,57 @@ namespace MatrixMath
         const std::string ToString() const;
     };
 
-    template <typename _Ty, int N, typename order = StorageOrder::RowMajor>
-    using MatrixQ = Matrix<_Ty, N, N, order>;
+    // Vector
 
     template <typename _Ty, int N, typename order>
     class Matrix<_Ty, N, 1, order>;
 
-    template <typename _Ty, int N, typename order = StorageOrder::RowMajor>
-    using Vector = Matrix<_Ty, N, 1, order>;
+    // Scalar
 
     template <typename _Ty, typename order>
     class Matrix<_Ty, 1, 1, order>;
 
+    // Identity
+
+    template <typename _Ty, int N, typename order = StorageOrder::RowMajor>
+    class IdentityMatrix
+        : public Matrix<_Ty, N, N, order>
+    {
+    public:
+        IdentityMatrix();
+    };
+
+    // Conduct template instantiation of IdentityMatrix
+#ifdef MakeIdentityMatrix
+#   error "Failed to conduct template instantiation of IdentityMatrix!"
+#else
+#   define MakeIdentityMatrix(_Ty, N, initializer) template <typename order> \
+    class IdentityMatrix<_Ty, N, order> : public Matrix<_Ty, N, N, order> \
+    { public: IdentityMatrix() : Matrix<_Ty, N, N, order>initializer {} }
+
+    MakeIdentityMatrix(int, 2, ({ 1,0,0,1 }));
+    MakeIdentityMatrix(int, 3, ({ 1,0,0,0,1,0,0,0,1 }));
+    MakeIdentityMatrix(int, 4, ({ 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1 }));
+    MakeIdentityMatrix(float, 2, ({ 1.0f,0.0f,0.0f,1.0f }));
+    MakeIdentityMatrix(float, 3, ({ 1.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,1.0f }));
+    MakeIdentityMatrix(float, 4, ({ 1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f }));
+    MakeIdentityMatrix(double, 2, ({ 1.0,0.0,0.0,1.0 }));
+    MakeIdentityMatrix(double, 3, ({ 1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0 }));
+    MakeIdentityMatrix(double, 4, ({ 1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0 }));
+
+#   undef MakeIdentityMatrix
+#endif
+
+    // Alias
+
+    template <typename _Ty, int N, typename order = StorageOrder::RowMajor>
+    using MatrixQ = Matrix<_Ty, N, N, order>;
+
+    template <typename _Ty, int N, typename order = StorageOrder::RowMajor>
+    using Vector = Matrix<_Ty, N, 1, order>;
+
     template <typename _Ty, typename order = StorageOrder::RowMajor>
     using Scalar = Matrix<_Ty, 1, 1, order>;
-
 
     template <typename order = StorageOrder::RowMajor>
     using Matrix2i = MatrixQ<int, 2, order>;
@@ -136,7 +172,6 @@ namespace MatrixMath
     template <typename order = StorageOrder::RowMajor>
     using Matrix4d = MatrixQ<double, 4, order>;
 
-
     template <typename order = StorageOrder::RowMajor>
     using Vector2i = Vector<int, 2, order>;
 
@@ -163,36 +198,6 @@ namespace MatrixMath
 
     template <typename order = StorageOrder::RowMajor>
     using Vector4d = Vector<double, 4, order>;
-
-
-    template <typename _Ty, int N, typename order = StorageOrder::RowMajor>
-    class IdentityMatrix
-        : public MatrixQ<_Ty, N, order>
-    {
-    public:
-        IdentityMatrix();
-    };
-
-    // Conduct template instantiation of IdentityMatrix
-#ifdef MakeIdentityMatrix
-#   error "Failed to conduct template instantiation of IdentityMatrix!"
-#else
-#   define MakeIdentityMatrix(_Ty, N, initializer) template <typename order> \
-    class IdentityMatrix<_Ty, N, order> : public MatrixQ<_Ty, N, order> \
-    { public: IdentityMatrix() : MatrixQ<_Ty, N, order>initializer {} }
-
-    MakeIdentityMatrix(int, 2, ({ 1,0,0,1 }));
-    MakeIdentityMatrix(int, 3, ({ 1,0,0,0,1,0,0,0,1 }));
-    MakeIdentityMatrix(int, 4, ({ 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1 }));
-    MakeIdentityMatrix(float, 2, ({ 1.0f,0.0f,0.0f,1.0f }));
-    MakeIdentityMatrix(float, 3, ({ 1.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,1.0f }));
-    MakeIdentityMatrix(float, 4, ({ 1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f }));
-    MakeIdentityMatrix(double, 2, ({ 1.0,0.0,0.0,1.0 }));
-    MakeIdentityMatrix(double, 3, ({ 1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0 }));
-    MakeIdentityMatrix(double, 4, ({ 1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0 }));
-
-#   undef MakeIdentityMatrix
-#endif
 
     // Basic algorithms
 
