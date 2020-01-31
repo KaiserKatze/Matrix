@@ -762,6 +762,8 @@ public:
     inline void SetElement(const int& index, const _Ty& value);
     inline const _Ty& GetElement(const int& index) const;
     inline _Ty& GetElement(const int& index);
+
+    const std::string ToString() const;
 };
 
 template <typename _Ty, int N, typename order>
