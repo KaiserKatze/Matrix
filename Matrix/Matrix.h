@@ -823,7 +823,7 @@ public:
     Matrix(const _Ty&);
     ~Matrix() {}
 
-    void SetData(const _Ty& value);
+    void SetElement(const _Ty& value);
     const _Ty& GetData() const;
     operator _Ty() const;
 
@@ -869,7 +869,7 @@ Matrix(const _Ty& value)
 template <typename _Ty, typename order>
 void
 MatrixMath::Matrix<_Ty, 1, 1, order>::
-SetData(const _Ty& value)
+SetElement(const _Ty& value)
 {
     this->data = value;
 }
