@@ -847,8 +847,8 @@ public:
     _Ty operator/(const _Ty&) const;
     bool operator==(const Matrix&) const;
     bool operator!=(const Matrix&) const;
-    bool operator==(const _Ty&) const;
-    bool operator!=(const _Ty&) const;
+    template <typename NumberType> bool operator==(const NumberType&) const;
+    template <typename NumberType> bool operator!=(const NumberType&) const;
     _Ty Transpose() const;
 
     const std::string ToString() const;
@@ -1053,17 +1053,19 @@ operator!=(const Matrix& other) const
 }
 
 template <typename _Ty, typename order>
+template <typename NumberType>
 bool
 MatrixMath::Matrix<_Ty, 1, 1, order>::
-operator==(const _Ty& other) const
+operator==(const NumberType& other) const
 {
     return this->data == other;
 }
 
 template <typename _Ty, typename order>
+template <typename NumberType>
 bool
 MatrixMath::Matrix<_Ty, 1, 1, order>::
-operator!=(const _Ty& other) const
+operator!=(const NumberType& other) const
 {
     return this->data != other;
 }
