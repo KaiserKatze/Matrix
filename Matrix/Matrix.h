@@ -760,7 +760,7 @@ public:
     ~Matrix() {}
 
     void SetElement(const int& index, const _Ty& value);
-    const _Ty& GetData(const int& index) const;
+    const _Ty& GetElement(const int& index) const;
 };
 
 template <typename _Ty, int N, typename order>
@@ -795,7 +795,7 @@ SetElement(const int& index, const _Ty& value)
 template <typename _Ty, int N, typename order>
 const _Ty&
 MatrixMath::Matrix<_Ty, N, 1, order>::
-GetData(const int& index) const
+GetElement(const int& index) const
 {
     return this->data[index];
 }
