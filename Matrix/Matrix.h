@@ -761,6 +761,7 @@ public:
 
     inline void SetElement(const int& index, const _Ty& value);
     inline const _Ty& GetElement(const int& index) const;
+    inline _Ty& GetElement(const int& index);
 };
 
 template <typename _Ty, int N, typename order>
@@ -796,6 +797,14 @@ template <typename _Ty, int N, typename order>
 inline const _Ty&
 MatrixMath::Matrix<_Ty, N, 1, order>::
 GetElement(const int& index) const
+{
+    return this->data[index];
+}
+
+template <typename _Ty, int N, typename order>
+inline _Ty&
+MatrixMath::Matrix<_Ty, N, 1, order>::
+GetElement(const int& index)
 {
     return this->data[index];
 }
