@@ -753,6 +753,7 @@ class MatrixMath::Matrix<_Ty, N, 1, order>
     : public MatrixMath::ProtoMatrixData<_Ty, N, 1, order>
 {
 public:
+    using DataType = ProtoMatrixData<_Ty, N, 1, order>;
     using Transposed = Matrix<_Ty, 1, N, order>;
 
     Matrix();
