@@ -40,6 +40,8 @@ int main()
     //==============================================
     // Scalar
 
+    std::cout << std::endl;
+
     // Test: Scalar initialization
     MatrixMath::Scalar<int> s1;
     MatrixMath::Scalar<int> s2{ 100 };
@@ -114,10 +116,23 @@ int main()
     //==============================================
     // Identity
 
+    std::cout << std::endl;
+
     // Test: Identity initialization
 
     MatrixMath::IdentityMatrix<float, 4> mi4f1;
+    std::cout
+        << "mi4f1 =" << std::endl
+        << mi4f1.ToString()
+        << std::endl
+        << std::endl;
+
     MatrixMath::IdentityMatrix<float, 6> mi4f2;
+    std::cout
+        << "mi4f2 =" << std::endl
+        << mi4f2.ToString()
+        << std::endl
+        << std::endl;
 
     return 0;
 }
