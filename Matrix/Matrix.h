@@ -80,6 +80,8 @@ namespace MatrixMath
 
         // Access data
 
+        void SetElement(const int& index, const _Ty& value);
+        const _Ty& GetElement(const int& index) const;
         void SetElement(const int& row, const int& column, const _Ty& value);
         const _Ty& GetElement(const int& row, const int& column) const;
 
