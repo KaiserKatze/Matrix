@@ -111,6 +111,14 @@ int main()
         << (s4 != 3 ? "[Succeed]" : "[Fail]")
         << std::endl;
 
+    //==============================================
+    // Identity
+
+    // Test: Identity initialization
+
+    MatrixMath::IdentityMatrix<float, 4> mi4f1;
+    MatrixMath::IdentityMatrix<float, 6> mi4f2;
+
     return 0;
 }
 
