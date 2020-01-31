@@ -771,21 +771,21 @@ public:
 template <typename _Ty, int N, typename order>
 MatrixMath::Matrix<_Ty, N, 1, order>::
 Matrix()
-    : ProtoMatrixData<_Ty, N, 1, order>()
+    : DataType()
 {
 }
 
 template <typename _Ty, int N, typename order>
 MatrixMath::Matrix<_Ty, N, 1, order>::
 Matrix(const Matrix& other)
-    : ProtoMatrixData<_Ty, N, 1, order>(other)
+    : DataType(other)
 {
 }
 
 template <typename _Ty, int N, typename order>
 MatrixMath::Matrix<_Ty, N, 1, order>::
 Matrix(const std::initializer_list<_Ty>& init)
-    : ProtoMatrixData<_Ty, N, 1, order>(init)
+    : DataType(init)
 {
 }
 
