@@ -9,6 +9,28 @@
 int main()
 {
     //==============================================
+    // Vector
+
+    // Test: Vector initialization
+    MatrixMath::Vector4f<> v4f1;
+    MatrixMath::Vector4i<> v4i1{
+        1, 2, 3, 4,
+        5, // intentional overflow
+    };
+
+    std::cout
+        << "v4i1 =" << std::endl
+        << v4i1.ToString()
+        << std::endl
+        << (v4i1.GetElement(0) == 1
+            && v4i1.GetElement(1) == 2
+            && v4i1.GetElement(2) == 3
+            && v4i1.GetElement(3) == 4
+            ? "[Succeed]" : "[Fail]")
+        << std::endl
+        << std::endl;
+
+    //==============================================
     // Scalar
 
     // Test: Scalar initialization
