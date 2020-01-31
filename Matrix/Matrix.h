@@ -194,6 +194,35 @@ namespace MatrixMath
 #   undef MakeIdentityMatrix
 #endif
 
+    // Basic algorithms
+
+    template <typename _Ty, int Height, int Width, typename order>
+    void operator+=(Matrix<_Ty, Height, Width, order>& lhs, const Matrix<_Ty, Height, Width, order>& rhs);
+
+    template <typename _Ty, int Height, int Width, typename order>
+    void operator-=(Matrix<_Ty, Height, Width, order>& lhs, const Matrix<_Ty, Height, Width, order>& rhs);
+
+    template <typename _Ty, int Height, int Width, typename order>
+    void operator*=(Matrix<_Ty, Height, Width, order>& lhs, const _Ty& rhs);
+
+    template <typename _Ty, int Height, int Width, typename order>
+    void operator/=(Matrix<_Ty, Height, Width, order>& lhs, const _Ty& rhs);
+
+    template <typename _Ty, int Height, int Width, typename order>
+    Matrix<_Ty, Height, Width, order> operator+(const Matrix<_Ty, Height, Width, order>& lhs, const Matrix<_Ty, Height, Width, order>& rhs);
+
+    template <typename _Ty, int Height, int Width, typename order>
+    Matrix<_Ty, Height, Width, order> operator-(const Matrix<_Ty, Height, Width, order>& lhs, const Matrix<_Ty, Height, Width, order>& rhs);
+
+    template <typename _Ty, int Height, int Width, typename order>
+    Matrix<_Ty, Height, Width, order> operator/(const Matrix<_Ty, Height, Width, order>& lhs, const _Ty& rhs);
+
+    template <typename _Ty, int Height, int Width, typename order>
+    bool operator==(const Matrix<_Ty, Height, Width, order>& lhs, const Matrix<_Ty, Height, Width, order>& rhs);
+
+    template <typename _Ty, int Height, int Width, typename order>
+    bool operator!=(const Matrix<_Ty, Height, Width, order>& lhs, const Matrix<_Ty, Height, Width, order>& rhs);
+
     // Multiplication algorithms
 
     template <typename _Ty, int Height, int Width, typename order>
@@ -443,6 +472,91 @@ IdentityMatrix()
     for (int i = 0; i < N; i++)
         this->SetElement(i, i, 1);
 }
+
+
+template <typename _Ty, int Height, int Width, typename order>
+void
+MatrixMath::
+operator+=(Matrix<_Ty, Height, Width, order>& lhs, const Matrix<_Ty, Height, Width, order>& rhs)
+{
+    for (int i{ 0 }; i < Width * Height; i++)
+        lhs.GetElement(i) += rhs.GetElement(i);
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+void
+MatrixMath::
+operator-=(Matrix<_Ty, Height, Width, order>& lhs, const Matrix<_Ty, Height, Width, order>& rhs)
+{
+    for (int i{ 0 }; i < Width * Height; i++)
+        lhs.GetElement(i) -= rhs.GetElement(i);
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+void
+MatrixMath::
+operator*=(Matrix<_Ty, Height, Width, order>& lhs, const _Ty& rhs)
+{
+    for (int i{ 0 }; i < Width * Height; i++)
+        lhs.GetElement(i) *= rhs;
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+void
+MatrixMath::
+operator/=(Matrix<_Ty, Height, Width, order>& lhs, const _Ty& rhs)
+{
+    for (int i{ 0 }; i < Width * Height; i++)
+        lhs.GetElement(i) /= rhs;
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+MatrixMath::Matrix<_Ty, Height, Width, order>
+MatrixMath::
+operator+(const Matrix<_Ty, Height, Width, order>& lhs, const Matrix<_Ty, Height, Width, order>& rhs)
+{
+    Matrix result(lhs);
+    result += rhs;
+    return result;
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+MatrixMath::Matrix<_Ty, Height, Width, order>
+MatrixMath::
+operator-(const Matrix<_Ty, Height, Width, order>& lhs, const Matrix<_Ty, Height, Width, order>& rhs)
+{
+    Matrix result(lhs);
+    result -= rhs;
+    return result;
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+MatrixMath::Matrix<_Ty, Height, Width, order>
+MatrixMath::
+operator/(const Matrix<_Ty, Height, Width, order>& lhs, const _Ty& rhs)
+{
+    Matrix result(lhs);
+    result /= rhs;
+    return result;
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+bool
+MatrixMath::
+operator==(const Matrix<_Ty, Height, Width, order>& lhs, const Matrix<_Ty, Height, Width, order>& rhs)
+{
+    return &lhs == &rhs
+        || lhs.GetData() == rhs.GetData();
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+bool
+MatrixMath::
+operator!=(const Matrix<_Ty, Height, Width, order>& lhs, const Matrix<_Ty, Height, Width, order>& rhs)
+{
+    return !(lhs == rhs);
+}
+
 
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::Matrix<_Ty, Height, Width, order>
