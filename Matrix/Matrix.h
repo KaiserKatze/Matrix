@@ -80,7 +80,7 @@ namespace MatrixMath
 
         // Access data
 
-        void SetData(const int& row, const int& column, const _Ty& value);
+        void SetElement(const int& row, const int& column, const _Ty& value);
         const _Ty& GetData(const int& row, const int& column) const;
 
         Transposed Transpose() const;
@@ -346,7 +346,7 @@ Matrix(const std::initializer_list<_Ty>& init)
 template <typename _Ty, int Height, int Width, typename order>
 void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
-SetData(const int& row, const int& column, const _Ty& value)
+SetElement(const int& row, const int& column, const _Ty& value)
 {
     this->data[order::convert2index<Height, Width>(row, column)] = value;
 }
@@ -370,7 +370,7 @@ Transpose() const
     {
         for (int column = 0; column < Height; column++)
         {
-            result.SetData(row, column, this->GetData(column, row));
+            result.SetElement(row, column, this->GetData(column, row));
         }
     }
 
@@ -405,7 +405,7 @@ IdentityMatrix()
     : MatrixQ<_Ty, N, order>()
 {
     for (int i = 0; i < N; i++)
-        this->SetData(i, i, 1);
+        this->SetElement(i, i, 1);
 }
 
 template <typename _Ty, int Height, int Width, typename order>
@@ -458,7 +458,7 @@ operator*(const MatrixMath::Matrix<_Ty, M, P, order>& first, const MatrixMath::M
             for (int k = 0; k < P; k++)
                 sum += first.GetData(i, k) * second.GetData(k, j);
 
-            result.SetData(i, j, sum);
+            result.SetElement(i, j, sum);
         }
     }
 
