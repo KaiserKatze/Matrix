@@ -60,7 +60,7 @@ namespace MatrixMath
         ProtoMatrixData(const _Ty* pSrc, const _Ty* pDst);
         ProtoMatrixData(const std::array<_Ty, Width * Height>& other);
         ProtoMatrixData(const std::initializer_list<_Ty>& init);
-        virtual ~ProtoMatrixData() {};
+        ~ProtoMatrixData() {};
 
     public:
         const std::array<_Ty, Width * Height>& GetData() const;
@@ -752,7 +752,7 @@ public:
     Matrix();
     Matrix(const Matrix& other);
     Matrix(const std::initializer_list<_Ty>& init);
-    virtual ~Matrix() {}
+    ~Matrix() {}
 
     void SetData(const int& index, const _Ty& value);
     const _Ty& GetData(const int& index) const;
@@ -807,7 +807,7 @@ private:
 public:
     Matrix();
     Matrix(const _Ty&);
-    virtual ~Matrix() {}
+    ~Matrix() {}
 
     void SetData(const _Ty& value);
     const _Ty& GetData() const;
