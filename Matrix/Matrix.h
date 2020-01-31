@@ -80,12 +80,12 @@ namespace MatrixMath
 
         // Access data
 
-        void SetElement(const int& index, const _Ty& value);
-        const _Ty& GetElement(const int& index) const;
-        void SetElement(const int& row, const int& column, const _Ty& value);
-        const _Ty& GetElement(const int& row, const int& column) const;
-        _Ty& GetElement(const int& index);
-        _Ty& GetElement(const int& row, const int& column);
+        inline void SetElement(const int& index, const _Ty& value);
+        inline const _Ty& GetElement(const int& index) const;
+        inline void SetElement(const int& row, const int& column, const _Ty& value);
+        inline const _Ty& GetElement(const int& row, const int& column) const;
+        inline _Ty& GetElement(const int& index);
+        inline _Ty& GetElement(const int& row, const int& column);
 
         Transposed Transpose() const;
 
@@ -382,7 +382,7 @@ Matrix(const std::initializer_list<_Ty>& init)
 }
 
 template <typename _Ty, int Height, int Width, typename order>
-void
+inline void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 SetElement(const int& index, const _Ty& value)
 {
@@ -390,7 +390,7 @@ SetElement(const int& index, const _Ty& value)
 }
 
 template <typename _Ty, int Height, int Width, typename order>
-const _Ty&
+inline const _Ty&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 GetElement(const int& index) const
 {
@@ -398,7 +398,7 @@ GetElement(const int& index) const
 }
 
 template <typename _Ty, int Height, int Width, typename order>
-void
+inline void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 SetElement(const int& row, const int& column, const _Ty& value)
 {
@@ -406,7 +406,7 @@ SetElement(const int& row, const int& column, const _Ty& value)
 }
 
 template <typename _Ty, int Height, int Width, typename order>
-const _Ty&
+inline const _Ty&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 GetElement(const int& row, const int& column) const
 {
@@ -414,7 +414,7 @@ GetElement(const int& row, const int& column) const
 }
 
 template <typename _Ty, int Height, int Width, typename order>
-_Ty&
+inline _Ty&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 GetElement(const int& index)
 {
@@ -422,7 +422,7 @@ GetElement(const int& index)
 }
 
 template <typename _Ty, int Height, int Width, typename order>
-_Ty&
+inline _Ty&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 GetElement(const int& row, const int& column)
 {
