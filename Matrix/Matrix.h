@@ -79,6 +79,7 @@ namespace MatrixMath
         Matrix(const std::initializer_list<_Ty>& init);
 
         // Access data
+
         void SetData(const int& row, const int& column, const _Ty& value);
         const _Ty& GetData(const int& row, const int& column) const;
 
