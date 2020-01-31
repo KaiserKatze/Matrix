@@ -354,6 +354,14 @@ SetElement(const int& index, const _Ty& value)
 }
 
 template <typename _Ty, int Height, int Width, typename order>
+const _Ty&
+MatrixMath::Matrix<_Ty, Height, Width, order>::
+GetElement(const int& index) const
+{
+    return this->data[index];
+}
+
+template <typename _Ty, int Height, int Width, typename order>
 void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 SetElement(const int& row, const int& column, const _Ty& value)
