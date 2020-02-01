@@ -268,6 +268,11 @@ namespace MatrixMath
 
     template <typename _Ty, int Height, int Width, typename order>
     Matrix<_Ty, Height, Width, order> operator*(const Scalar<_Ty, order>&, const Matrix<_Ty, Height, Width, order>&);
+
+    // Advanced algorithms
+
+    template <typename _Ty, int N, typename order>
+    class Determinant;
 } /* NAMESPACE: MatrixMath */
 
 
@@ -1164,4 +1169,164 @@ MatrixMath::StorageOrder::ColumnMajor::
 IsColumnMajor()
 {
     return true;
+}
+
+namespace detail
+{
+    template <int N>
+    struct Factorial
+    {
+        static_assert(N >= 0, "Invalid template argument: N < 0!");
+        constexpr static int value{ N * Factorial<N - 1>::value };
+    };
+    template <> struct Factorial<0> { constexpr static int value{ 1 }; };
+
+    // Permutation generation in lexicographic order
+    // @see: https://en.wikipedia.org/wiki/Permutation#Algorithms_to_generate_permutations
+    template <int Size>
+    struct PermutationGenerator
+    {
+        struct MyArray
+        {
+            std::array<int, Size> data;
+            int inverse;
+
+#pragma warning(push)
+#pragma warning(disable: 26495)
+            constexpr MyArray()
+                : inverse{ 0 }
+            {
+                for (int i = 0; i < Size; i++)
+                    data[i] = i;
+            }
+#pragma warning(pop)
+
+            constexpr void swap(const int& lhs, const int& rhs)
+            {
+                std::swap(data[lhs], data[rhs]);
+                ++inverse;
+            }
+
+            constexpr void sort(const int& src, const int& dst)
+            {
+                const int len{ dst - src };
+                for (int i = 0; i < len; i++)
+                {
+                    for (int j = i; j > 0 && data[src + j] < data[src + j - 1]; j--)
+                    {
+                        this->swap(src + j, src + j - 1);
+                    }
+                }
+            }
+
+            constexpr int& operator[](const int& index)
+            {
+                return data[index];
+            }
+
+            constexpr auto begin() -> decltype(data.begin())
+            {
+                return data.begin();
+            }
+
+            constexpr auto end() -> decltype(data.end())
+            {
+                return data.end();
+            }
+        };
+
+        using ArrayType = MyArray;
+        constexpr static int Count{ Factorial<Size>::value };
+        using ResultType = std::array<ArrayType, Count>;
+
+        constexpr static ResultType generate(ArrayType& seq)
+        {
+            ResultType result;
+
+            for (int p = 0; p < Factorial<Size>::value; p++)
+            {
+                ArrayType& target{ result[p] };
+                std::copy(seq.begin(), seq.end(), target.begin());
+                target.inverse = seq.inverse;
+
+#pragma warning(push)
+#pragma warning(disable: 26451)
+                int i{ Size - 2 };
+                while (i >= 0 && seq[i] >= seq[i + 1]) --i;
+                if (i == -1) break;
+                int j{ i + 1 };
+                for (int k = j + 1; k <= Size - 1; k++)
+                    if (seq[k] > seq[i] && seq[k] < seq[j])
+                        j = k;
+                seq.swap(i, j);
+                //int* src{ &seq[i + 1] };
+                //int* dst{ &seq[0] + Size };
+                //std::sort(src, dst);
+                seq.sort(i + 1, Size);
+#pragma warning(pop)
+            }
+
+            return result;
+        }
+
+        constexpr static ResultType generate()
+        {
+            ArrayType sequence;
+            ResultType result{ generate(sequence) };
+            /*
+            {
+                for (auto& p : result)
+                {
+                    for (auto& i : p)
+                    {
+                        std::cout << i << ", ";
+                    }
+                    std::cout << " -- " << p.inverse << std::endl;
+                }
+                std::cout << std::endl;
+            }
+            */
+            return result;
+        }
+    };
+
+}
+
+template <typename _Ty, int N, typename order>
+class MatrixMath::Determinant
+{
+private:
+    _Ty result;
+
+public:
+    Determinant(const Matrix<_Ty, N, N, order>& square);
+
+    operator _Ty() const;
+};
+
+template <typename _Ty, int N, typename order>
+MatrixMath::Determinant<_Ty, N, order>::
+Determinant(const Matrix<_Ty, N, N, order>& square)
+    : result{ 0 }
+{
+    for (auto& p : detail::PermutationGenerator<N>::generate())
+    {
+        _Ty cache{ (p.inverse & 0x1) ? -1 : 1 };
+        //std::cout << std::setw(2) << cache;
+        for (int i = 0; i < N; i++)
+        {
+            const _Ty& element{ square.GetElement(i, p[i]) };
+            cache *= element;
+            //std::cout << " * (" << i << ", " << p[i] << ": " << element << ")";
+        }
+        result += cache;
+        //std::cout << " = " << cache << std::endl;
+    }
+}
+
+template <typename _Ty, int N, typename order>
+MatrixMath::Determinant<_Ty, N, order>::
+operator _Ty() const
+{
+    return result;
 }

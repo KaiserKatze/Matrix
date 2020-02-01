@@ -2,6 +2,7 @@
 //
 
 #include <iostream>
+#include <iomanip>
 
 #include "Matrix.h"
 #include "Geometry.h"
@@ -137,6 +138,24 @@ int main()
         << "m4f1 == mi4f1 -> "
         << std::boolalpha << (m4f1 == mi4f1) << std::noboolalpha << " "
         << (m4f1 == mi4f1 ? "[Succeed]" : "[Fail]")
+        << std::endl
+        << std::endl;
+
+    //==============================================
+    // Identity
+
+    //==============================================
+    // Determinant
+
+    MatrixMath::Matrix3i<> m3i1{ 3, 4, 9, 7, 6, 5, 0, 1, 2 };
+    std::cout
+        << "imat = " << std::endl
+        << m3i1.ToString();
+
+    MatrixMath::Determinant detA1(m3i1);
+    std::cout
+        << "Result = " << detA1 << " "
+        << (detA1 == 28 ? "[Succeed]" : "[Fail]")
         << std::endl;
 
     return 0;
