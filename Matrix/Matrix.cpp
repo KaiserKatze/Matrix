@@ -18,6 +18,40 @@ int main()
     //==============================================
     // Matrix
 
+    MatrixMath::Matrix4i<> m4i1{
+        1, 2, 3, 4,
+        0, 1, 2, 3,
+        0, 0, 1, 2,
+        0, 0, 0, 1,
+    };
+    const auto m4i1c1 = m4i1.GetCofactor<0, 2, 0, 2>();
+    const auto m4i1c2 = m4i1.GetCofactor<0, 2, 2, 4>();
+    const auto m4i1c3 = m4i1.GetCofactor<2, 4, 0, 2>();
+    const auto m4i1c4 = m4i1.GetCofactor<2, 4, 2, 4>();
+
+#if 0
+    std::cout
+        << "m4i1c1 = "
+        << std::endl
+        << m4i1c1.ToString()
+        << std::endl
+
+        << "m4i1c2 = "
+        << std::endl
+        << m4i1c2.ToString()
+        << std::endl
+
+        << "m4i1c3 = "
+        << std::endl
+        << m4i1c3.ToString()
+        << std::endl
+
+        << "m4i1c4 = "
+        << std::endl
+        << m4i1c4.ToString()
+        << std::endl;
+#endif
+
     MatrixMath::Matrix2i<> m2i1{
         1, 2,
         3, 4,
