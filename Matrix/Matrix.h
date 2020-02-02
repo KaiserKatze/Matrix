@@ -384,7 +384,7 @@ MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
 {
 #ifdef _DEBUG
     std::cout
-        << "Deleting      ProtoMatrixData{name: "
+        << "Deleting ProtoMatrixData{name: "
         << this->name
         << "} ..."
         << std::endl;

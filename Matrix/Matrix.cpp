@@ -250,6 +250,8 @@ int main()
         << (detA1 == 28 ? "[Succeed]" : "[Fail]")
         << std::endl;
 
+    std::cout << std::endl;
+
     return 0;
 }
 
