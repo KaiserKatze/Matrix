@@ -7,6 +7,12 @@
 #include "Matrix.h"
 #include "Geometry.h"
 
+#ifdef _DEBUG
+#   define SET_DEBUG_NAME(var)     var.name = #var
+#else
+#   define SET_DEBUG_NAME(var)
+#endif
+
 int main()
 {
     //==============================================
@@ -16,6 +22,7 @@ int main()
         1, 2,
         3, 4,
     };
+    SET_DEBUG_NAME(m2i1);
     std::cout
         << "m2i1 = " << std::endl
         << m2i1.ToString()
@@ -25,6 +32,7 @@ int main()
         << std::endl;
 
     MatrixMath::Matrix2i<> m2i2(m2i1);
+    SET_DEBUG_NAME(m2i2);
     std::cout
         << "m2i2 = " << std::endl
         << m2i2.ToString()
@@ -34,6 +42,7 @@ int main()
         << std::endl;
 
     MatrixMath::Matrix2i<> m2i3 = std::move(m2i2);
+    SET_DEBUG_NAME(m2i3);
     std::cout
         << "m2i3 = " << std::endl
         << m2i3.ToString()
@@ -83,10 +92,12 @@ int main()
 
     // Test: Vector initialization
     MatrixMath::Vector4f<> v4f1;
+    SET_DEBUG_NAME(v4f1);
     MatrixMath::Vector4i<> v4i1{
         1, 2, 3, 4,
         5, // intentional overflow
     };
+    SET_DEBUG_NAME(v4i1);
 
     std::cout
         << "v4i1 =" << std::endl
@@ -102,12 +113,14 @@ int main()
         << std::endl;
 
     MatrixMath::Vector4i<> v4i2(v4i1);
+    SET_DEBUG_NAME(v4i2);
     std::cout
         << "v4i1 == v4i2 -> "
         << (v4i1 == v4i2 ? "[Succeed]" : "[Fail]")
         << std::endl;
 
     MatrixMath::Vector4i<> v4i3(std::move(v4i1));
+    SET_DEBUG_NAME(v4i3);
     std::cout
         << "v4i1 == v4i3 -> "
         << (v4i1 == v4i3 ? "[Succeed]" : "[Fail]")
@@ -197,18 +210,21 @@ int main()
     // Test: Identity initialization
 
     MatrixMath::IdentityMatrix<float, 4> mi4f1;
+    SET_DEBUG_NAME(mi4f1);
     std::cout
         << "mi4f1 =" << std::endl
         << mi4f1.ToString()
         << std::endl;
 
     MatrixMath::IdentityMatrix<float, 6> mi4f2;
+    SET_DEBUG_NAME(mi4f2);
     std::cout
         << "mi4f2 =" << std::endl
         << mi4f2.ToString()
         << std::endl;
 
     MatrixMath::MatrixQ<float, 4> m4f1{ mi4f1 * mi4f1 };
+    SET_DEBUG_NAME(m4f1);
     std::cout
         << "m4f1 == mi4f1 -> "
         << std::boolalpha << (m4f1 == mi4f1) << std::noboolalpha << " "
@@ -223,6 +239,7 @@ int main()
     // Determinant
 
     MatrixMath::Matrix3i<> m3i1{ 3, 4, 9, 7, 6, 5, 0, 1, 2 };
+    SET_DEBUG_NAME(m3i1);
     std::cout
         << "imat = " << std::endl
         << m3i1.ToString();

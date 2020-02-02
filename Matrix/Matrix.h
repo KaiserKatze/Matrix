@@ -81,6 +81,10 @@ namespace MatrixMath
         bool IsTransposed() const;
         const std::array<_Ty, Width * Height>& GetData() const;
         std::array<_Ty, Width * Height>& GetData();
+
+#ifdef _DEBUG
+        std::string name;
+#endif
     };
 
     template <typename _Ty, int Height, int Width, typename order = StorageOrder::RowMajor>
