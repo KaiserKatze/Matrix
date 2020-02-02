@@ -146,6 +146,12 @@ namespace MatrixMath
 
         // Always output a string representing the matrix in row-major order
         const std::string ToString() const;
+
+        template <int RowSrc, int RowDst, int ColSrc, int ColDst>
+        class Cofactor;
+
+        template <int RowSrc, int RowDst, int ColSrc, int ColDst>
+        Cofactor<RowSrc, RowDst, ColSrc, ColDst> GetCofactor();
     };
 
     // Vector
@@ -579,6 +585,57 @@ ToString() const
     }
 
     return ss.str();
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+template <int RowSrc, int RowDst, int ColSrc, int ColDst>
+class MatrixMath::Matrix<_Ty, Height, Width, order>::Cofactor
+    : protected Matrix<_Ty, RowDst - RowSrc, ColDst - ColSrc, order>
+{
+public:
+    using ParentType = Matrix<_Ty, Height, Width, order>;
+    using OrderType = StorageOrder::CofactorOrder<order>;
+
+private:
+    ParentType& parent;
+
+public:
+    Cofactor(const ParentType& parent)
+        : parent{ parent }
+    {
+    }
+
+    // Access data
+
+    inline void SetElement(const int& row, const int& column, const _Ty& value)
+    {
+        const int index{ OrderType::convert2index(Height, Width,
+            row, column, parent.IsTransposed()) };
+        this->ParentType::SetElement(index, value);
+    }
+
+    inline const _Ty& GetElement(const int& row, const int& column) const
+    {
+        const int index{ OrderType::convert2index(Height, Width,
+            row, column, parent.IsTransposed()) };
+        return this->ParentType::GetElement(index);
+    }
+
+    inline _Ty& GetElement(const int& row, const int& column)
+    {
+        const int index{ OrderType::convert2index(Height, Width,
+            row, column, parent.IsTransposed()) };
+        return this->ParentType::GetElement(index);
+    }
+};
+
+template <typename _Ty, int Height, int Width, typename order>
+template <int RowSrc, int RowDst, int ColSrc, int ColDst>
+MatrixMath::Matrix<_Ty, Height, Width, order>::Cofactor<RowSrc, RowDst, ColSrc, ColDst>
+MatrixMath::Matrix<_Ty, Height, Width, order>::
+GetCofactor()
+{
+    return Cofactor<RowSrc, RowDst, ColSrc, ColDst>(*this);
 }
 
 template <typename _Ty, int N, typename order>
