@@ -55,6 +55,18 @@ namespace MatrixMath
     template <typename order>
     struct StorageOrder::CofactorOrder : order
     {
+        //
+        // Height:
+        //      the height of the parent matrix of the cofactor
+        // Width:
+        //      the width of the parent matrix of the cofactor
+        // row:
+        //      the relative coordinate in the cofactor
+        // column:
+        //      the relative coordinate in the cofactor
+        // RowSrc, RowDst, ColSrc, ColDst:
+        //      the absolute coordinate in the parent matrix of the cofactor
+        //
         inline static int convert2index(const int& Height, const int& Width,
             const int& row, const int& column, const bool& isTransposed,
             int RowSrc, int RowDst, int ColSrc, int ColDst);
