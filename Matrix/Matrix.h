@@ -837,7 +837,6 @@ public:
     Matrix(const Matrix& other);
     Matrix(const Matrix&& other);
     Matrix(const std::initializer_list<_Ty>& init);
-    ~Matrix() {}
 
     inline void SetElement(const int& index, const _Ty& value);
     inline const _Ty& GetElement(const int& index) const;
