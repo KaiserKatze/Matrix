@@ -18,6 +18,7 @@ int main()
     //==============================================
     // Matrix
 
+#if 0
     MatrixMath::Matrix4i<> m4i1{
         1, 2, 3, 4,
         0, 1, 2, 3,
@@ -29,7 +30,6 @@ int main()
     const auto m4i1c3 = m4i1.GetCofactor<2, 4, 0, 2>();
     const auto m4i1c4 = m4i1.GetCofactor<2, 4, 2, 4>();
 
-#if 0
     std::cout
         << "m4i1c1 = "
         << std::endl
