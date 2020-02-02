@@ -108,6 +108,9 @@ namespace MatrixMath
         ProtoMatrixData(const std::initializer_list<_Ty>& init);
         ~ProtoMatrixData();
 
+        inline const std::shared_ptr<std::array<_Ty, Width * Height>>& GetDataPointer() const;
+        inline std::shared_ptr<std::array<_Ty, Width * Height>>& GetDataPointer();
+
     public:
         void Transpose();
         bool IsTransposed() const;
@@ -420,6 +423,24 @@ MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
         << "} ..."
         << std::endl;
 #endif
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+inline
+const std::shared_ptr<std::array<_Ty, Width * Height>>&
+MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
+GetDataPointer() const
+{
+    return this->pData;
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+inline
+std::shared_ptr<std::array<_Ty, Width * Height>>&
+MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
+GetDataPointer()
+{
+    return this->pData;
 }
 
 template <typename _Ty, int Height, int Width, typename order>
