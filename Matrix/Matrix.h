@@ -383,13 +383,20 @@ MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
 {
 #ifdef _DEBUG
     std::cout
-        << "Deleting ProtoMatrixData{name: "
+        << "Deleting      ProtoMatrixData{name: "
         << this->name
         << "} ..."
         << std::endl;
 #endif
     delete this->pData;
     this->pData = nullptr;
+#ifdef _DEBUG
+    std::cout
+        << "Done deleting ProtoMatrixData{name: "
+        << this->name
+        << "} ... [Success]"
+        << std::endl;
+#endif
 }
 
 template <typename _Ty, int Height, int Width, typename order>
