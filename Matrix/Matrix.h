@@ -396,7 +396,8 @@ inline void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 SetElement(const int& index, const _Ty& value)
 {
-    this->data[index] = value;
+    auto& data{ this->GetData() };
+    data[index] = value;
 }
 
 template <typename _Ty, int Height, int Width, typename order>
@@ -404,7 +405,8 @@ inline const _Ty&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 GetElement(const int& index) const
 {
-    return this->data[index];
+    auto& data{ this->GetData() };
+    return data[index];
 }
 
 template <typename _Ty, int Height, int Width, typename order>
@@ -428,7 +430,8 @@ inline _Ty&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 GetElement(const int& index)
 {
-    return this->data[index];
+    auto& data{ this->GetData() };
+    return data[index];
 }
 
 template <typename _Ty, int Height, int Width, typename order>
@@ -803,7 +806,8 @@ inline void
 MatrixMath::Matrix<_Ty, N, 1, order>::
 SetElement(const int& index, const _Ty& value)
 {
-    this->data[index] = value;
+    auto& data{ this->GetData() };
+    data[index] = value;
 }
 
 template <typename _Ty, int N, typename order>
@@ -811,7 +815,8 @@ inline const _Ty&
 MatrixMath::Matrix<_Ty, N, 1, order>::
 GetElement(const int& index) const
 {
-    return this->data[index];
+    auto& data{ this->GetData() };
+    return data[index];
 }
 
 template <typename _Ty, int N, typename order>
@@ -819,7 +824,8 @@ inline _Ty&
 MatrixMath::Matrix<_Ty, N, 1, order>::
 GetElement(const int& index)
 {
-    return this->data[index];
+    auto& data{ this->GetData() };
+    return data[index];
 }
 
 template <typename _Ty, int N, typename order>
@@ -827,10 +833,11 @@ const std::string
 MatrixMath::Matrix<_Ty, N, 1, order>::
 ToString() const
 {
+    auto& data{ this->GetData() };
     std::stringstream ss;
 
     ss << "| ";
-    for (const auto& x : this->data)
+    for (const auto& x : data)
     {
         ss << x << " ";
     }
