@@ -33,7 +33,7 @@ int main()
         << std::endl
         << std::endl;
 
-    MatrixMath::Matrix2i<> m2i3(std::move(m2i2));
+    MatrixMath::Matrix2i<> m2i3 = std::move(m2i2);
     std::cout
         << "m2i3 = " << std::endl
         << m2i3.ToString()

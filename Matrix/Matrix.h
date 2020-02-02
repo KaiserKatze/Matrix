@@ -430,7 +430,7 @@ Matrix(const Matrix& other)
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 Matrix(const Matrix&& other)
-    : DataType(other)
+    : DataType(std::move(other))
 {
 }
 
@@ -863,7 +863,7 @@ Matrix(const Matrix& other)
 template <typename _Ty, int N, typename order>
 MatrixMath::Matrix<_Ty, N, 1, order>::
 Matrix(const Matrix&& other)
-    : DataType(other)
+    : DataType(std::move(other))
 {
 }
 
