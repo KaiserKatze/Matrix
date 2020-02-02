@@ -17,6 +17,12 @@ namespace MetaMath
 
     template <int LHS, int RHS>
     constexpr static bool Equal = LHS == RHS;
+
+    template <int Number>
+    constexpr static bool IsOdd = (Number & 1) == 1;
+
+    template <int Number>
+    constexpr static bool IsEven = (Number & 1) == 0;
 }
 
 namespace MatrixMath
