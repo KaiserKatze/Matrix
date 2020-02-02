@@ -480,7 +480,8 @@ inline void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 SetElement(const int& row, const int& column, const _Ty& value)
 {
-    this->SetElement(order::convert2index<Height, Width>(row, column, this->IsTransposed()), value);
+    const int index{ order::convert2index<Height, Width>(row, column, this->IsTransposed()) };
+    this->SetElement(index, value);
 }
 
 template <typename _Ty, int Height, int Width, typename order>
@@ -488,7 +489,8 @@ inline const _Ty&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 GetElement(const int& row, const int& column) const
 {
-    return this->GetElement(order::convert2index<Height, Width>(row, column, this->IsTransposed()));
+    const int index{ order::convert2index<Height, Width>(row, column, this->IsTransposed()) };
+    return this->GetElement(index);
 }
 
 template <typename _Ty, int Height, int Width, typename order>
@@ -505,7 +507,8 @@ inline _Ty&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 GetElement(const int& row, const int& column)
 {
-    return this->GetElement(order::convert2index<Height, Width>(row, column, this->IsTransposed()));
+    const int index{ order::convert2index<Height, Width>(row, column, this->IsTransposed()) };
+    return this->GetElement(index);
 }
 
 template <typename _Ty, int Height, int Width, typename order>
