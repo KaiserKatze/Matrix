@@ -54,7 +54,7 @@ namespace MatrixMath
     {
         static_assert(Width > 0, "Template argument 'Width' has negative value!");
         static_assert(Height > 0, "Template argument 'Height' has negative value!");
-        static_assert(std::is_same_v<StorageOrder::RowMajor, order> || std::is_same_v<StorageOrder::ColumnMajor, order>, "Template argument 'order' is invalid type!");
+        static_assert(std::is_base_of_v<StorageOrder, order>, "Template argument 'order' is invalid type!");
 
     public:
         using ElementType = _Ty;
