@@ -5,6 +5,7 @@
 #include <exception>
 #include <initializer_list>
 #include <iterator>
+#include <memory>
 #include <sstream>
 #include <string>
 #include <type_traits>
@@ -64,9 +65,9 @@ namespace MatrixMath
         : public ProtoMatrix<_Ty, Height, Width, order>
     {
     private:
-        std::array<_Ty, Width * Height>* pData; // 'Width * Height' here cannot be replaced by 'Size',
-                                                // otherwise a compiler error (C2244) will be thrown at compile time
-                                                // if the project is compiled with Microsoft VC++
+        std::shared_ptr<std::array<_Ty, Width * Height>> pData; // 'Width * Height' here cannot be replaced by 'Size',
+                                                                // otherwise a compiler error (C2244) will be thrown at compile time
+                                                                // if the project is compiled with Microsoft VC++
         bool isTransposed;
 
     protected:
@@ -342,7 +343,7 @@ GetHeight() const
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
 ProtoMatrixData()                                   // default ctor
-    : pData{ new std::array<_Ty, Width * Height>{ 0 } } // initialize std::array pointer with nullptr
+    : pData{ std::make_unique<std::array<_Ty, Width * Height>>() } // initialize std::array pointer with nullptr
     , isTransposed{ false }
 {
 }
@@ -386,15 +387,6 @@ MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
         << "Deleting      ProtoMatrixData{name: "
         << this->name
         << "} ..."
-        << std::endl;
-#endif
-    delete this->pData;
-    this->pData = nullptr;
-#ifdef _DEBUG
-    std::cout
-        << "Done deleting ProtoMatrixData{name: "
-        << this->name
-        << "} ... [Success]"
         << std::endl;
 #endif
 }

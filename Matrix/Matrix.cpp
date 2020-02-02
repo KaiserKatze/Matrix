@@ -114,11 +114,6 @@ int main()
         << std::endl
         << std::endl;
 
-    // FIXME:
-    // When deleting object 'v4i1',
-    // ERROR occured:
-    // HEAP[Matrix.exe]: Invalid address specified to RtlValidateHeap( 00860000, 008AC978 )
-
 #if 0
     MatrixMath::Vector4i<> v4i2(v4i1);
     SET_DEBUG_NAME(v4i2);
