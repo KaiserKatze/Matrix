@@ -52,6 +52,16 @@ namespace MatrixMath
         inline static constexpr bool IsColumnMajor();
     };
 
+    template <typename order>
+    struct StorageOrder::CofactorOrder : order
+    {
+        inline static int convert2index(const int& Height, const int& Width,
+            const int& row, const int& column, const bool& isTransposed,
+            int RowSrc, int RowDst, int ColSrc, int ColDst);
+        inline static int convert2index(const int& Height, const int& Width,
+            const int& row, const int& column, const bool& isTransposed);
+    };
+
     template <typename _Ty, int Height, int Width, typename order>
     class ProtoMatrix
     {
