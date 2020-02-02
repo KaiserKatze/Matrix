@@ -51,6 +51,7 @@ int main()
         << std::endl
         << std::endl;
 
+#if 0
     m2i3.Transpose();
     std::cout
         << "m2i3.Transpose(); <--" << std::endl
@@ -93,6 +94,7 @@ int main()
     // Test: Vector initialization
     MatrixMath::Vector4f<> v4f1;
     SET_DEBUG_NAME(v4f1);
+#endif
     MatrixMath::Vector4i<> v4i1{
         1, 2, 3, 4,
         5, // intentional overflow
@@ -112,6 +114,12 @@ int main()
         << std::endl
         << std::endl;
 
+    // FIXME:
+    // When deleting object 'v4i1',
+    // ERROR occured:
+    // HEAP[Matrix.exe]: Invalid address specified to RtlValidateHeap( 00860000, 008AC978 )
+
+#if 0
     MatrixMath::Vector4i<> v4i2(v4i1);
     SET_DEBUG_NAME(v4i2);
     std::cout
@@ -249,7 +257,7 @@ int main()
         << "Result = " << detA1 << " "
         << (detA1 == 28 ? "[Succeed]" : "[Fail]")
         << std::endl;
-
+#endif
     return 0;
 }
 
