@@ -73,8 +73,6 @@ namespace MatrixMath
         ProtoMatrixData();
         ProtoMatrixData(const ProtoMatrixData& other);
         ProtoMatrixData(const ProtoMatrixData&& other);
-        ProtoMatrixData(const _Ty* pSrc, const _Ty* pDst, const bool& isTransposed = false);
-        ProtoMatrixData(const std::array<_Ty, Width * Height>& other, const bool& isTransposed = false);
         ProtoMatrixData(const std::initializer_list<_Ty>& init);
         ~ProtoMatrixData();
 
@@ -348,8 +346,10 @@ ProtoMatrixData()                                   // default ctor
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
 ProtoMatrixData(const ProtoMatrixData& other)       // copy ctor
-    : ProtoMatrixData(*(other.pData), other.isTransposed)
+    : ProtoMatrixData()
 {
+    std::copy(other.pData->begin(), other.pData->end(), this->pData->begin());
+    this->isTransposed = other.isTransposed;
 }
 
 template <typename _Ty, int Height, int Width, typename order>
@@ -362,36 +362,15 @@ ProtoMatrixData(const ProtoMatrixData&& other)      // move ctor
 
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
-ProtoMatrixData(const _Ty* src, const _Ty* dst, const bool& isTransposed)
-    : ProtoMatrixData()
+ProtoMatrixData(const std::initializer_list<_Ty>& init)
+    : ProtoMatrixData() // allocate the destination array/buffer of copy operation
 {
-    if (src == nullptr)
-        throw std::invalid_argument("Invalid argument: 'src' is nullptr!");
-    if (dst == nullptr)
-        throw std::invalid_argument("Invalid argument: 'dst' is nullptr!");
-    if (src >= dst)
-        throw std::invalid_argument("Invalid argument: 'src' >= 'dst'!");
-
+    const _Ty* src{ init.begin() };
+    const _Ty* dst{ init.end() };
     // prevent buffer overflow attack
     const _Ty* end{ src + std::min<ptrdiff_t>(dst - src, Width * Height) };
     std::copy(src, end, this->pData->begin());
-    this->isTransposed = isTransposed;
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
-ProtoMatrixData(const std::array<_Ty, Width * Height>& other, const bool& isTransposed)
-    : ProtoMatrixData()
-{
-    std::copy(other.begin(), other.end(), this->pData->begin());
-    this->isTransposed = isTransposed;
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
-ProtoMatrixData(const std::initializer_list<_Ty>& init)
-    : ProtoMatrixData(init.begin(), init.end(), false)
-{
+    this->isTransposed = false;
 }
 
 template <typename _Ty, int Height, int Width, typename order>
