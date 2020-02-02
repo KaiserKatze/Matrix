@@ -16,22 +16,36 @@ int main()
         1, 2,
         3, 4,
     };
+    std::cout
+        << m2i1.ToString()
+        << "isTransposed: "
+        << std::boolalpha << m2i1.IsTransposed() << std::noboolalpha
+        << std::endl
+        << std::endl;
 
     MatrixMath::Matrix2i<> m2i2(m2i1);
-    MatrixMath::Matrix2i<> m2i3(std::move(m2i2));
+    std::cout
+        << m2i2.ToString()
+        << "isTransposed: "
+        << std::boolalpha << m2i2.IsTransposed() << std::noboolalpha
+        << std::endl
+        << std::endl;
 
+    MatrixMath::Matrix2i<> m2i3(std::move(m2i2));
     std::cout
         << m2i3.ToString()
         << "isTransposed: "
         << std::boolalpha << m2i3.IsTransposed() << std::noboolalpha
+        << std::endl
         << std::endl;
+
     m2i3.Transpose();
     std::cout
         << m2i3.ToString()
         << "isTransposed: "
         << std::boolalpha << m2i3.IsTransposed() << std::noboolalpha
+        << std::endl
         << std::endl;
-    std::cout << std::endl;
 
     //==============================================
     // Vector
