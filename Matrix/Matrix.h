@@ -465,7 +465,7 @@ const std::array<_Ty, Width * Height>&
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
 GetData() const
 {
-    return *(this->pData);
+    return *(GetDataPointer());
 }
 
 template <typename _Ty, int Height, int Width, typename order>
@@ -474,7 +474,7 @@ std::array<_Ty, Width * Height>&
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
 GetData()
 {
-    return *(this->pData);
+    return *(GetDataPointer());
 }
 
 template <typename _Ty, int Height, int Width, typename order>
