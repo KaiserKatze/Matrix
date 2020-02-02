@@ -35,16 +35,16 @@ namespace MatrixMath
 
     struct StorageOrder::RowMajor : StorageOrder
     {
-        template <int Height, int Width>
-        inline static int convert2index(const int& row, const int& column, const bool& isTransposed);
+        inline static int convert2index(const int& Height, const int& Width,
+            const int& row, const int& column, const bool& isTransposed);
         inline static constexpr bool IsRowMajor();
         inline static constexpr bool IsColumnMajor();
     };
 
     struct StorageOrder::ColumnMajor : StorageOrder
     {
-        template <int Height, int Width>
-        inline static int convert2index(const int& row, const int& column, const bool& isTransposed);
+        inline static int convert2index(const int& Height, const int& Width,
+            const int& row, const int& column, const bool& isTransposed);
         inline static constexpr bool IsRowMajor();
         inline static constexpr bool IsColumnMajor();
     };
@@ -480,7 +480,7 @@ inline void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 SetElement(const int& row, const int& column, const _Ty& value)
 {
-    const int index{ order::convert2index<Height, Width>(row, column, this->IsTransposed()) };
+    const int index{ order::convert2index(Height, Width, row, column, this->IsTransposed()) };
     this->SetElement(index, value);
 }
 
@@ -489,7 +489,7 @@ inline const _Ty&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 GetElement(const int& row, const int& column) const
 {
-    const int index{ order::convert2index<Height, Width>(row, column, this->IsTransposed()) };
+    const int index{ order::convert2index(Height, Width, row, column, this->IsTransposed()) };
     return this->GetElement(index);
 }
 
@@ -507,7 +507,7 @@ inline _Ty&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 GetElement(const int& row, const int& column)
 {
-    const int index{ order::convert2index<Height, Width>(row, column, this->IsTransposed()) };
+    const int index{ order::convert2index(Height, Width, row, column, this->IsTransposed()) };
     return this->GetElement(index);
 }
 
@@ -1225,10 +1225,10 @@ operator*(const Scalar<_Ty, order>& lhs, const Matrix<_Ty, Height, Width, order>
 }
 
 
-template <int Height, int Width>
-inline static int
+inline int
 MatrixMath::StorageOrder::RowMajor::
-convert2index(const int& row, const int& column, const bool& isTransposed)
+convert2index(const int& Height, const int& Width,
+    const int& row, const int& column, const bool& isTransposed)
 {
     if (isTransposed)   return row + column * Height;
     else                return column + row * Width;
@@ -1248,10 +1248,10 @@ IsColumnMajor()
     return false;
 }
 
-template <int Height, int Width>
-inline static int
+inline int
 MatrixMath::StorageOrder::ColumnMajor::
-convert2index(const int& row, const int& column, const bool& isTransposed)
+convert2index(const int& Height, const int& Width,
+    const int& row, const int& column, const bool& isTransposed)
 {
     if (isTransposed)   return column + row * Width;
     else                return row + column * Height;
