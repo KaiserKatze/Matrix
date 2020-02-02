@@ -111,8 +111,8 @@ namespace MatrixMath
     public:
         void Transpose();
         bool IsTransposed() const;
-        const std::array<_Ty, Width * Height>& GetData() const;
-        std::array<_Ty, Width * Height>& GetData();
+        inline const std::array<_Ty, Width * Height>& GetData() const;
+        inline std::array<_Ty, Width * Height>& GetData();
 
 #ifdef _DEBUG
         std::string name;
@@ -439,6 +439,7 @@ IsTransposed() const
 }
 
 template <typename _Ty, int Height, int Width, typename order>
+inline
 const std::array<_Ty, Width * Height>&
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
 GetData() const
@@ -447,6 +448,7 @@ GetData() const
 }
 
 template <typename _Ty, int Height, int Width, typename order>
+inline
 std::array<_Ty, Width * Height>&
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
 GetData()
