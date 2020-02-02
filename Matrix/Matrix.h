@@ -75,7 +75,7 @@ namespace MatrixMath
         ProtoMatrixData(const ProtoMatrixData&& other);
         ProtoMatrixData(const _Ty* pSrc, const _Ty* pDst, const bool& isTransposed = false);
         ProtoMatrixData(const std::array<_Ty, Width * Height>& other, const bool& isTransposed = false);
-        ProtoMatrixData(const std::initializer_list<_Ty>& init, const bool& isTransposed = false);
+        ProtoMatrixData(const std::initializer_list<_Ty>& init);
         ~ProtoMatrixData();
 
     public:
@@ -389,8 +389,8 @@ ProtoMatrixData(const std::array<_Ty, Width * Height>& other, const bool& isTran
 
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
-ProtoMatrixData(const std::initializer_list<_Ty>& init, const bool& isTransposed)
-    : ProtoMatrixData(init.begin(), init.end(), isTransposed)
+ProtoMatrixData(const std::initializer_list<_Ty>& init)
+    : ProtoMatrixData(init.begin(), init.end(), false)
 {
 }
 
