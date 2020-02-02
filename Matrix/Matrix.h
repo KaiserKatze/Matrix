@@ -31,6 +31,9 @@ namespace MatrixMath
     {
         struct RowMajor;
         struct ColumnMajor;
+
+        template <typename order>
+        struct CofactorOrder;
     };
 
     struct StorageOrder::RowMajor : StorageOrder
