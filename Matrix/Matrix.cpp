@@ -10,6 +10,30 @@
 int main()
 {
     //==============================================
+    // Matrix
+
+    MatrixMath::Matrix2i<> m2i1{
+        1, 2,
+        3, 4,
+    };
+
+    MatrixMath::Matrix2i<> m2i2(m2i1);
+    MatrixMath::Matrix2i<> m2i3(std::move(m2i2));
+
+    std::cout
+        << m2i3.ToString()
+        << "isTransposed: "
+        << std::boolalpha << m2i3.IsTransposed() << std::noboolalpha
+        << std::endl;
+    m2i3.Transpose();
+    std::cout
+        << m2i3.ToString()
+        << "isTransposed: "
+        << std::boolalpha << m2i3.IsTransposed() << std::noboolalpha
+        << std::endl;
+    std::cout << std::endl;
+
+    //==============================================
     // Vector
 
     // Test: Vector initialization
@@ -36,6 +60,12 @@ int main()
     std::cout
         << "v4i1 == v4i2 -> "
         << (v4i1 == v4i2 ? "[Succeed]" : "[Fail]")
+        << std::endl;
+
+    MatrixMath::Vector4i<> v4i3(std::move(v4i1));
+    std::cout
+        << "v4i1 == v4i3 -> "
+        << (v4i1 == v4i3 ? "[Succeed]" : "[Fail]")
         << std::endl;
 
     //==============================================

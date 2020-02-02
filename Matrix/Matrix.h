@@ -9,6 +9,15 @@
 #include <string>
 #include <type_traits>
 
+namespace MetaMath
+{
+    template <int LHS, int RHS>
+    constexpr static bool LargerThan = LHS > RHS;
+
+    template <int LHS, int RHS>
+    constexpr static bool Equal = LHS == RHS;
+}
+
 namespace MatrixMath
 {
     struct StorageOrder
@@ -20,7 +29,7 @@ namespace MatrixMath
     struct StorageOrder::RowMajor : StorageOrder
     {
         template <int Height, int Width>
-        inline static int convert2index(const int& row, const int& column);
+        inline static int convert2index(const int& row, const int& column, const bool& isTransposed);
         inline static constexpr bool IsRowMajor();
         inline static constexpr bool IsColumnMajor();
     };
@@ -28,7 +37,7 @@ namespace MatrixMath
     struct StorageOrder::ColumnMajor : StorageOrder
     {
         template <int Height, int Width>
-        inline static int convert2index(const int& row, const int& column);
+        inline static int convert2index(const int& row, const int& column, const bool& isTransposed);
         inline static constexpr bool IsRowMajor();
         inline static constexpr bool IsColumnMajor();
     };
@@ -54,19 +63,24 @@ namespace MatrixMath
     class ProtoMatrixData
         : public ProtoMatrix<_Ty, Height, Width, order>
     {
-    protected:
-        std::array<_Ty, Width * Height> data; // 'Width * Height' here cannot be replaced by 'Size',
-                                              // otherwise a compiler error (C2244) will be thrown at compile time
-                                              // if the project is compiled with Microsoft VC++
+    private:
+        std::array<_Ty, Width * Height>* pData; // 'Width * Height' here cannot be replaced by 'Size',
+                                                // otherwise a compiler error (C2244) will be thrown at compile time
+                                                // if the project is compiled with Microsoft VC++
+        bool isTransposed;
 
+    protected:
         ProtoMatrixData();
         ProtoMatrixData(const ProtoMatrixData& other);
-        ProtoMatrixData(const _Ty* pSrc, const _Ty* pDst);
-        ProtoMatrixData(const std::array<_Ty, Width * Height>& other);
-        ProtoMatrixData(const std::initializer_list<_Ty>& init);
-        ~ProtoMatrixData() {};
+        ProtoMatrixData(const ProtoMatrixData&& other);
+        ProtoMatrixData(const _Ty* pSrc, const _Ty* pDst, const bool& isTransposed = false);
+        ProtoMatrixData(const std::array<_Ty, Width * Height>& other, const bool& isTransposed = false);
+        ProtoMatrixData(const std::initializer_list<_Ty>& init, const bool& isTransposed = false);
+        ~ProtoMatrixData();
 
     public:
+        void Transpose();
+        bool IsTransposed() const;
         const std::array<_Ty, Width * Height>& GetData() const;
         std::array<_Ty, Width * Height>& GetData();
     };
@@ -81,6 +95,7 @@ namespace MatrixMath
 
         Matrix();
         Matrix(const Matrix& other);
+        Matrix(const Matrix&& other);
         Matrix(const std::initializer_list<_Ty>& init);
 
         // Access data
@@ -91,8 +106,6 @@ namespace MatrixMath
         inline const _Ty& GetElement(const int& row, const int& column) const;
         inline _Ty& GetElement(const int& index);
         inline _Ty& GetElement(const int& row, const int& column);
-
-        Transposed Transpose() const;
 
         // Always output a string representing the matrix in row-major order
         const std::string ToString() const;
@@ -227,7 +240,15 @@ namespace MatrixMath
     template <typename _Ty, int Height, int Width, typename order>
     Matrix<_Ty, Height, Width, order> operator/(const Matrix<_Ty, Height, Width, order>& lhs, const _Ty& rhs);
 
-    template <typename _Ty, int Height, int Width, typename order>
+    // Valid only if the arguments are matrix de facto
+    template <typename _Ty, int Height, int Width, typename order,
+        std::enable_if_t<MetaMath::LargerThan<Height, 1> && MetaMath::LargerThan<Width, 1>, int> = 0>
+    bool operator==(const Matrix<_Ty, Height, Width, order>& lhs, const Matrix<_Ty, Height, Width, order>& rhs);
+
+    // Valid only if the arguments are vector de facto
+    template <typename _Ty, int Height, int Width, typename order,
+        std::enable_if_t<MetaMath::LargerThan<Height, 1> && MetaMath::Equal<Width, 1>
+        || MetaMath::LargerThan<Width, 1> && MetaMath::Equal<Height, 1>, int> = 0>
     bool operator==(const Matrix<_Ty, Height, Width, order>& lhs, const Matrix<_Ty, Height, Width, order>& rhs);
 
     template <typename _Ty, int Height, int Width, typename order>
@@ -318,40 +339,83 @@ GetHeight() const
 
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
-ProtoMatrixData()
-    : data{ 0 } // initialize std::array with 0
+ProtoMatrixData()                                   // default ctor
+    : pData{ new std::array<_Ty, Width * Height>{ 0 } } // initialize std::array pointer with nullptr
+    , isTransposed{ false }
 {
 }
 
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
-ProtoMatrixData(const ProtoMatrixData& other)
-    : ProtoMatrixData(other.data)
+ProtoMatrixData(const ProtoMatrixData& other)       // copy ctor
+    : ProtoMatrixData(*(other.pData), other.isTransposed)
 {
 }
 
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
-ProtoMatrixData(const _Ty* src, const _Ty* dst)
+ProtoMatrixData(const ProtoMatrixData&& other)      // move ctor
+    : pData{ other.pData }
+    , isTransposed{ other.isTransposed }
+{
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
+ProtoMatrixData(const _Ty* src, const _Ty* dst, const bool& isTransposed)
     : ProtoMatrixData()
 {
+    if (src == nullptr)
+        throw std::invalid_argument("Invalid argument: 'src' is nullptr!");
+    if (dst == nullptr)
+        throw std::invalid_argument("Invalid argument: 'dst' is nullptr!");
+    if (src >= dst)
+        throw std::invalid_argument("Invalid argument: 'src' >= 'dst'!");
+
     // prevent buffer overflow attack
     const _Ty* end{ src + std::min<ptrdiff_t>(dst - src, Width * Height) };
-    std::copy(src, end, std::begin(data));
+    std::copy(src, end, this->pData->begin());
+    this->isTransposed = isTransposed;
 }
 
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
-ProtoMatrixData(const std::array<_Ty, Width * Height>& other)
+ProtoMatrixData(const std::array<_Ty, Width * Height>& other, const bool& isTransposed)
+    : ProtoMatrixData()
 {
-    std::copy(std::begin(other), std::end(other), std::begin(data));
+    std::copy(other.begin(), other.end(), this->pData->begin());
+    this->isTransposed = isTransposed;
 }
 
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
-ProtoMatrixData(const std::initializer_list<_Ty>& init)
-    : ProtoMatrixData(init.begin(), init.end())
+ProtoMatrixData(const std::initializer_list<_Ty>& init, const bool& isTransposed)
+    : ProtoMatrixData(init.begin(), init.end(), isTransposed)
 {
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
+~ProtoMatrixData()
+{
+    delete this->pData;
+    this->pData = nullptr;
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+void
+MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
+Transpose()
+{
+    this->isTransposed = !this->isTransposed;
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+bool
+MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
+IsTransposed() const
+{
+    return this->isTransposed;
 }
 
 template <typename _Ty, int Height, int Width, typename order>
@@ -359,7 +423,7 @@ const std::array<_Ty, Width * Height>&
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
 GetData() const
 {
-    return this->data;
+    return *(this->pData);
 }
 
 template <typename _Ty, int Height, int Width, typename order>
@@ -367,7 +431,7 @@ std::array<_Ty, Width * Height>&
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
 GetData()
 {
-    return this->data;
+    return *(this->pData);
 }
 
 template <typename _Ty, int Height, int Width, typename order>
@@ -380,6 +444,13 @@ Matrix()
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 Matrix(const Matrix& other)
+    : DataType(other)
+{
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+MatrixMath::Matrix<_Ty, Height, Width, order>::
+Matrix(const Matrix&& other)
     : DataType(other)
 {
 }
@@ -414,7 +485,7 @@ inline void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 SetElement(const int& row, const int& column, const _Ty& value)
 {
-    this->SetElement(order::convert2index<Height, Width>(row, column), value);
+    this->SetElement(order::convert2index<Height, Width>(row, column, this->IsTransposed()), value);
 }
 
 template <typename _Ty, int Height, int Width, typename order>
@@ -422,7 +493,7 @@ inline const _Ty&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 GetElement(const int& row, const int& column) const
 {
-    return this->GetElement(order::convert2index<Height, Width>(row, column));
+    return this->GetElement(order::convert2index<Height, Width>(row, column, this->IsTransposed()));
 }
 
 template <typename _Ty, int Height, int Width, typename order>
@@ -439,25 +510,7 @@ inline _Ty&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 GetElement(const int& row, const int& column)
 {
-    return this->GetElement(order::convert2index<Height, Width>(row, column));
-}
-
-template <typename _Ty, int Height, int Width, typename order>
-typename MatrixMath::Matrix<_Ty, Height, Width, order>::Transposed
-MatrixMath::Matrix<_Ty, Height, Width, order>::
-Transpose() const
-{
-    Transposed result;
-
-    for (int row = 0; row < Width; row++)
-    {
-        for (int column = 0; column < Height; column++)
-        {
-            result.SetElement(row, column, this->GetElement(column, row));
-        }
-    }
-
-    return result;
+    return this->GetElement(order::convert2index<Height, Width>(row, column, this->IsTransposed()));
 }
 
 template <typename _Ty, int Height, int Width, typename order>
@@ -558,13 +611,46 @@ operator/(const Matrix<_Ty, Height, Width, order>& lhs, const _Ty& rhs)
     return result;
 }
 
-template <typename _Ty, int Height, int Width, typename order>
+template <typename _Ty, int Height, int Width, typename order,
+    std::enable_if_t<MetaMath::LargerThan<Height, 1> && MetaMath::LargerThan<Width, 1>, int>>
 bool
 MatrixMath::
 operator==(const Matrix<_Ty, Height, Width, order>& lhs, const Matrix<_Ty, Height, Width, order>& rhs)
 {
-    return &lhs == &rhs
-        || lhs.GetData() == rhs.GetData();
+    if (&lhs == &rhs) return true;
+    auto& lhsd{ lhs.GetData() };
+    auto& rhsd{ rhs.GetData() };
+    if ((&lhsd == &rhsd || lhsd == rhsd) && lhs.IsTransposed() == rhs.IsTransposed())
+        return true;
+    for (int row = 0; row < Height; row++)
+    {
+        for (int col = 0; col < Width; col++)
+        {
+            if (lhs.GetElement(row, col) != rhs.GetElement(row, col))
+                return false;
+        }
+    }
+    return true;
+}
+
+template <typename _Ty, int Height, int Width, typename order,
+    std::enable_if_t<MetaMath::LargerThan<Height, 1> && MetaMath::Equal<Width, 1>
+    || MetaMath::LargerThan<Width, 1> && MetaMath::Equal<Height, 1>, int>>
+bool
+MatrixMath::
+operator==(const Matrix<_Ty, Height, Width, order>& lhs, const Matrix<_Ty, Height, Width, order>& rhs)
+{
+    if (&lhs == &rhs) return true;
+    auto& lhsd{ lhs.GetData() };
+    auto& rhsd{ rhs.GetData() };
+    if ((&lhsd == &rhsd || lhsd == rhsd) && lhs.IsTransposed() == rhs.IsTransposed())
+        return true;
+    for (int index = 0; index < Width * Height; index++)
+    {
+        if (lhs.GetElement(index) != rhs.GetElement(index))
+            return false;
+    }
+    return true;
 }
 
 template <typename _Ty, int Height, int Width, typename order>
@@ -770,6 +856,7 @@ public:
 
     Matrix();
     Matrix(const Matrix& other);
+    Matrix(const Matrix&& other);
     Matrix(const std::initializer_list<_Ty>& init);
     ~Matrix() {}
 
@@ -790,6 +877,13 @@ Matrix()
 template <typename _Ty, int N, typename order>
 MatrixMath::Matrix<_Ty, N, 1, order>::
 Matrix(const Matrix& other)
+    : DataType(other)
+{
+}
+
+template <typename _Ty, int N, typename order>
+MatrixMath::Matrix<_Ty, N, 1, order>::
+Matrix(const Matrix&& other)
     : DataType(other)
 {
 }
@@ -1137,9 +1231,10 @@ operator*(const Scalar<_Ty, order>& lhs, const Matrix<_Ty, Height, Width, order>
 template <int Height, int Width>
 inline static int
 MatrixMath::StorageOrder::RowMajor::
-convert2index(const int& row, const int& column)
+convert2index(const int& row, const int& column, const bool& isTransposed)
 {
-    return column + row * Width;
+    if (isTransposed)   return row + column * Height;
+    else                return column + row * Width;
 }
 
 inline constexpr bool
@@ -1159,9 +1254,10 @@ IsColumnMajor()
 template <int Height, int Width>
 inline static int
 MatrixMath::StorageOrder::ColumnMajor::
-convert2index(const int& row, const int& column)
+convert2index(const int& row, const int& column, const bool& isTransposed)
 {
-    return row + column * Height;
+    if (isTransposed)   return column + row * Width;
+    else                return row + column * Height;
 }
 
 inline constexpr bool
