@@ -17,6 +17,7 @@ int main()
         3, 4,
     };
     std::cout
+        << "m2i1 = " << std::endl
         << m2i1.ToString()
         << "isTransposed: "
         << std::boolalpha << m2i1.IsTransposed() << std::noboolalpha
@@ -25,6 +26,7 @@ int main()
 
     MatrixMath::Matrix2i<> m2i2(m2i1);
     std::cout
+        << "m2i2 = " << std::endl
         << m2i2.ToString()
         << "isTransposed: "
         << std::boolalpha << m2i2.IsTransposed() << std::noboolalpha
@@ -33,6 +35,7 @@ int main()
 
     MatrixMath::Matrix2i<> m2i3(std::move(m2i2));
     std::cout
+        << "m2i3 = " << std::endl
         << m2i3.ToString()
         << "isTransposed: "
         << std::boolalpha << m2i3.IsTransposed() << std::noboolalpha
@@ -41,9 +44,37 @@ int main()
 
     m2i3.Transpose();
     std::cout
+        << "m2i3.Transpose(); <--" << std::endl
+        << "m2i3 = " << std::endl
         << m2i3.ToString()
         << "isTransposed: "
         << std::boolalpha << m2i3.IsTransposed() << std::noboolalpha
+        << std::endl
+        << std::endl;
+
+    m2i3.SetElement(0, 0, 0);
+    m2i3.SetElement(0, 1, 0);
+    std::cout
+        << "m2i3.SetElement(0, 0, 0); <--" << std::endl
+        << "m2i3.SetElement(0, 1, 0); <--" << std::endl
+        << "m2i3 = " << std::endl
+        << m2i3.ToString()
+        << "isTransposed: "
+        << std::boolalpha << m2i3.IsTransposed() << std::noboolalpha
+        << std::endl
+        << std::endl;
+    std::cout
+        << "m2i2 = " << std::endl
+        << m2i2.ToString()
+        << "isTransposed: "
+        << std::boolalpha << m2i2.IsTransposed() << std::noboolalpha
+        << std::endl
+        << std::endl;
+    std::cout
+        << "m2i1 = " << std::endl
+        << m2i1.ToString()
+        << "isTransposed: "
+        << std::boolalpha << m2i1.IsTransposed() << std::noboolalpha
         << std::endl
         << std::endl;
 
