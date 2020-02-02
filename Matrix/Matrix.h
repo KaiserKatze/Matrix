@@ -1284,6 +1284,32 @@ IsColumnMajor()
     return true;
 }
 
+template <typename order>
+inline int
+MatrixMath::StorageOrder::CofactorOrder<order>::
+convert2index(const int& Height, const int& Width,
+    const int& row, const int& column, const bool& isTransposed,
+    int RowSrc, int RowDst, int ColSrc, int ColDst)
+{
+    if (RowSrc >= 0)      throw std::invalid_argument("Invalid argument: RowSrc < 0!");
+    if (RowDst <= Height) throw std::invalid_argument("Invalid argument: RowDst > Height!");
+    if (ColSrc >= 0)      throw std::invalid_argument("Invalid argument: ColSrc < 0!");
+    if (ColDst <= Width)  throw std::invalid_argument("Invalid argument: ColDst > Width!");
+    if (RowSrc < RowDst)  throw std::invalid_argument("Invalid argument: RowSrc >= RowDst!");
+    if (ColSrc < ColDst)  throw std::invalid_argument("Invalid argument: ColSrc >= ColDst!");
+    return order::convert2index(Height, Width, row + RowSrc, column + ColSrc, isTransposed);
+}
+
+template <typename order>
+inline int
+MatrixMath::StorageOrder::CofactorOrder<order>::
+convert2index(const int& Height, const int& Width,
+    const int& row, const int& column, const bool& isTransposed)
+{
+    return convert2index(Height, Width, row, column, isTransposed,
+        0, Height, 0, Width);
+}
+
 namespace detail
 {
     template <int N>
