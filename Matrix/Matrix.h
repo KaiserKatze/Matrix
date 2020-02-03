@@ -153,10 +153,10 @@ namespace MatrixMath
         const std::string ToString() const;
 
         template <int RowSrc, int RowDst, int ColSrc, int ColDst>
-        class Cofactor;
+        class SubMatrix;
 
         template <int RowSrc, int RowDst, int ColSrc, int ColDst>
-        Cofactor<RowSrc, RowDst, ColSrc, ColDst> GetCofactor();
+        SubMatrix<RowSrc, RowDst, ColSrc, ColDst> GetSubMatrix();
     };
 
     // Vector
@@ -600,7 +600,7 @@ ToString() const
 
 template <typename _Ty, int Height, int Width, typename order>
 template <int RowSrc, int RowDst, int ColSrc, int ColDst>
-class MatrixMath::Matrix<_Ty, Height, Width, order>::Cofactor
+class MatrixMath::Matrix<_Ty, Height, Width, order>::SubMatrix
     : public ProtoMatrix<_Ty, RowDst - RowSrc, ColDst - ColSrc, order>
 {
 public:
@@ -634,21 +634,21 @@ private:
             row = index / Width;
             column = index % Width;
         }
-        return Cofactor::convert2index(row, column, isTransposed);
+        return SubMatrix::convert2index(row, column, isTransposed);
     }
 
     inline int convert2index(const int& row, const int& column) const
     {
-        return Cofactor::convert2index(row, column, parent.IsTransposed());
+        return SubMatrix::convert2index(row, column, parent.IsTransposed());
     }
 
     inline int convert2index(const int& index) const
     {
-        return Cofactor::convert2index(index, parent.IsTransposed());
+        return SubMatrix::convert2index(index, parent.IsTransposed());
     }
 
 public:
-    Cofactor(ParentType& parent)
+    SubMatrix(ParentType& parent)
         : parent{ parent }
     {
     }
@@ -722,11 +722,11 @@ public:
 
 template <typename _Ty, int Height, int Width, typename order>
 template <int RowSrc, int RowDst, int ColSrc, int ColDst>
-MatrixMath::Matrix<_Ty, Height, Width, order>::Cofactor<RowSrc, RowDst, ColSrc, ColDst>
+MatrixMath::Matrix<_Ty, Height, Width, order>::SubMatrix<RowSrc, RowDst, ColSrc, ColDst>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
-GetCofactor()
+GetSubMatrix()
 {
-    return Cofactor<RowSrc, RowDst, ColSrc, ColDst>(*this);
+    return SubMatrix<RowSrc, RowDst, ColSrc, ColDst>(*this);
 }
 
 template <typename _Ty, int N, typename order>

@@ -89,7 +89,7 @@ int main()
 #endif
 
     //==============================================
-    // Matrix Cofactor
+    // SubMatrix
 #if 1
     MatrixMath::Matrix4i<> m4i1{
         1, 2, 3, 4,
@@ -103,10 +103,10 @@ int main()
         << m4i1.ToString()
         << std::endl;
 
-    auto m4i1c1 = m4i1.GetCofactor<0, 2, 0, 2>();
-    auto m4i1c2 = m4i1.GetCofactor<0, 2, 2, 4>();
-    auto m4i1c3 = m4i1.GetCofactor<2, 4, 0, 2>();
-    auto m4i1c4 = m4i1.GetCofactor<2, 4, 2, 4>();
+    auto m4i1c1 = m4i1.GetSubMatrix<0, 2, 0, 2>();
+    auto m4i1c2 = m4i1.GetSubMatrix<0, 2, 2, 4>();
+    auto m4i1c3 = m4i1.GetSubMatrix<2, 4, 0, 2>();
+    auto m4i1c4 = m4i1.GetSubMatrix<2, 4, 2, 4>();
 
     std::cout
         << "m4i1c1 = "
