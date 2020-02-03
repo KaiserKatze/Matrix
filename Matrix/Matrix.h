@@ -82,8 +82,17 @@ namespace MatrixMath
 
     // INTERFACE OF ALL KINDS OF MATRICES
     // Use this interface as the base of
-    class IMatrix {};
     // all the "de facto" matrices, vectors, etc.
+    template <typename _Ty>
+    class IMatrix
+    {
+        virtual inline void SetElement(const int& index, const _Ty& value) = 0;
+        virtual inline void SetElement(const int& row, const int& column, const _Ty& value) = 0;
+        virtual inline const _Ty& GetElement(const int& index) const = 0;
+        virtual inline const _Ty& GetElement(const int& row, const int& column) const = 0;
+        virtual inline _Ty& GetElement(const int& index) = 0;
+        virtual inline _Ty& GetElement(const int& row, const int& column) = 0;
+    };
 
     template <typename _Ty, int Height, int Width, typename order>
     class ProtoMatrix
@@ -136,7 +145,7 @@ namespace MatrixMath
     template <typename _Ty, int Height, int Width, typename order = StorageOrder::RowMajor>
     class Matrix
         : public ProtoMatrixData<_Ty, Height, Width, order>
-        , public IMatrix
+        , public IMatrix<_Ty>
     {
     public:
         using DataType = ProtoMatrixData<_Ty, Height, Width, order>;
@@ -612,7 +621,7 @@ template <typename _Ty, int Height, int Width, typename order>
 template <int RowSrc, int RowDst, int ColSrc, int ColDst>
 class MatrixMath::Matrix<_Ty, Height, Width, order>::SubMatrix
     : public ProtoMatrix<_Ty, RowDst - RowSrc, ColDst - ColSrc, order>
-    , public IMatrix
+    , public IMatrix<_Ty>
 {
     static_assert(RowSrc >= 0, "Invalid argument: RowSrc < 0!");
     static_assert(RowDst <= Height, "Invalid argument: RowDst > Height!");
@@ -752,7 +761,7 @@ template <typename _Ty, int Height, int Width, typename order>
 template <int Row, int Column>
 class MatrixMath::Matrix<_Ty, Height, Width, order>::Refactor
     : public ProtoMatrix<_Ty, Height - 1, Width - 1, order>
-    , public IMatrix
+    , public IMatrix<_Ty>
 {
     static_assert(Row >= 0, "Invalid template argument: Row < 0!");
     static_assert(Row < Height, "Invalid template argument: Row >= Height!");
@@ -764,7 +773,7 @@ public:
 
 private:
     ParentType& parent;
-    std::vector<std::unique_ptr<IMatrix>> subMatrices;
+    std::vector<std::unique_ptr<IMatrix<_Ty>>> subMatrices;
 
 public:
     Refactor(ParentType& parent)
@@ -1104,7 +1113,7 @@ operator*(const MatrixQ<_Ty, 4, order>& lhs, const MatrixQ<_Ty, 4, order>& rhs)
 template <typename _Ty, int N, typename order>
 class MatrixMath::Matrix<_Ty, N, 1, order>
     : public MatrixMath::ProtoMatrixData<_Ty, N, 1, order>
-    , public IMatrix
+    , public IMatrix<_Ty>
 {
 public:
     using DataType = ProtoMatrixData<_Ty, N, 1, order>;
@@ -1116,8 +1125,11 @@ public:
     Matrix(const std::initializer_list<_Ty>& init);
 
     inline void SetElement(const int& index, const _Ty& value);
+    inline void SetElement(const int& row, const int& column, const _Ty& value);
     inline const _Ty& GetElement(const int& index) const;
+    inline const _Ty& GetElement(const int& row, const int& column) const;
     inline _Ty& GetElement(const int& index);
+    inline _Ty& GetElement(const int& row, const int& column);
 
     const std::string ToString() const;
 };
@@ -1160,6 +1172,14 @@ SetElement(const int& index, const _Ty& value)
 }
 
 template <typename _Ty, int N, typename order>
+inline void
+MatrixMath::Matrix<_Ty, N, 1, order>::
+SetElement(const int& row, const int& column, const _Ty& value)
+{
+    this->SetElement(row, value);
+}
+
+template <typename _Ty, int N, typename order>
 inline const _Ty&
 MatrixMath::Matrix<_Ty, N, 1, order>::
 GetElement(const int& index) const
@@ -1169,12 +1189,28 @@ GetElement(const int& index) const
 }
 
 template <typename _Ty, int N, typename order>
+inline const _Ty&
+MatrixMath::Matrix<_Ty, N, 1, order>::
+GetElement(const int& row, const int& column) const
+{
+    return this->GetElement(row);
+}
+
+template <typename _Ty, int N, typename order>
 inline _Ty&
 MatrixMath::Matrix<_Ty, N, 1, order>::
 GetElement(const int& index)
 {
     auto& data{ this->GetData() };
     return data[index];
+}
+
+template <typename _Ty, int N, typename order>
+inline _Ty&
+MatrixMath::Matrix<_Ty, N, 1, order>::
+GetElement(const int& row, const int& column)
+{
+    return this->GetElement(row);
 }
 
 template <typename _Ty, int N, typename order>
