@@ -103,6 +103,8 @@ namespace MatrixMath
 
     public:
         using ElementType = _Ty;
+        constexpr static int Width{ Width };
+        constexpr static int Height{ Height };
 
         inline constexpr bool IsVector() const;
         inline constexpr bool IsSquare() const;
