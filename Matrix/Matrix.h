@@ -736,6 +736,7 @@ GetSubMatrix()
 template <typename _Ty, int Height, int Width, typename order>
 template <int Row, int Column>
 class MatrixMath::Matrix<_Ty, Height, Width, order>::Refactor
+    : public ProtoMatrix<_Ty, Height - 1, Width - 1, order>
 {
 
 };
