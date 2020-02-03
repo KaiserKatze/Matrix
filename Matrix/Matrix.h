@@ -175,10 +175,10 @@ namespace MatrixMath
         SubMatrix<RowSrc, RowDst, ColSrc, ColDst> GetSubMatrix();
 
         template <int Row, int Column>
-        class Refactor;
+        class Cofactor;
 
         template <int Row, int Column>
-        Refactor<Row, Column> GetRefactor();
+        Cofactor<Row, Column> GetCofactor();
     };
 
     // Vector
@@ -762,7 +762,7 @@ GetSubMatrix()
 
 template <typename _Ty, int Height, int Width, typename order>
 template <int Row, int Column>
-class MatrixMath::Matrix<_Ty, Height, Width, order>::Refactor
+class MatrixMath::Matrix<_Ty, Height, Width, order>::Cofactor
     : public ProtoMatrix<_Ty, Height - 1, Width - 1, order>
     , public IMatrix<_Ty>
 {
@@ -801,21 +801,21 @@ private:
             row = index / Width;
             column = index % Width;
         }
-        return Refactor::convert2index(row, column, isTransposed);
+        return Cofactor::convert2index(row, column, isTransposed);
     }
 
     inline int convert2index(const int& row, const int& column) const
     {
-        return Refactor::convert2index(row, column, parent.IsTransposed());
+        return Cofactor::convert2index(row, column, parent.IsTransposed());
     }
 
     inline int convert2index(const int& index) const
     {
-        return Refactor::convert2index(index, parent.IsTransposed());
+        return Cofactor::convert2index(index, parent.IsTransposed());
     }
 
 public:
-    Refactor(ParentType& parent)
+    Cofactor(ParentType& parent)
         : parent{ parent }
     {
     }
@@ -890,11 +890,11 @@ public:
 
 template <typename _Ty, int Height, int Width, typename order>
 template <int Row, int Column>
-MatrixMath::Matrix<_Ty, Height, Width, order>::Refactor<Row, Column>
+MatrixMath::Matrix<_Ty, Height, Width, order>::Cofactor<Row, Column>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
-GetRefactor()
+GetCofactor()
 {
-    return Refactor<Row, Column>(*this);
+    return Cofactor<Row, Column>(*this);
 }
 
 

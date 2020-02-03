@@ -187,7 +187,7 @@ int main()
 #endif
 
     //==============================================
-    // Refactor
+    // Cofactor
 #if 1
     {
         MatrixMath::Matrix4i<> m4i1{
@@ -197,7 +197,7 @@ int main()
             0, 0, 0, 1,
         };
 
-        auto m3i1 = m4i1.GetRefactor<0, 0>();
+        auto m3i1 = m4i1.GetCofactor<0, 0>();
         std::cout
             << "m3i1 = "
             << std::endl
