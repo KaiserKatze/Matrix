@@ -201,6 +201,7 @@ int main()
         std::cout
             << "m3i1 = "
             << std::endl
+            << m3i1.ToString()
             << std::endl;
     }
 #endif
