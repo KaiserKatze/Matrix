@@ -643,25 +643,34 @@ public:
 
     // Access data
 
+    inline void SetElement(const int& index, const _Ty& value)
+    {
+        this->ParentType::SetElement(this->convert2pair(index), value);
+    }
+
+    inline const _Ty& GetElement(const int& index) const
+    {
+        this->ParentType::GetElement(this->convert2pair(index));
+    }
+
     inline void SetElement(const int& row, const int& column, const _Ty& value)
     {
-        const int index{ OrderType::convert2index(Height, Width,
-            row, column, parent.IsTransposed()) };
-        this->ParentType::SetElement(index, value);
+        this->ParentType::SetElement(this->convert2pair(row, column), value);
     }
 
     inline const _Ty& GetElement(const int& row, const int& column) const
     {
-        const int index{ OrderType::convert2index(Height, Width,
-            row, column, parent.IsTransposed()) };
-        return this->ParentType::GetElement(index);
+        return this->ParentType::GetElement(this->convert2pair(row, column));
+    }
+
+    inline _Ty& GetElement(const int& index)
+    {
+        return this->ParentType::GetElement(this->convert2pair(index));
     }
 
     inline _Ty& GetElement(const int& row, const int& column)
     {
-        const int index{ OrderType::convert2index(Height, Width,
-            row, column, parent.IsTransposed()) };
-        return this->ParentType::GetElement(index);
+        return this->ParentType::GetElement(this->convert2pair(row, column));
     }
 };
 
