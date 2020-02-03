@@ -80,6 +80,8 @@ namespace MatrixMath
     };
 
     // INTERFACE OF ALL KINDS OF MATRICES
+    // Use this interface as the base of
+    // all the "de facto" matrices, vectors and scalars
     class IMatrix {};
 
     template <typename _Ty, int Height, int Width, typename order>
@@ -133,6 +135,7 @@ namespace MatrixMath
     template <typename _Ty, int Height, int Width, typename order = StorageOrder::RowMajor>
     class Matrix
         : public ProtoMatrixData<_Ty, Height, Width, order>
+        , public IMatrix
     {
     public:
         using DataType = ProtoMatrixData<_Ty, Height, Width, order>;
@@ -608,6 +611,7 @@ template <typename _Ty, int Height, int Width, typename order>
 template <int RowSrc, int RowDst, int ColSrc, int ColDst>
 class MatrixMath::Matrix<_Ty, Height, Width, order>::SubMatrix
     : public ProtoMatrix<_Ty, RowDst - RowSrc, ColDst - ColSrc, order>
+    , public IMatrix
 {
     static_assert(RowSrc >= 0, "Invalid argument: RowSrc < 0!");
     static_assert(RowDst <= Height, "Invalid argument: RowDst > Height!");
@@ -747,6 +751,7 @@ template <typename _Ty, int Height, int Width, typename order>
 template <int Row, int Column>
 class MatrixMath::Matrix<_Ty, Height, Width, order>::Refactor
     : public ProtoMatrix<_Ty, Height - 1, Width - 1, order>
+    , public IMatrix
 {
     static_assert(Row >= 0, "Invalid template argument: Row < 0!");
     static_assert(Row < Height, "Invalid template argument: Row >= Height!");
@@ -1097,6 +1102,7 @@ operator*(const MatrixQ<_Ty, 4, order>& lhs, const MatrixQ<_Ty, 4, order>& rhs)
 template <typename _Ty, int N, typename order>
 class MatrixMath::Matrix<_Ty, N, 1, order>
     : public MatrixMath::ProtoMatrixData<_Ty, N, 1, order>
+    , public IMatrix
 {
 public:
     using DataType = ProtoMatrixData<_Ty, N, 1, order>;
@@ -1192,6 +1198,7 @@ ToString() const
 template <typename _Ty, typename order>
 class MatrixMath::Matrix<_Ty, 1, 1, order>
     : public MatrixMath::ProtoMatrix<_Ty, 1, 1, order>
+    , public IMatrix
 {
 private:
     _Ty data;
