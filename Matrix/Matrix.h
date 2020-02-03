@@ -599,6 +599,42 @@ public:
 private:
     ParentType& parent;
 
+    inline static int convert2index(const int& row, const int& column, const bool& isTransposed)
+    {
+        const int index{ OrderType::convert2index(Height, Width,
+            row, column, isTransposed) };
+        return index;
+    }
+
+    inline static int convert2index(const int& index, const bool& isTransposed)
+    {
+        int row{ 0 }, column{ 0 };
+        if (OrderType::IsRowMajor() && isTransposed
+            || OrderType::IsColumnMajor() && !isTransposed)
+        {
+            // index = row + column * Height
+            row = index % Height;
+            column = index / Height;
+        }
+        else
+        {
+            // index = column + row * Width
+            row = index / Width;
+            column = index % Width;
+        }
+        return Cofactor::convert2index(row, column, isTransposed);
+    }
+
+    inline int convert2index(const int& row, const int& column)
+    {
+        return Cofactor::convert2index(row, column, parent.IsTransposed());
+    }
+
+    inline int convert2index(const int& index)
+    {
+        return Cofactor::convert2index(index, parent.IsTransposed());
+    }
+
 public:
     Cofactor(const ParentType& parent)
         : parent{ parent }
