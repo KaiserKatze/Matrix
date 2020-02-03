@@ -311,7 +311,7 @@ int main()
 
     //==============================================
     // ChangeOrder
-
+#if 1
     MatrixMath::Matrix2f<> m2f1{
         1.0f, 0.0f,
         2.0f, 3.0f,
@@ -326,6 +326,7 @@ int main()
         << "m2f2 = " << std::endl
         << m2f2.ToString()
         << std::endl;
+#endif
 
     return 0;
 }
