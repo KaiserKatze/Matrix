@@ -867,6 +867,25 @@ public:
         return this->parent.GetElement(this->convert2index(row, column));
     }
 
+    const std::string ToString() const
+    {
+        std::stringstream ss;
+
+        for (int row = 0; row < this->GetHeight(); row++)
+        {
+            ss << "| ";
+            for (int col = 0; col < this->GetWidth(); col++)
+            {
+                ss << this->GetElement(row, col)
+                    << " ";
+            }
+            ss << "|"
+                << std::endl;
+        }
+
+        return ss.str();
+    }
+
 };
 
 template <typename _Ty, int Height, int Width, typename order>
