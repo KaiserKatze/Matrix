@@ -364,7 +364,8 @@ namespace MatrixMath
 
     // Advanced algorithms
 
-    template <typename _Ty, int N, typename order>
+    template <typename MatrixType,
+        std::enable_if_t<MatrixType::Width == MatrixType::Height, int> = 0>
     class Determinant;
 
     // Storage order utility
@@ -1807,46 +1808,41 @@ namespace detail
 
 }
 
-template <typename _Ty, int N, typename order>
+template <typename MatrixType,
+    std::enable_if_t<MatrixType::Width == MatrixType::Height, int>>
 class MatrixMath::Determinant
 {
+public:
+    using _Ty = typename MatrixType::ElementType;
+
 private:
     _Ty result;
+    constexpr static int N{ MatrixType::Width };
 
 public:
-    using MatrixType = Matrix<_Ty, N, N, order>;
-
-    Determinant(const MatrixType& square);
-
-    operator _Ty() const;
-};
-
-template <typename _Ty, int N, typename order>
-MatrixMath::Determinant<_Ty, N, order>::
-Determinant(const MatrixType& square)
-    : result{ 0 }
-{
-    for (auto& p : detail::PermutationGenerator<N>::generate())
+    Determinant(const MatrixType& square)
+        : result{ 0 }
     {
-        _Ty cache{ (p.inverse & 0x1) ? -1 : 1 };
-        //std::cout << std::setw(2) << cache;
-        for (int i = 0; i < N; i++)
+        for (auto& p : detail::PermutationGenerator<N>::generate())
         {
-            const _Ty& element{ square.GetElement(i, p[i]) };
-            cache *= element;
-            //std::cout << " * (" << i << ", " << p[i] << ": " << element << ")";
+            _Ty cache{ (p.inverse & 0x1) ? -1 : 1 };
+            //std::cout << std::setw(2) << cache;
+            for (int i = 0; i < N; i++)
+            {
+                const _Ty& element{ square.GetElement(i, p[i]) };
+                cache *= element;
+                //std::cout << " * (" << i << ", " << p[i] << ": " << element << ")";
+            }
+            result += cache;
+            //std::cout << " = " << cache << std::endl;
         }
-        result += cache;
-        //std::cout << " = " << cache << std::endl;
     }
-}
 
-template <typename _Ty, int N, typename order>
-MatrixMath::Determinant<_Ty, N, order>::
-operator _Ty() const
-{
-    return result;
-}
+    operator _Ty() const
+    {
+        return result;
+    }
+};
 
 
 template <typename NewOrder, typename _Ty, int Height, int Width, typename OldOrder>
