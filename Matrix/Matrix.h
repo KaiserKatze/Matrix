@@ -764,6 +764,7 @@ public:
 
 private:
     ParentType& parent;
+    std::vector<std::unique_ptr<IMatrix>> subMatrices;
 
 public:
     Refactor(ParentType& parent)
