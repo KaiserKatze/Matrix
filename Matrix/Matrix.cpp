@@ -309,6 +309,24 @@ int main()
     std::cout << std::endl;
 #endif
 
+    //==============================================
+    // ChangeOrder
+
+    MatrixMath::Matrix2f<> m2f1{
+        1.0f, 0.0f,
+        2.0f, 3.0f,
+    };
+    auto m2f2{ MatrixMath::ChangeOrder<MatrixMath::StorageOrder::ColumnMajor>(m2f1) };
+
+    std::cout
+        << "m2f1 = " << std::endl
+        << m2f1.ToString()
+        << std::endl
+
+        << "m2f2 = " << std::endl
+        << m2f2.ToString()
+        << std::endl;
+
     return 0;
 }
 
