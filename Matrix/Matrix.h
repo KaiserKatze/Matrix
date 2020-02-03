@@ -641,6 +641,21 @@ public:
     {
     }
 
+    const ParentType& GetParent() const
+    {
+        return parent;
+    }
+
+    ParentType& GetParent()
+    {
+        return parent;
+    }
+
+    bool IsTransposed() const
+    {
+        return parent.IsTransposed();
+    }
+
     // Access data
 
     inline void SetElement(const int& index, const _Ty& value)
