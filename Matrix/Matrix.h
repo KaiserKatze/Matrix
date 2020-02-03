@@ -82,8 +82,8 @@ namespace MatrixMath
 
     // INTERFACE OF ALL KINDS OF MATRICES
     // Use this interface as the base of
-    // all the "de facto" matrices, vectors and scalars
     class IMatrix {};
+    // all the "de facto" matrices, vectors, etc.
 
     template <typename _Ty, int Height, int Width, typename order>
     class ProtoMatrix
@@ -1200,7 +1200,6 @@ ToString() const
 template <typename _Ty, typename order>
 class MatrixMath::Matrix<_Ty, 1, 1, order>
     : public MatrixMath::ProtoMatrix<_Ty, 1, 1, order>
-    , public IMatrix
 {
 private:
     _Ty data;
