@@ -342,6 +342,12 @@ namespace MatrixMath
 
     template <typename _Ty, int N, typename order>
     class Determinant;
+
+    // Storage order utility
+
+    template <typename NewOrder, typename _Ty, int Height, int Width, typename OldOrder>
+    Matrix<_Ty, Height, Width, NewOrder> ChangeOrder(const Matrix<_Ty, Height, Width, OldOrder>& other);
+
 } /* NAMESPACE: MatrixMath */
 
 
@@ -1644,5 +1650,34 @@ template <typename _Ty, int N, typename order>
 MatrixMath::Determinant<_Ty, N, order>::
 operator _Ty() const
 {
+    return result;
+}
+
+
+template <typename NewOrder, typename _Ty, int Height, int Width, typename OldOrder>
+MatrixMath::Matrix<_Ty, Height, Width, NewOrder>
+MatrixMath::
+ChangeOrder(const Matrix<_Ty, Height, Width, OldOrder>& other)
+{
+    static_assert(std::is_base_of_v<StorageOrder, OldOrder>
+        && std::is_base_of_v<StorageOrder, NewOrder>,
+        "Invalid template argument: Not a derived of StorageOrder!");
+
+    static_assert(!std::is_base_of_v<AbstractCofactor, NewOrder>,
+        "Invalid template argument: It is not allowed to change into CofactorOrder!");
+
+    static_assert(!std::is_base_of_v<AbstractCofactor, OldOrder>,
+        "Invalid template argument: It is not allowed to change from CofactorOrder!");
+
+    if constexpr (std::is_same_v<NewOrder, OldOrder>)
+        return other;
+
+    using NewType = Matrix<_Ty, Height, Width, NewOrder>;
+
+    NewType result;
+    for (int row = 0; row < Height; row++)
+        for (int col = 0; col < Width; col++)
+            result.SetElement(row, col,
+                other.GetElement(row, col));
     return result;
 }
