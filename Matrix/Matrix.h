@@ -602,7 +602,8 @@ private:
     inline static int convert2index(const int& row, const int& column, const bool& isTransposed)
     {
         const int index{ OrderType::convert2index(Height, Width,
-            row, column, isTransposed) };
+            row, column, isTransposed,
+            RowSrc, RowDst, ColSrc, ColDst) };
         return index;
     }
 
