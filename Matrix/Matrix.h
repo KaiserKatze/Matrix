@@ -776,7 +776,6 @@ public:
 
 private:
     ParentType& parent;
-    std::vector<std::unique_ptr<IMatrix<_Ty>>> subMatrices;
 
     inline static int convert2index(const int& y, const int& x, const bool& isTransposed)
     {
