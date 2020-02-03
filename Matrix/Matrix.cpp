@@ -203,6 +203,17 @@ int main()
             << std::endl
             << m3i1.ToString()
             << std::endl;
+
+        auto acm4i1 = MatrixMath::AlgebraicCofactor<3, 3>(m4i1);
+        auto acm4i2 = MatrixMath::AlgebraicCofactor<0, 1>(m4i1);
+        std::cout
+            << "AlgebraicCofactor<3, 3>(m4i1) = "
+            << acm4i1
+            << std::endl
+            << "AlgebraicCofactor<0, 1>(m4i1) = "
+            << acm4i2
+            << std::endl
+            << std::endl;
     }
 #endif
 
