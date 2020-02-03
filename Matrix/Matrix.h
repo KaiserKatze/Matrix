@@ -1812,14 +1812,16 @@ private:
     _Ty result;
 
 public:
-    Determinant(const Matrix<_Ty, N, N, order>& square);
+    using MatrixType = Matrix<_Ty, N, N, order>;
+
+    Determinant(const MatrixType& square);
 
     operator _Ty() const;
 };
 
 template <typename _Ty, int N, typename order>
 MatrixMath::Determinant<_Ty, N, order>::
-Determinant(const Matrix<_Ty, N, N, order>& square)
+Determinant(const MatrixType& square)
     : result{ 0 }
 {
     for (auto& p : detail::PermutationGenerator<N>::generate())
