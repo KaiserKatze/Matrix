@@ -625,12 +625,12 @@ private:
         return Cofactor::convert2index(row, column, isTransposed);
     }
 
-    inline int convert2index(const int& row, const int& column)
+    inline int convert2index(const int& row, const int& column) const
     {
         return Cofactor::convert2index(row, column, parent.IsTransposed());
     }
 
-    inline int convert2index(const int& index)
+    inline int convert2index(const int& index) const
     {
         return Cofactor::convert2index(index, parent.IsTransposed());
     }
