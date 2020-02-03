@@ -196,6 +196,12 @@ int main()
             0, 0, 1, 2,
             0, 0, 0, 1,
         };
+
+        auto m3i1 = m4i1.GetRefactor<0, 0>();
+        std::cout
+            << "m3i1 = "
+            << std::endl
+            << std::endl;
     }
 #endif
 
