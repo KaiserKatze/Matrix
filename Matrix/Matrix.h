@@ -745,6 +745,11 @@ template <int Row, int Column>
 class MatrixMath::Matrix<_Ty, Height, Width, order>::Refactor
     : public ProtoMatrix<_Ty, Height - 1, Width - 1, order>
 {
+    static_assert(Row >= 0, "Invalid template argument: Row < 0!");
+    static_assert(Row < Height, "Invalid template argument: Row >= Height!");
+    static_assert(Column >= 0, "Invalid template argument: Column < 0!");
+    static_assert(Column < Width, "Invalid template argument: Column < Width!");
+
 public:
     using ParentType = Matrix<_Ty, Height, Width, order>;
 
