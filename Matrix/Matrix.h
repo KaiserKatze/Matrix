@@ -636,7 +636,7 @@ private:
     }
 
 public:
-    Cofactor(const ParentType& parent)
+    Cofactor(ParentType& parent)
         : parent{ parent }
     {
     }
