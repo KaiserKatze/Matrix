@@ -368,6 +368,9 @@ namespace MatrixMath
         std::enable_if_t<MatrixType::Width == MatrixType::Height, int> = 0>
     class Determinant;
 
+    template <int Row, int Column, typename _Ty, int N, typename order>
+    _Ty AlgebraicCofactor(Matrix<_Ty, N, N, order>& square);
+
     // Storage order utility
 
     template <typename NewOrder, typename _Ty, int Height, int Width, typename OldOrder>
@@ -1844,6 +1847,14 @@ public:
     }
 };
 
+template <int Row, int Column, typename _Ty, int N, typename order>
+_Ty
+MatrixMath::
+AlgebraicCofactor(Matrix<_Ty, N, N, order>& square)
+{
+    return (((Row + Column) & 1) == 1 ? -1 : 1)
+        * Determinant(square.GetCofactor<Row, Column>());
+}
 
 template <typename NewOrder, typename _Ty, int Height, int Width, typename OldOrder>
 MatrixMath::Matrix<_Ty, Height, Width, NewOrder>
