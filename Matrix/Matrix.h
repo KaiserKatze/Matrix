@@ -786,6 +786,25 @@ private:
             isTransposed);
     }
 
+    inline static int convert2index(const int& index, const bool& isTransposed)
+    {
+        int row{ 0 }, column{ 0 };
+        if (order::IsRowMajor() && isTransposed
+            || order::IsColumnMajor() && !isTransposed)
+        {
+            // index = row + column * Height
+            row = index % Height;
+            column = index / Height;
+        }
+        else
+        {
+            // index = column + row * Width
+            row = index / Width;
+            column = index % Width;
+        }
+        return Refactor::convert2index(row, column, isTransposed);
+    }
+
 public:
     Refactor(ParentType& parent)
         : parent{ parent }
