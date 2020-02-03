@@ -651,7 +651,7 @@ public:
         return parent;
     }
 
-    bool IsTransposed() const
+    inline bool IsTransposed() const
     {
         return parent.IsTransposed();
     }
