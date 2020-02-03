@@ -590,7 +590,7 @@ ToString() const
 template <typename _Ty, int Height, int Width, typename order>
 template <int RowSrc, int RowDst, int ColSrc, int ColDst>
 class MatrixMath::Matrix<_Ty, Height, Width, order>::Cofactor
-    : protected Matrix<_Ty, RowDst - RowSrc, ColDst - ColSrc, order>
+    : public ProtoMatrix<_Ty, RowDst - RowSrc, ColDst - ColSrc, order>
 {
 public:
     using ParentType = Matrix<_Ty, Height, Width, order>;
@@ -639,38 +639,6 @@ public:
     Cofactor(ParentType& parent)
         : parent{ parent }
     {
-    }
-
-    inline constexpr int GetWidth() const
-    {
-        return ColDst - ColSrc;
-    }
-
-    inline constexpr int GetHeight() const
-    {
-        return RowDst - RowSrc;
-    }
-
-    inline constexpr bool IsVector() const
-    {
-        const int width{ GetWidth() };
-        const int height{ GetHeight() };
-        return width == 1 && height > 1
-            || width > 1 && height == 1;
-    }
-
-    inline constexpr bool IsSquare() const
-    {
-        const int width{ GetWidth() };
-        const int height{ GetHeight() };
-        return width == height && width > 1;
-    }
-
-    inline constexpr bool IsScalar() const
-    {
-        const int width{ GetWidth() };
-        const int height{ GetHeight() };
-        return width == height && width == 1;
     }
 
     // Access data
