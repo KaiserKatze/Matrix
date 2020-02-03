@@ -641,6 +641,38 @@ public:
     {
     }
 
+    inline constexpr int GetWidth() const
+    {
+        return ColDst - ColSrc;
+    }
+
+    inline constexpr int GetHeight() const
+    {
+        return RowDst - RowSrc;
+    }
+
+    inline constexpr bool IsVector() const
+    {
+        const int width{ GetWidth() };
+        const int height{ GetHeight() };
+        return width == 1 && height > 1
+            || width > 1 && height == 1;
+    }
+
+    inline constexpr bool IsSquare() const
+    {
+        const int width{ GetWidth() };
+        const int height{ GetHeight() };
+        return width == height && width > 1;
+    }
+
+    inline constexpr bool IsScalar() const
+    {
+        const int width{ GetWidth() };
+        const int height{ GetHeight() };
+        return width == height && width == 1;
+    }
+
     // Access data
 
     inline void SetElement(const int& index, const _Ty& value)
