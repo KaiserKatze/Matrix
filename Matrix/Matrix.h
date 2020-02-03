@@ -372,6 +372,10 @@ namespace MatrixMath
         std::enable_if_t<MatrixType::Width == MatrixType::Height, int> = 0>
     typename MatrixType::ElementType AlgebraicCofactor(MatrixType& square);
 
+    template <typename MatrixType,
+        std::enable_if_t<MatrixType::Width == MatrixType::Height, int> = 0>
+    MatrixType AdjointMatrix(const MatrixType& matrix);
+
     // Storage order utility
 
     template <typename NewOrder, typename _Ty, int Height, int Width, typename OldOrder>
