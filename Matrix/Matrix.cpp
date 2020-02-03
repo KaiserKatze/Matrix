@@ -31,10 +31,10 @@ int main()
         << m4i1.ToString()
         << std::endl;
 
-    const auto m4i1c1 = m4i1.GetCofactor<0, 2, 0, 2>();
-    const auto m4i1c2 = m4i1.GetCofactor<0, 2, 2, 4>();
-    const auto m4i1c3 = m4i1.GetCofactor<2, 4, 0, 2>();
-    const auto m4i1c4 = m4i1.GetCofactor<2, 4, 2, 4>();
+    auto m4i1c1 = m4i1.GetCofactor<0, 2, 0, 2>();
+    auto m4i1c2 = m4i1.GetCofactor<0, 2, 2, 4>();
+    auto m4i1c3 = m4i1.GetCofactor<2, 4, 0, 2>();
+    auto m4i1c4 = m4i1.GetCofactor<2, 4, 2, 4>();
 
     std::cout
         << "m4i1c1 = "
@@ -55,6 +55,22 @@ int main()
         << "m4i1c4 = "
         << std::endl
         << m4i1c4.ToString()
+        << std::endl;
+
+    m4i1c1.SetElement(0, 1, 9);
+
+    std::cout
+        << "m4i1c1.SetElement(0, 1, 9); <--" << std::endl
+        << std::endl
+
+        << "m4i1c1 = "
+        << std::endl
+        << m4i1c1.ToString()
+        << std::endl
+
+        << "m4i1 = "
+        << std::endl
+        << m4i1.ToString()
         << std::endl;
 #endif
 #if 0
