@@ -52,8 +52,13 @@ namespace MatrixMath
         inline static constexpr bool IsColumnMajor();
     };
 
+    // DOES NOTHING
+    struct AbstractCofactor {};
+
     template <typename order>
-    struct StorageOrder::CofactorOrder : order
+    struct StorageOrder::CofactorOrder
+        : AbstractCofactor
+        , order
     {
         //
         // Height:
