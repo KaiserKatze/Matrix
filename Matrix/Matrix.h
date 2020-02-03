@@ -695,7 +695,7 @@ public:
 
     inline const _Ty& GetElement(const int& index) const
     {
-        this->parent.GetElement(this->convert2index(index));
+        return this->parent.GetElement(this->convert2index(index));
     }
 
     inline void SetElement(const int& row, const int& column, const _Ty& value)
