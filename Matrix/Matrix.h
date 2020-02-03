@@ -157,6 +157,9 @@ namespace MatrixMath
 
         template <int RowSrc, int RowDst, int ColSrc, int ColDst>
         SubMatrix<RowSrc, RowDst, ColSrc, ColDst> GetSubMatrix();
+
+        template <int Row, int Column>
+        class Refactor;
     };
 
     // Vector
