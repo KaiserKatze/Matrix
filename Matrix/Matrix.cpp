@@ -17,64 +17,7 @@ int main()
 {
     //==============================================
     // Matrix
-
 #if 1
-    MatrixMath::Matrix4i<> m4i1{
-        1, 2, 3, 4,
-        0, 1, 2, 3,
-        0, 0, 1, 2,
-        0, 0, 0, 1,
-    };
-    std::cout
-        << "m4i1 = "
-        << std::endl
-        << m4i1.ToString()
-        << std::endl;
-
-    auto m4i1c1 = m4i1.GetCofactor<0, 2, 0, 2>();
-    auto m4i1c2 = m4i1.GetCofactor<0, 2, 2, 4>();
-    auto m4i1c3 = m4i1.GetCofactor<2, 4, 0, 2>();
-    auto m4i1c4 = m4i1.GetCofactor<2, 4, 2, 4>();
-
-    std::cout
-        << "m4i1c1 = "
-        << std::endl
-        << m4i1c1.ToString()
-        << std::endl
-
-        << "m4i1c2 = "
-        << std::endl
-        << m4i1c2.ToString()
-        << std::endl
-
-        << "m4i1c3 = "
-        << std::endl
-        << m4i1c3.ToString()
-        << std::endl
-
-        << "m4i1c4 = "
-        << std::endl
-        << m4i1c4.ToString()
-        << std::endl;
-
-    m4i1c1.SetElement(0, 1, 9);
-
-    std::cout
-        << "m4i1c1.SetElement(0, 1, 9); <--" << std::endl
-        << std::endl
-
-        << "m4i1c1 = "
-        << std::endl
-        << m4i1c1.ToString()
-        << std::endl
-
-        << "m4i1 = "
-        << std::endl
-        << m4i1.ToString()
-        << std::endl;
-#endif
-#if 0
-
     MatrixMath::Matrix2i<> m2i1{
         1, 2,
         3, 4,
@@ -143,10 +86,68 @@ int main()
         << std::boolalpha << m2i1.IsTransposed() << std::noboolalpha
         << std::endl
         << std::endl;
+#endif
+
+    //==============================================
+    // Matrix Cofactor
+#if 1
+    MatrixMath::Matrix4i<> m4i1{
+        1, 2, 3, 4,
+        0, 1, 2, 3,
+        0, 0, 1, 2,
+        0, 0, 0, 1,
+    };
+    std::cout
+        << "m4i1 = "
+        << std::endl
+        << m4i1.ToString()
+        << std::endl;
+
+    auto m4i1c1 = m4i1.GetCofactor<0, 2, 0, 2>();
+    auto m4i1c2 = m4i1.GetCofactor<0, 2, 2, 4>();
+    auto m4i1c3 = m4i1.GetCofactor<2, 4, 0, 2>();
+    auto m4i1c4 = m4i1.GetCofactor<2, 4, 2, 4>();
+
+    std::cout
+        << "m4i1c1 = "
+        << std::endl
+        << m4i1c1.ToString()
+        << std::endl
+
+        << "m4i1c2 = "
+        << std::endl
+        << m4i1c2.ToString()
+        << std::endl
+
+        << "m4i1c3 = "
+        << std::endl
+        << m4i1c3.ToString()
+        << std::endl
+
+        << "m4i1c4 = "
+        << std::endl
+        << m4i1c4.ToString()
+        << std::endl;
+
+    m4i1c1.SetElement(0, 1, 9);
+    std::cout
+        << "m4i1c1.SetElement(0, 1, 9); <--" << std::endl
+        << std::endl
+
+        << "m4i1c1 = "
+        << std::endl
+        << m4i1c1.ToString()
+        << std::endl
+
+        << "m4i1 = "
+        << std::endl
+        << m4i1.ToString()
+        << std::endl;
+#endif
 
     //==============================================
     // Vector
-
+#if 1
     // Test: Vector initialization
     MatrixMath::Vector4f<> v4f1;
     SET_DEBUG_NAME(v4f1);
@@ -181,13 +182,13 @@ int main()
     std::cout
         << "v4i1 == v4i3 -> "
         << (v4i1 == v4i3 ? "[Succeed]" : "[Fail]")
+        << std::endl
         << std::endl;
+#endif
 
     //==============================================
     // Scalar
-
-    std::cout << std::endl;
-
+#if 1
     // Test: Scalar initialization
     MatrixMath::Scalar<int> s1;
     MatrixMath::Scalar<int> s2{ 100 };
@@ -257,13 +258,13 @@ int main()
         << "s4 -> " << s4 << std::endl
         << "s4 != 3 -> "
         << (s4 != 3 ? "[Succeed]" : "[Fail]")
+        << std::endl
         << std::endl;
+#endif
 
     //==============================================
     // Identity
-
-    std::cout << std::endl;
-
+#if 1
     // Test: Identity initialization
 
     MatrixMath::IdentityMatrix<float, 4> mi4f1;
@@ -288,13 +289,11 @@ int main()
         << (m4f1 == mi4f1 ? "[Succeed]" : "[Fail]")
         << std::endl
         << std::endl;
-
-    //==============================================
-    // Identity
+#endif
 
     //==============================================
     // Determinant
-
+#if 1
     MatrixMath::Matrix3i<> m3i1{ 3, 4, 9, 7, 6, 5, 0, 1, 2 };
     SET_DEBUG_NAME(m3i1);
     std::cout
@@ -309,6 +308,7 @@ int main()
 
     std::cout << std::endl;
 #endif
+
     return 0;
 }
 
