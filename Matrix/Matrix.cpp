@@ -17,7 +17,7 @@ int main()
 {
     //==============================================
     // Matrix
-#if 1
+#if ACTIVATE_MATRIX_TEST
     MatrixMath::Matrix2i<> m2i1{
         1, 2,
         3, 4,
@@ -90,7 +90,7 @@ int main()
 
     //==============================================
     // SubMatrix
-#if 1
+#if ACTIVATE_MATRIX_TEST
     MatrixMath::Matrix4i<> m4i1{
         1, 2, 3, 4,
         0, 1, 2, 3,
@@ -147,7 +147,7 @@ int main()
 
     //==============================================
     // Vector
-#if 1
+#if ACTIVATE_MATRIX_TEST
     // Test: Vector initialization
     MatrixMath::Vector4f<> v4f1;
     SET_DEBUG_NAME(v4f1);
@@ -188,7 +188,7 @@ int main()
 
     //==============================================
     // Cofactor
-#if 1
+#if ACTIVATE_MATRIX_TEST
     {
         MatrixMath::Matrix4i<> m4i1{
             1, 2, 3, 4,
@@ -219,7 +219,7 @@ int main()
 
     //==============================================
     // Scalar
-#if 1
+#if ACTIVATE_MATRIX_TEST
     // Test: Scalar initialization
     MatrixMath::Scalar<int> s1;
     MatrixMath::Scalar<int> s2{ 100 };
@@ -295,7 +295,7 @@ int main()
 
     //==============================================
     // Identity
-#if 1
+#if ACTIVATE_MATRIX_TEST
     // Test: Identity initialization
 
     MatrixMath::IdentityMatrix<float, 4> mi4f1;
@@ -324,7 +324,7 @@ int main()
 
     //==============================================
     // Determinant
-#if 1
+#if ACTIVATE_MATRIX_TEST
     MatrixMath::Matrix3i<> m3i1{ 3, 4, 9, 7, 6, 5, 0, 1, 2 };
     SET_DEBUG_NAME(m3i1);
     std::cout
@@ -342,7 +342,7 @@ int main()
 
     //==============================================
     // ChangeOrder
-#if 1
+#if ACTIVATE_MATRIX_TEST
     MatrixMath::Matrix2f<> m2f1{
         1.0f, 0.0f,
         2.0f, 3.0f,
