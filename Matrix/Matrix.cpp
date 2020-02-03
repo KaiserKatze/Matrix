@@ -18,7 +18,7 @@ int main()
     //==============================================
     // Matrix
 
-#if 0
+#if 1
     MatrixMath::Matrix4i<> m4i1{
         1, 2, 3, 4,
         0, 1, 2, 3,
@@ -51,6 +51,7 @@ int main()
         << m4i1c4.ToString()
         << std::endl;
 #endif
+#if 0
 
     MatrixMath::Matrix2i<> m2i1{
         1, 2,
@@ -285,7 +286,7 @@ int main()
         << std::endl;
 
     std::cout << std::endl;
-
+#endif
     return 0;
 }
 
