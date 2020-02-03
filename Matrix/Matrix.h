@@ -835,6 +835,38 @@ public:
         return parent.IsTransposed();
     }
 
+    // Access data
+
+    inline void SetElement(const int& index, const _Ty& value)
+    {
+        this->parent.SetElement(this->convert2index(index), value);
+    }
+
+    inline const _Ty& GetElement(const int& index) const
+    {
+        return this->parent.GetElement(this->convert2index(index));
+    }
+
+    inline void SetElement(const int& row, const int& column, const _Ty& value)
+    {
+        this->parent.SetElement(this->convert2index(row, column), value);
+    }
+
+    inline const _Ty& GetElement(const int& row, const int& column) const
+    {
+        return this->parent.GetElement(this->convert2index(row, column));
+    }
+
+    inline _Ty& GetElement(const int& index)
+    {
+        return this->parent.GetElement(this->convert2index(index));
+    }
+
+    inline _Ty& GetElement(const int& row, const int& column)
+    {
+        return this->parent.GetElement(this->convert2index(row, column));
+    }
+
 };
 
 template <typename _Ty, int Height, int Width, typename order>
