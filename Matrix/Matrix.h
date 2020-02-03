@@ -732,6 +732,15 @@ GetSubMatrix()
     return SubMatrix<RowSrc, RowDst, ColSrc, ColDst>(*this);
 }
 
+
+template <typename _Ty, int Height, int Width, typename order>
+template <int Row, int Column>
+class MatrixMath::Matrix<_Ty, Height, Width, order>::Refactor
+{
+
+};
+
+
 template <typename _Ty, int N, typename order>
 MatrixMath::IdentityMatrix<_Ty, N, order>::
 IdentityMatrix()
