@@ -176,6 +176,9 @@ namespace MatrixMath
 
         template <int Row, int Column>
         class Refactor;
+
+        template <int Row, int Column>
+        Refactor<Row, Column> GetRefactor();
     };
 
     // Vector
@@ -797,6 +800,15 @@ public:
     }
 
 };
+
+template <typename _Ty, int Height, int Width, typename order>
+template <int Row, int Column>
+MatrixMath::Matrix<_Ty, Height, Width, order>::Refactor<Row, Column>
+MatrixMath::Matrix<_Ty, Height, Width, order>::
+GetRefactor()
+{
+    return Refactor<Row, Column>(*this);
+}
 
 
 template <typename _Ty, int N, typename order>
