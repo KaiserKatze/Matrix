@@ -677,32 +677,32 @@ public:
 
     inline void SetElement(const int& index, const _Ty& value)
     {
-        this->ParentType::SetElement(this->convert2pair(index), value);
+        this->ParentType::SetElement(this->convert2index(index), value);
     }
 
     inline const _Ty& GetElement(const int& index) const
     {
-        this->ParentType::GetElement(this->convert2pair(index));
+        this->ParentType::GetElement(this->convert2index(index));
     }
 
     inline void SetElement(const int& row, const int& column, const _Ty& value)
     {
-        this->ParentType::SetElement(this->convert2pair(row, column), value);
+        this->ParentType::SetElement(this->convert2index(row, column), value);
     }
 
     inline const _Ty& GetElement(const int& row, const int& column) const
     {
-        return this->ParentType::GetElement(this->convert2pair(row, column));
+        return this->ParentType::GetElement(this->convert2index(row, column));
     }
 
     inline _Ty& GetElement(const int& index)
     {
-        return this->ParentType::GetElement(this->convert2pair(index));
+        return this->ParentType::GetElement(this->convert2index(index));
     }
 
     inline _Ty& GetElement(const int& row, const int& column)
     {
-        return this->ParentType::GetElement(this->convert2pair(row, column));
+        return this->ParentType::GetElement(this->convert2index(row, column));
     }
 
     const std::string ToString() const
