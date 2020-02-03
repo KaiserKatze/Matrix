@@ -778,6 +778,14 @@ private:
     ParentType& parent;
     std::vector<std::unique_ptr<IMatrix<_Ty>>> subMatrices;
 
+    inline static int convert2index(const int& y, const int& x, const bool& isTransposed)
+    {
+        return order::convert2index(Height, Width,
+            y < Row ? y : y + 1,
+            x < Column ? x : x + 1,
+            isTransposed);
+    }
+
 public:
     Refactor(ParentType& parent)
         : parent{ parent }
