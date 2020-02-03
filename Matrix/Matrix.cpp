@@ -25,6 +25,12 @@ int main()
         0, 0, 1, 2,
         0, 0, 0, 1,
     };
+    std::cout
+        << "m4i1 = "
+        << std::endl
+        << m4i1.ToString()
+        << std::endl;
+
     const auto m4i1c1 = m4i1.GetCofactor<0, 2, 0, 2>();
     const auto m4i1c2 = m4i1.GetCofactor<0, 2, 2, 4>();
     const auto m4i1c3 = m4i1.GetCofactor<2, 4, 0, 2>();
