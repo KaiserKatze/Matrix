@@ -738,6 +738,32 @@ template <int Row, int Column>
 class MatrixMath::Matrix<_Ty, Height, Width, order>::Refactor
     : public ProtoMatrix<_Ty, Height - 1, Width - 1, order>
 {
+public:
+    using ParentType = Matrix<_Ty, Height, Width, order>;
+
+private:
+    ParentType& parent;
+
+public:
+    Refactor(ParentType& parent)
+        : parent{ parent }
+    {
+    }
+
+    const ParentType& GetParent() const
+    {
+        return parent;
+    }
+
+    ParentType& GetParent()
+    {
+        return parent;
+    }
+
+    inline bool IsTransposed() const
+    {
+        return parent.IsTransposed();
+    }
 
 };
 
