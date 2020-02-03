@@ -79,6 +79,9 @@ namespace MatrixMath
             const int& row, const int& column, const bool& isTransposed);
     };
 
+    // INTERFACE OF ALL KINDS OF MATRICES
+    class IMatrix {};
+
     template <typename _Ty, int Height, int Width, typename order>
     class ProtoMatrix
     {
