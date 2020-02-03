@@ -804,6 +804,16 @@ private:
         return Refactor::convert2index(row, column, isTransposed);
     }
 
+    inline int convert2index(const int& row, const int& column) const
+    {
+        return Refactor::convert2index(row, column, parent.IsTransposed());
+    }
+
+    inline int convert2index(const int& index) const
+    {
+        return Refactor::convert2index(index, parent.IsTransposed());
+    }
+
 public:
     Refactor(ParentType& parent)
         : parent{ parent }
