@@ -26,6 +26,84 @@ namespace MetaMath
     constexpr static bool IsEven = (Number & 1) == 0;
 }
 
+namespace MetaControl
+{
+    template <int _Src, int _Dst, int _Inc, int _Pos = _Src>
+    struct ForLoop_Range_t
+    {
+        using Next = ForLoop_Range_t<_Src, _Dst, _Inc, _Pos + _Inc>;
+        using Reset = ForLoop_Range_t<_Src, _Dst, _Inc, _Src>;
+
+        constexpr static bool IsValid{ _Inc > 0 && _Pos < _Dst || _Inc < 0 && _Pos > _Dst };
+
+        constexpr static int Src{ _Src };
+        constexpr static int Dst{ _Dst };
+        constexpr static int Pos{ _Pos };
+    };
+
+    struct ForLoop_t
+    {
+
+        // Without Context
+
+        template <typename XRange, typename YRange, typename Function>
+        constexpr static void pass1()
+        {
+            if constexpr (XRange::IsValid)
+            {
+                pass2<XRange, YRange, Function>();
+            }
+        }
+
+        template <typename XRange, typename YRange, typename Function>
+        constexpr static void pass2()
+        {
+            if constexpr (YRange::IsValid)
+            {
+                // the innermost loop
+                Function::template run<XRange, YRange>();
+
+                pass2<XRange, typename YRange::Next, Function>();
+            }
+            else if constexpr (!YRange::IsValid)
+            {
+                // the nesting loop is over;
+                // restart the outter loop
+                pass1<typename XRange::Next, typename YRange::Reset, Function>();
+            }
+        }
+
+        // With Context
+
+        template <typename XRange, typename YRange, typename Function, typename Context>
+        constexpr static void pass1(Context&& context)
+        {
+            if constexpr (XRange::IsValid)
+            {
+                pass2<XRange, YRange, Function>(context);
+            }
+        }
+
+        template <typename XRange, typename YRange, typename Function, typename Context>
+        constexpr static void pass2(Context&& context)
+        {
+            if constexpr (YRange::IsValid)
+            {
+                // the innermost loop
+                Function::template run<XRange, YRange>(context);
+
+                pass2<XRange, typename YRange::Next, Function>(context);
+            }
+            else if constexpr (!YRange::IsValid)
+            {
+                // the nesting loop is over;
+                // restart the outter loop
+                pass1<typename XRange::Next, typename YRange::Reset, Function>(context);
+            }
+        }
+    };
+}
+
 namespace MatrixMath
 {
     struct StorageOrder
@@ -1860,6 +1938,59 @@ AlgebraicCofactor(MatrixType& square)
 {
     return (((Row + Column) & 1) == 1 ? -1 : 1)
         * Determinant(square.GetCofactor<Row, Column>());
+}
+
+namespace detail
+{
+    template <typename MatrixType>
+    struct AdjointMatrix_Context_t
+    {
+        constexpr static int Height{ MatrixType::Height };
+        constexpr static int Width{ MatrixType::Width };
+
+        const MatrixType& matrix;
+        MatrixType& result;
+
+        AdjointMatrix_Context_t(const MatrixType& matrix, MatrixType& result)
+            : matrix{ matrix }
+            , result{ result }
+        {
+        }
+    };
+
+    template <typename ContextType>
+    struct AdjointMatrix_Maker_t
+    {
+        template <typename XRange, typename YRange>
+        constexpr static void run(ContextType& context)
+        {
+            const int Height{ ContextType::Height };
+            const int Width{ ContextType::Width };
+            auto val{ MatrixMath::template AlgebraicCofactor<Height, Width>(context.matrix) };
+            const int row{ XRange::Pos };
+            const int col{ YRange::Pos };
+            context.result.SetElement(row, col, val);
+        }
+    };
+}
+
+template <typename MatrixType,
+    std::enable_if_t<MatrixType::Width == MatrixType::Height, int>>
+MatrixType
+MatrixMath::
+AdjointMatrix(const MatrixType& matrix)
+{
+    using ContextType = detail::template AdjointMatrix_Context_t<MatrixType>;
+    using FunctionType = detail::template AdjointMatrix_Maker_t<ContextType>;
+    MatrixType result;
+
+    MetaControl::ForLoop_t::template pass1<
+        MetaControl::template ForLoop_Range_t<0, MatrixType::Height, 1>,
+        MetaControl::template ForLoop_Range_t<0, MatrixType::Width, 1>,
+        FunctionType
+    >(ContextType(matrix, result));
+
+    return result;
 }
 
 template <typename NewOrder, typename _Ty, int Height, int Width, typename OldOrder>
