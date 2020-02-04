@@ -1974,9 +1974,7 @@ namespace detail
         template <typename XRange, typename YRange>
         constexpr static void run(ContextType& context)
         {
-            const int Height{ ContextType::Height };
-            const int Width{ ContextType::Width };
-            auto val{ MatrixMath::template AlgebraicCofactor<Height, Width>(context.matrix) };
+            auto val{ MatrixMath::template AlgebraicCofactor<XRange::Pos, YRange::Pos>(context.matrix) };
             const int row{ XRange::Pos };
             const int col{ YRange::Pos };
             context.result.SetElement(row, col, val);
