@@ -1937,7 +1937,7 @@ MatrixMath::
 AlgebraicCofactor(MatrixType& square)
 {
     using ResultType = typename MatrixType::ElementType;
-    using CofactorType = MatrixType::Cofactor<Row, Column>;
+    using CofactorType = typename MatrixType::Cofactor<Row, Column>;
     CofactorType cofactor{ square.template GetCofactor<Row, Column>() };
     Determinant detA(cofactor);
     ResultType result{ static_cast<ResultType>(detA) };
