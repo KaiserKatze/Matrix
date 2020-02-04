@@ -15,6 +15,38 @@
 
 int main()
 {
+    MatrixMath::Matrix3i<> m3i1{
+        1, -2, 2,
+        -3, 1, 1,
+        -2, -1, 6,
+    };
+    std::cout
+        << "m3i1 = " << std::endl
+        << m3i1.ToString()
+        << std::endl;
+
+    MatrixMath::Determinant detA(m3i1);
+    std::cout
+        << "det(m3i1) = "
+        << detA
+        << std::endl;
+
+    auto m3i1c = m3i1.template GetCofactor<1, 1>();
+    MatrixMath::Determinant detA1(m3i1c);
+    std::cout
+        << "det(m3i1c) = "
+        << detA1
+        << std::endl;
+
+#if 1
+    MatrixMath::Matrix3i<> m3i2{ MatrixMath::AdjointMatrix(m3i1) };
+    std::cout
+        << "m3i2 = Adjoint(m3i1) = "
+        << std::endl
+        << m3i2.ToString()
+        << std::endl;
+#endif
+
     //==============================================
     // Matrix
 #if ACTIVATE_MATRIX_TEST
