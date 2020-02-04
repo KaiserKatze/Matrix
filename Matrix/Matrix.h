@@ -31,6 +31,10 @@ namespace MetaControl
     template <int _Src, int _Dst, int _Inc, int _Pos = _Src>
     struct ForLoop_Range_t
     {
+        static_assert(_Inc > 0 && _Src <= _Dst && _Pos <= _Dst
+            || _Inc < 0 && _Src >= _Dst && _Pos >= _Dst,
+            "Invalid template argument: Possible infinite loop!");
+
         using Next = ForLoop_Range_t<_Src, _Dst, _Inc, _Pos + _Inc>;
         using Reset = ForLoop_Range_t<_Src, _Dst, _Inc, _Src>;
 
