@@ -1936,8 +1936,12 @@ typename MatrixType::ElementType
 MatrixMath::
 AlgebraicCofactor(MatrixType& square)
 {
-    return (((Row + Column) & 1) == 1 ? -1 : 1)
-        * Determinant(square.GetCofactor<Row, Column>());
+    typename MatrixType::ElementType result{
+        Determinant(square.GetCofactor<Row, Column>())
+    };
+    const bool IsOdd{ ((Row + Column) & 1) == 1 };
+    result *= (IsOdd ? -1 : 1);
+    return result;
 }
 
 namespace detail
