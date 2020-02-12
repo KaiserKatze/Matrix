@@ -456,7 +456,7 @@ namespace MatrixMath
     typename MatrixType::ElementType AlgebraicCofactor(const MatrixType& square);
 
     template <typename MatrixType,
-        std::enable_if_t<!std::is_const_v<MatrixType> && MatrixType::Width == MatrixType::Height, int> = 0>
+        std::enable_if_t<MatrixType::Width == MatrixType::Height, int> = 0>
     MatrixType AdjointMatrix(const MatrixType& matrix);
 
     // Utilities
@@ -1950,7 +1950,7 @@ namespace detail
 }
 
 template <typename MatrixType,
-    std::enable_if_t<!std::is_const_v<MatrixType> && MatrixType::Width == MatrixType::Height, int>>
+    std::enable_if_t<MatrixType::Width == MatrixType::Height, int>>
 MatrixType
 MatrixMath::
 AdjointMatrix(const MatrixType& matrix)
