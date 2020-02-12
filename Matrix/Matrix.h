@@ -1900,6 +1900,11 @@ public:
         }
     }
 
+    const _Ty& value() const
+    {
+        return result;
+    }
+
     operator _Ty() const
     {
         return result;
