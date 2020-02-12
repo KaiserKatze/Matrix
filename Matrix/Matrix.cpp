@@ -20,22 +20,27 @@ int main()
         -3, 1, 1,
         -2, -1, 6,
     };
+    SET_DEBUG_NAME(m3i1);
     std::cout
         << "m3i1 = " << std::endl
-        << m3i1.ToString()
-        << std::endl;
+        << m3i1.ToString();
 
     MatrixMath::Determinant detA(m3i1);
     std::cout
         << "det(m3i1) = "
         << detA
+        << std::endl
         << std::endl;
 
-    auto m3i1c = m3i1.template GetCofactor<1, 1>();
-    MatrixMath::Determinant detA1(m3i1c);
+    auto m3i1c00 = m3i1.template GetCofactor<0, 0>();
+    MatrixMath::Determinant detA1(m3i1c00);
     std::cout
-        << "det(m3i1c) = "
+        << "m3i1c00 = "
+        << std::endl
+        << m3i1c00.ToString()
+        << "det(m3i1c00) = "
         << detA1
+        << std::endl
         << std::endl;
 
 #if 1
