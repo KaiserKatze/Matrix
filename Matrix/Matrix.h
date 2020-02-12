@@ -25,6 +25,11 @@ namespace MetaMath
 
     template <int Number>
     constexpr static bool IsEven = (Number & 1) == 0;
+
+    template <typename _Ty> constexpr static _Ty Zero{ 0 };
+    template <> constexpr static float Zero<float>{ 0.0f };
+    template <> constexpr static double Zero<double>{ 0.0 };
+    template <> constexpr static long long Zero<long long>{ 0LL };
 }
 
 namespace MetaControl
