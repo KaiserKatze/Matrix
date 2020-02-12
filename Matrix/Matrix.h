@@ -458,7 +458,10 @@ namespace MatrixMath
         std::enable_if_t<!std::is_const_v<MatrixType> && MatrixType::Width == MatrixType::Height, int> = 0>
     MatrixType AdjointMatrix(const MatrixType& matrix);
 
-    // Storage order utility
+    // Utilities
+
+    template <typename MatrixType>
+    const std::string ToString(const MatrixType& matrix);
 
     template <typename NewOrder, typename _Ty, int Height, int Width, typename OldOrder>
     Matrix<_Ty, Height, Width, NewOrder> ChangeOrder(const Matrix<_Ty, Height, Width, OldOrder>& other);
