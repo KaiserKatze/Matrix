@@ -1977,6 +1977,21 @@ AdjointMatrix(const MatrixType& matrix)
     return result;
 }
 
+template <typename MatrixType,
+    std::enable_if_t<MatrixType::Width == MatrixType::Height, int>>
+bool
+MatrixMath::
+IsInvertible(const MatrixType& matrix)
+{
+    using _Ty = typename MatrixType::ElementType;
+    // TODO
+    // for now, MetaMath::Zero is explicitly instantiated
+    // for long long, float, and double;
+    // what if ElementType is an instance of Matrix?
+    // what if ElementType is an instance of std::complex?
+    return MetaMath::Zero<_Ty> == Determinant(matrix);
+}
+
 template <typename MatrixType>
 const std::string
 MatrixMath::
