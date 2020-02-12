@@ -30,6 +30,10 @@ int main()
         << "det(m3i1) = "
         << detA
         << std::endl
+        << "IsInvertible(m3i1) -> "
+        << std::boolalpha
+        << MatrixMath::IsInvertible(m3i1)
+        << std::endl
         << std::endl;
 
 #define _PRINT_COFACTOR_0(m) \
