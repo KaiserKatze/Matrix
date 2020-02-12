@@ -1994,7 +1994,7 @@ IsInvertible(const MatrixType& matrix)
     // for long long, float, and double;
     // what if ElementType is an instance of Matrix?
     // what if ElementType is an instance of std::complex?
-    return MetaMath::Zero<_Ty> == Determinant(matrix);
+    return MetaMath::Zero<_Ty> != Determinant(matrix).value();
 }
 
 template <typename MatrixType>
