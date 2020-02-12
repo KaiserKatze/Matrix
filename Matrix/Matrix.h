@@ -459,6 +459,10 @@ namespace MatrixMath
         std::enable_if_t<MatrixType::Width == MatrixType::Height, int> = 0>
     MatrixType AdjointMatrix(const MatrixType& matrix);
 
+    template <typename MatrixType,
+        std::enable_if_t<MatrixType::Width == MatrixType::Height, int> = 0>
+    bool IsInvertible(const MatrixType& matrix);
+
     // Utilities
 
     template <typename MatrixType>
