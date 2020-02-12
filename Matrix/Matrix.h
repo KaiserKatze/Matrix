@@ -1942,8 +1942,8 @@ namespace detail
         constexpr static void run(ContextType& context)
         {
             auto val{ MatrixMath::template AlgebraicCofactor<XRange::Pos, YRange::Pos>(context.matrix) };
-            const int row{ XRange::Pos };
-            const int col{ YRange::Pos };
+            const int col{ XRange::Pos };
+            const int row{ YRange::Pos };
             context.result.SetElement(row, col, val);
         }
     };
