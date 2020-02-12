@@ -1915,6 +1915,7 @@ public:
     {
         for (auto& p : detail::PermutationGenerator<N>::generate())
         {
+            // calculate power(-1, p.inverse)
             _Ty cache{ (p.inverse & 0x1) ? -1 : 1 };
             //std::cout << std::setw(2) << cache;
             for (int i = 0; i < N; i++)
