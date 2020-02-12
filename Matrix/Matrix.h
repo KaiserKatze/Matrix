@@ -4,6 +4,7 @@
 #include <array>
 #include <exception>
 #include <initializer_list>
+#include <iomanip>
 #include <iterator>
 #include <memory>
 #include <sstream>
@@ -2007,6 +2008,32 @@ AdjointMatrix(const MatrixType& matrix)
     >(ContextType(matrix, result));
 
     return result;
+}
+
+template <typename MatrixType>
+const std::string
+MatrixMath::
+ToString(const MatrixType& matrix)
+{
+    std::stringstream ss;
+    int Width{ MatrixType::Width };
+    int Height{ MatrixType::Height };
+
+    for (int row = 0; row < Height; row++)
+    {
+        ss << "| ";
+        for (int column = 0; column < Width; column++)
+        {
+            ss
+                << std::setw(5)
+                << matrix.GetElement(row, column)
+                << " ";
+        }
+        ss << "|"
+            << std::endl;
+    }
+
+    return ss.str();
 }
 
 template <typename NewOrder, typename _Ty, int Height, int Width, typename OldOrder>
