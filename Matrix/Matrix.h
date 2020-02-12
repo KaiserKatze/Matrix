@@ -700,21 +700,7 @@ const std::string
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 ToString() const
 {
-    std::stringstream ss;
-
-    for (int row = 0; row < Height; row++)
-    {
-        ss << "| ";
-        for (int column = 0; column < Width; column++)
-        {
-            ss << GetElement(row, column)
-                << " ";
-        }
-        ss << "|"
-            << std::endl;
-    }
-
-    return ss.str();
+    return MatrixMath::ToString(*this);
 }
 
 template <typename _Ty, int Height, int Width, typename order>
@@ -829,21 +815,7 @@ public:
 
     const std::string ToString() const
     {
-        std::stringstream ss;
-
-        for (int row = 0; row < this->GetHeight(); row++)
-        {
-            ss << "| ";
-            for (int col = 0; col < this->GetWidth(); col++)
-            {
-                ss << this->GetElement(row, col)
-                    << " ";
-            }
-            ss << "|"
-                << std::endl;
-        }
-
-        return ss.str();
+        return MatrixMath::ToString(*this);
     }
 };
 
@@ -966,21 +938,7 @@ public:
 
     const std::string ToString() const
     {
-        std::stringstream ss;
-
-        for (int row = 0; row < this->GetHeight(); row++)
-        {
-            ss << "| ";
-            for (int col = 0; col < this->GetWidth(); col++)
-            {
-                ss << this->GetElement(row, col)
-                    << " ";
-            }
-            ss << "|"
-                << std::endl;
-        }
-
-        return ss.str();
+        return MatrixMath::ToString(*this);
     }
 
 };
@@ -2024,13 +1982,11 @@ ToString(const MatrixType& matrix)
         ss << "| ";
         for (int column = 0; column < Width; column++)
         {
-            ss
-                << std::setw(5)
+            ss << std::setw(5)
                 << matrix.GetElement(row, column)
                 << " ";
         }
-        ss << "|"
-            << std::endl;
+        ss << "    |" << std::endl;
     }
 
     return ss.str();
