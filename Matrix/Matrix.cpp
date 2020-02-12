@@ -33,13 +33,22 @@ int main()
         << std::endl;
 
     auto m3i1c00 = m3i1.template GetCofactor<0, 0>();
-    MatrixMath::Determinant detA1(m3i1c00);
     std::cout
         << "m3i1c00 = "
         << std::endl
         << m3i1c00.ToString()
         << "det(m3i1c00) = "
-        << detA1
+        << MatrixMath::Determinant(m3i1c00)
+        << std::endl
+        << std::endl;
+
+    auto m3i1c01 = m3i1.template GetCofactor<0, 1>();
+    std::cout
+        << "m3i1c01 = "
+        << std::endl
+        << m3i1c01.ToString()
+        << "det(m3i1c01) = "
+        << MatrixMath::Determinant(m3i1c01)
         << std::endl
         << std::endl;
 
