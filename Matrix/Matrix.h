@@ -84,7 +84,7 @@ namespace MetaControl
         {
             if constexpr (XRange::IsValid)
             {
-                pass2<XRange, YRange, Function>(context);
+                pass2<XRange, YRange, Function>(std::move(context));
             }
         }
 
@@ -96,13 +96,13 @@ namespace MetaControl
                 // the innermost loop
                 Function::template run<XRange, YRange>(context);
 
-                pass2<XRange, typename YRange::Next, Function>(context);
+                pass2<XRange, typename YRange::Next, Function>(std::move(context));
             }
             else if constexpr (!YRange::IsValid)
             {
                 // the nesting loop is over;
                 // restart the outter loop
-                pass1<typename XRange::Next, typename YRange::Reset, Function>(context);
+                pass1<typename XRange::Next, typename YRange::Reset, Function>(std::move(context));
             }
         }
     };
@@ -452,10 +452,10 @@ namespace MatrixMath
 
     template <int Row, int Column, typename MatrixType,
         std::enable_if_t<MatrixType::Width == MatrixType::Height, int> = 0>
-    typename MatrixType::ElementType AlgebraicCofactor(MatrixType& square);
+    typename MatrixType::ElementType AlgebraicCofactor(const MatrixType& square);
 
     template <typename MatrixType,
-        std::enable_if_t<MatrixType::Width == MatrixType::Height, int> = 0>
+        std::enable_if_t<!std::is_const_v<MatrixType> && MatrixType::Width == MatrixType::Height, int> = 0>
     MatrixType AdjointMatrix(const MatrixType& matrix);
 
     // Storage order utility
@@ -1938,11 +1938,15 @@ template <int Row, int Column, typename MatrixType,
     std::enable_if_t<MatrixType::Width == MatrixType::Height, int>>
 typename MatrixType::ElementType
 MatrixMath::
-AlgebraicCofactor(MatrixType& square)
+AlgebraicCofactor(const MatrixType& square)
 {
-    using ResultType = typename MatrixType::ElementType;
-    using CofactorType = typename MatrixType::template Cofactor<Row, Column>;
-    CofactorType cofactor{ square.template GetCofactor<Row, Column>() };
+    using Nude = std::remove_cv_t<std::remove_reference_t<MatrixType>>;
+    using ResultType = typename Nude::ElementType;
+    using CofactorType = typename Nude::template Cofactor<Row, Column>;
+    using NudeRef = std::add_lvalue_reference_t<Nude>;
+    // function `GetConfactor` is non-const member function
+    // const_cast the reference in case of const-reference
+    CofactorType cofactor{ const_cast<NudeRef>(square).template GetCofactor<Row, Column>() };
     Determinant detA(cofactor);
     ResultType result{ static_cast<ResultType>(detA) };
     const bool IsOdd{ ((Row + Column) & 1) == 1 };
@@ -1983,7 +1987,7 @@ namespace detail
 }
 
 template <typename MatrixType,
-    std::enable_if_t<MatrixType::Width == MatrixType::Height, int>>
+    std::enable_if_t<!std::is_const_v<MatrixType> && MatrixType::Width == MatrixType::Height, int>>
 MatrixType
 MatrixMath::
 AdjointMatrix(const MatrixType& matrix)
