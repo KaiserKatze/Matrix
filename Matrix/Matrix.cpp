@@ -32,25 +32,30 @@ int main()
         << std::endl
         << std::endl;
 
-    auto m3i1c00 = m3i1.template GetCofactor<0, 0>();
-    std::cout
-        << "m3i1c00 = "
+#define _PRINT_COFACTOR_0(m) \
+    std::cout \
+        << #m " = " \
+        << std::endl \
+        << m.ToString() \
+        << "det(" #m ") = " \
+        << MatrixMath::Determinant(m) \
+        << std::endl \
         << std::endl
-        << m3i1c00.ToString()
-        << "det(m3i1c00) = "
-        << MatrixMath::Determinant(m3i1c00)
-        << std::endl
-        << std::endl;
+#define PRINT_COFACTOR(m, x, y) \
+    do { \
+        auto _##m##x##y{ m.template GetCofactor<x, y>() }; \
+        _PRINT_COFACTOR_0(_##m##x##y); \
+    } while(0)
 
-    auto m3i1c01 = m3i1.template GetCofactor<0, 1>();
-    std::cout
-        << "m3i1c01 = "
-        << std::endl
-        << m3i1c01.ToString()
-        << "det(m3i1c01) = "
-        << MatrixMath::Determinant(m3i1c01)
-        << std::endl
-        << std::endl;
+    PRINT_COFACTOR(m3i1, 0, 0);
+    PRINT_COFACTOR(m3i1, 0, 1);
+    PRINT_COFACTOR(m3i1, 0, 2);
+    PRINT_COFACTOR(m3i1, 1, 0);
+    PRINT_COFACTOR(m3i1, 1, 1);
+    PRINT_COFACTOR(m3i1, 1, 2);
+    PRINT_COFACTOR(m3i1, 2, 0);
+    PRINT_COFACTOR(m3i1, 2, 1);
+    PRINT_COFACTOR(m3i1, 2, 2);
 
 #if 1
     MatrixMath::Matrix3i<> m3i2{ MatrixMath::AdjointMatrix(m3i1) };
