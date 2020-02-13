@@ -182,17 +182,17 @@ namespace MatrixMath
         virtual inline _Ty& GetElement(const int& row, const int& column) = 0;
     };
 
-    template <typename _Ty, int Height, int Width, typename order>
+    template <typename _Ty, int _Height, int _Width, typename _StorageOrder>
     class ProtoMatrix
     {
-        static_assert(Width > 0, "Template argument 'Width' has negative value!");
-        static_assert(Height > 0, "Template argument 'Height' has negative value!");
-        static_assert(std::is_base_of_v<StorageOrder, order>, "Template argument 'order' is invalid type!");
+        static_assert(_Width > 0, "Template argument 'Width' has negative value!");
+        static_assert(_Height > 0, "Template argument 'Height' has negative value!");
+        static_assert(std::is_base_of_v<StorageOrder, _StorageOrder>, "Template argument 'order' is invalid type!");
 
     public:
         using ElementType = _Ty;
-        constexpr static int Width{ Width };
-        constexpr static int Height{ Height };
+        constexpr static int Width{ _Width };
+        constexpr static int Height{ _Height };
 
         inline constexpr bool IsVector() const;
         inline constexpr bool IsSquare() const;
