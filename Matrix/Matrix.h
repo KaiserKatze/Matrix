@@ -476,6 +476,27 @@ namespace MatrixMath
     template <typename NewOrder, typename _Ty, int Height, int Width, typename OldOrder>
     Matrix<_Ty, Height, Width, NewOrder> ChangeOrder(const Matrix<_Ty, Height, Width, OldOrder>& other);
 
+    enum class MergeMode : unsigned char
+    {
+        // Merge two matrices in a row.
+        ROW = 1u,
+        // Merge two matrices in a column.
+        COL = 2u,
+        // - If this flag is on,
+        //      merge two matrices SUBSTANTIALLY as one single matrix,
+        //      which has a data container of its own;
+        // - If this flag is off,
+        //      merge two matrices FORMALLY as one single matrix,
+        //      which has two references to the data containers
+        //      of the two merging matrices.
+        MEG = 4u,
+
+        // Bitwise OR: ROW | MEG
+        ROW_MEG = 5u,
+        // Bitwise OR: COL | MEG
+        COL_MEG = 6u,
+    };
+
 } /* NAMESPACE: MatrixMath */
 
 
