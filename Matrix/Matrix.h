@@ -2117,4 +2117,127 @@ namespace detail
             && (row && _lmt::Height == _rmt::Height
                 || col && _lmt::Width == _rmt::Width);
     };
+
+    template <typename _LMatrixType, typename _RMatrixType, MatrixMath::MergeMode _MergeMode, typename _NewStorageOrder>
+    class MergeResultProxy
+        : public MatrixMath::IMatrix<typename _LMatrixType::ElementType>
+    {
+    public:
+        using _lmt = _LMatrixType;
+        using _rmt = _RMatrixType;
+        using ElementType = typename _lmt::ElementType;
+        using _Ty = ElementType;
+
+        constexpr static int LHeight{ _lmt::Height };
+        constexpr static int LWidth{ _lmt::Width };
+        constexpr static int RHeight{ _rmt::Height };
+        constexpr static int RWidth{ _rmt::Width };
+        constexpr static int Height{ (_MergeMode == MatrixMath::MergeMode::ROW) ? (LHeight) : (LHeight + RHeight) };
+        constexpr static int Width{ (_MergeMode == MatrixMath::MergeMode::ROW) ? (LWidth + RWidth) : (LWidth) };
+
+    private:
+        _lmt& lmat;
+        _rmt& rmat;
+
+        // store the initial state of whether the two merging matrices are transposed
+        // if any one of them is transposed when the access/write functions are invoked
+        // tweak the addressing algorithm a little bit
+
+        bool lTrans;
+        bool rTrans;
+
+        _Ty& get(int row, int column) const
+        {
+            if constexpr (_MergeMode == MatrixMath::MergeMode::ROW)
+            {
+                // ROW merge mode
+                // need not check 'row', must check 'column'
+                if (column < LWidth)
+                {
+                    const int index{ _lmt::convert2index(row, column, lTrans) };
+                    return const_cast<_Ty&>(lmat.GetElement(index));
+                }
+                else
+                {
+                    row -= LWidth;
+                    const int index{ _rmt::convert2index(row, column, rTrans) };
+                    return const_cast<_Ty&>(rmat.GetElement(index));
+                }
+            }
+            else
+            {
+                // COL merge mode
+                // need not check 'column', must check 'row'
+                if (row < LHeight)
+                {
+                    const int index{ _lmt::convert2index(row, column, lTrans) };
+                    return const_cast<_Ty&>(lmat.GetElement(index));
+                }
+                else
+                {
+                    column -= LHeight;
+                    const int index{ _rmt::convert2index(row, column, rTrans) };
+                    return const_cast<_Ty&>(rmat.GetElement(index));
+                }
+            }
+        }
+
+        _Ty& get(int index) const
+        {
+            // TODO the following chunk of code
+            // is copied from the body of another
+            // function "MatrixMath::Matrix::SubMatrix::convert2index" #Line 771
+            // I should make a layer of abstract from it
+            const static bool isTransposed{ false }; // TODO
+            using prototype = MatrixMath::ProtoMatrixData<_Ty, Height, Width, _NewStorageOrder>;
+            auto [row, column] = prototype::index2pair(index, isTransposed);
+            return get(row, column);
+        }
+
+    public:
+        MergeResultProxy(const _lmt& lhs, const _rmt& rhs)
+            : lmat{ const_cast<_lmt&>(lhs) }
+            , rmat{ const_cast<_rmt&>(rhs) }
+            , lTrans{ lhs.IsTransposed() }
+            , rTrans{ rhs.IsTransposed() }
+        {
+        }
+
+        virtual inline void SetElement(const int& index, const _Ty& value)
+        {
+            _Ty& entry{ get(index) };
+            entry = value;
+        }
+
+        virtual inline void SetElement(const int& row, const int& column, const _Ty& value)
+        {
+            _Ty& entry{ get(row, column) };
+            entry = value;
+        }
+
+        virtual inline const _Ty& GetElement(const int& index) const
+        {
+            _Ty& entry{ get(index) };
+            return entry;
+        }
+
+        virtual inline const _Ty& GetElement(const int& row, const int& column) const
+        {
+            _Ty& entry{ get(row, column) };
+            return entry;
+        }
+
+        virtual inline _Ty& GetElement(const int& index)
+        {
+            _Ty& entry{ get(index) };
+            return entry;
+        }
+
+        virtual inline _Ty& GetElement(const int& row, const int& column)
+        {
+            _Ty& entry{ get(row, column) };
+            return entry;
+        }
+
+    };
 }
