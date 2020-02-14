@@ -2083,3 +2083,25 @@ ChangeOrder(const Matrix<_Ty, Height, Width, OldOrder>& other)
                 other.GetElement(row, col));
     return result;
 }
+
+namespace detail
+{
+    template <typename _LhsMatrixType, typename _RhsMatrixType, MatrixMath::MergeMode _MergeMode>
+    struct MergingMatricesTypeCheck
+    {
+        using byte = unsigned char;
+        using Mode = MatrixMath::MergeMode;
+        using _lmt = _LhsMatrixType;
+        using _rmt = _RhsMatrixType;
+        using _let = typename _lmt::ElementType;
+        using _ret = typename _rmt::ElementType;
+        constexpr static bool row = (static_cast<byte>(_MergeMode)
+            & static_cast<byte>(Mode::ROW)) != 0;
+        constexpr static bool col = (static_cast<byte>(_MergeMode)
+            & static_cast<byte>(Mode::COL)) != 0;
+        constexpr static bool value = !(row && col)
+            && std::is_same_v<_let, _ret>
+            && (row && _lmt::Height == _rmt::Height
+                || col && _lmt::Width == _rmt::Width);
+    };
+}
