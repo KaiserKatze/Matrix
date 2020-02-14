@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <iterator>
 #include <memory>
+#include <tuple>
 #include <sstream>
 #include <string>
 #include <type_traits>
@@ -226,6 +227,8 @@ namespace MatrixMath
         bool IsTransposed() const;
         inline const std::array<_Ty, Width * Height>& GetData() const;
         inline std::array<_Ty, Width * Height>& GetData();
+
+        static inline std::pair<int, int> index2pair(const int index, const bool isTransposed);
 
 #ifdef _DEBUG
         std::string name;
@@ -646,6 +649,29 @@ GetData()
 }
 
 template <typename _Ty, int Height, int Width, typename order>
+inline
+std::pair<int, int>
+MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
+index2pair(const int index, const bool isTransposed)
+{
+    int row{ 0 }, column{ 0 };
+    if (order::IsRowMajor() && isTransposed
+        || order::IsColumnMajor() && !isTransposed)
+    {
+        // index = row + column * Height
+        row = index % Height;
+        column = index / Height;
+    }
+    else
+    {
+        // index = column + row * Width
+        row = index / Width;
+        column = index % Width;
+    }
+    return std::make_pair(row, column);
+}
+
+template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 Matrix()
     : DataType()
@@ -897,20 +923,7 @@ private:
 
     inline static int convert2index(const int& index, const bool& isTransposed)
     {
-        int row{ 0 }, column{ 0 };
-        if (order::IsRowMajor() && isTransposed
-            || order::IsColumnMajor() && !isTransposed)
-        {
-            // index = row + column * Height
-            row = index % Height;
-            column = index / Height;
-        }
-        else
-        {
-            // index = column + row * Width
-            row = index / Width;
-            column = index % Width;
-        }
+        auto [row, column] = Matrix::index2pair(index, isTransposed);
         return Cofactor::convert2index(row, column, isTransposed);
     }
 
