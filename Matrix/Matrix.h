@@ -128,16 +128,16 @@ namespace MatrixMath
 
     struct StorageOrder::RowMajor : StorageOrder
     {
-        inline static int convert2index(const int& Height, const int& Width,
-            const int& row, const int& column, const bool& isTransposed);
+        inline static int convert2index(const int Height, const int Width,
+            const int row, const int column, const bool isTransposed);
         inline static constexpr bool IsRowMajor();
         inline static constexpr bool IsColumnMajor();
     };
 
     struct StorageOrder::ColumnMajor : StorageOrder
     {
-        inline static int convert2index(const int& Height, const int& Width,
-            const int& row, const int& column, const bool& isTransposed);
+        inline static int convert2index(const int Height, const int Width,
+            const int row, const int column, const bool isTransposed);
         inline static constexpr bool IsRowMajor();
         inline static constexpr bool IsColumnMajor();
     };
@@ -162,11 +162,11 @@ namespace MatrixMath
         // RowSrc, RowDst, ColSrc, ColDst:
         //      the absolute coordinate in the parent matrix of the cofactor
         //
-        inline static int convert2index(const int& Height, const int& Width,
-            const int& row, const int& column, const bool& isTransposed,
+        inline static int convert2index(const int Height, const int Width,
+            const int row, const int column, const bool isTransposed,
             int RowSrc, int RowDst, int ColSrc, int ColDst);
-        inline static int convert2index(const int& Height, const int& Width,
-            const int& row, const int& column, const bool& isTransposed);
+        inline static int convert2index(const int Height, const int Width,
+            const int row, const int column, const bool isTransposed);
     };
 
     // INTERFACE OF ALL KINDS OF MATRICES
@@ -175,12 +175,12 @@ namespace MatrixMath
     template <typename _Ty>
     class IMatrix
     {
-        virtual inline void SetElement(const int& index, const _Ty& value) = 0;
-        virtual inline void SetElement(const int& row, const int& column, const _Ty& value) = 0;
-        virtual inline const _Ty& GetElement(const int& index) const = 0;
-        virtual inline const _Ty& GetElement(const int& row, const int& column) const = 0;
-        virtual inline _Ty& GetElement(const int& index) = 0;
-        virtual inline _Ty& GetElement(const int& row, const int& column) = 0;
+        virtual inline void SetElement(const int index, const _Ty& value) = 0;
+        virtual inline void SetElement(const int row, const int column, const _Ty& value) = 0;
+        virtual inline const _Ty& GetElement(const int index) const = 0;
+        virtual inline const _Ty& GetElement(const int row, const int column) const = 0;
+        virtual inline _Ty& GetElement(const int index) = 0;
+        virtual inline _Ty& GetElement(const int row, const int column) = 0;
     };
 
     template <typename _Ty, int _Height, int _Width, typename _StorageOrder>
@@ -253,12 +253,12 @@ namespace MatrixMath
 
         static inline int convert2index(int row, int column, bool isTransposed);
 
-        inline void SetElement(const int& index, const _Ty& value);
-        inline const _Ty& GetElement(const int& index) const;
-        inline void SetElement(const int& row, const int& column, const _Ty& value);
-        inline const _Ty& GetElement(const int& row, const int& column) const;
-        inline _Ty& GetElement(const int& index);
-        inline _Ty& GetElement(const int& row, const int& column);
+        inline void SetElement(const int index, const _Ty& value);
+        inline const _Ty& GetElement(const int index) const;
+        inline void SetElement(const int row, const int column, const _Ty& value);
+        inline const _Ty& GetElement(const int row, const int column) const;
+        inline _Ty& GetElement(const int index);
+        inline _Ty& GetElement(const int row, const int column);
 
         // Always output a string representing the matrix in row-major order
         const std::string ToString() const;
@@ -711,7 +711,7 @@ convert2index(int row, int column, bool isTransposed)
 template <typename _Ty, int Height, int Width, typename order>
 inline void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
-SetElement(const int& index, const _Ty& value)
+SetElement(const int index, const _Ty& value)
 {
     auto& data{ this->GetData() };
     data[index] = value;
@@ -720,7 +720,7 @@ SetElement(const int& index, const _Ty& value)
 template <typename _Ty, int Height, int Width, typename order>
 inline const _Ty&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
-GetElement(const int& index) const
+GetElement(const int index) const
 {
     auto& data{ this->GetData() };
     return data[index];
@@ -729,7 +729,7 @@ GetElement(const int& index) const
 template <typename _Ty, int Height, int Width, typename order>
 inline void
 MatrixMath::Matrix<_Ty, Height, Width, order>::
-SetElement(const int& row, const int& column, const _Ty& value)
+SetElement(const int row, const int column, const _Ty& value)
 {
     const int index{ Matrix::convert2index(row, column, this->IsTransposed()) };
     this->SetElement(index, value);
@@ -738,7 +738,7 @@ SetElement(const int& row, const int& column, const _Ty& value)
 template <typename _Ty, int Height, int Width, typename order>
 inline const _Ty&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
-GetElement(const int& row, const int& column) const
+GetElement(const int row, const int column) const
 {
     const int index{ Matrix::convert2index(row, column, this->IsTransposed()) };
     return this->GetElement(index);
@@ -747,7 +747,7 @@ GetElement(const int& row, const int& column) const
 template <typename _Ty, int Height, int Width, typename order>
 inline _Ty&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
-GetElement(const int& index)
+GetElement(const int index)
 {
     auto& data{ this->GetData() };
     return data[index];
@@ -756,7 +756,7 @@ GetElement(const int& index)
 template <typename _Ty, int Height, int Width, typename order>
 inline _Ty&
 MatrixMath::Matrix<_Ty, Height, Width, order>::
-GetElement(const int& row, const int& column)
+GetElement(const int row, const int column)
 {
     const int index{ Matrix::convert2index(row, column, this->IsTransposed()) };
     return this->GetElement(index);
@@ -790,7 +790,7 @@ public:
 private:
     ParentType& parent;
 
-    inline static int convert2index(const int& row, const int& column, const bool& isTransposed)
+    inline static int convert2index(const int row, const int column, const bool isTransposed)
     {
         const int index{ OrderType::convert2index(Height, Width,
             row, column, isTransposed,
@@ -798,7 +798,7 @@ private:
         return index;
     }
 
-    inline static int convert2index(const int& index, const bool& isTransposed)
+    inline static int convert2index(const int index, const bool isTransposed)
     {
         int row{ 0 }, column{ 0 };
         if (OrderType::IsRowMajor() && isTransposed
@@ -817,12 +817,12 @@ private:
         return SubMatrix::convert2index(row, column, isTransposed);
     }
 
-    inline int convert2index(const int& row, const int& column) const
+    inline int convert2index(const int row, const int column) const
     {
         return SubMatrix::convert2index(row, column, parent.IsTransposed());
     }
 
-    inline int convert2index(const int& index) const
+    inline int convert2index(const int index) const
     {
         return SubMatrix::convert2index(index, parent.IsTransposed());
     }
@@ -850,32 +850,32 @@ public:
 
     // Access data
 
-    inline void SetElement(const int& index, const _Ty& value)
+    inline void SetElement(const int index, const _Ty& value)
     {
         this->parent.SetElement(this->convert2index(index), value);
     }
 
-    inline const _Ty& GetElement(const int& index) const
+    inline const _Ty& GetElement(const int index) const
     {
         return this->parent.GetElement(this->convert2index(index));
     }
 
-    inline void SetElement(const int& row, const int& column, const _Ty& value)
+    inline void SetElement(const int row, const int column, const _Ty& value)
     {
         this->parent.SetElement(this->convert2index(row, column), value);
     }
 
-    inline const _Ty& GetElement(const int& row, const int& column) const
+    inline const _Ty& GetElement(const int row, const int column) const
     {
         return this->parent.GetElement(this->convert2index(row, column));
     }
 
-    inline _Ty& GetElement(const int& index)
+    inline _Ty& GetElement(const int index)
     {
         return this->parent.GetElement(this->convert2index(index));
     }
 
-    inline _Ty& GetElement(const int& row, const int& column)
+    inline _Ty& GetElement(const int row, const int column)
     {
         return this->parent.GetElement(this->convert2index(row, column));
     }
@@ -913,7 +913,7 @@ public:
 private:
     ParentType& parent;
 
-    inline static int convert2index(const int& y, const int& x, const bool& isTransposed)
+    inline static int convert2index(const int y, const int x, const bool isTransposed)
     {
         return order::convert2index(Height, Width,
             y < Row ? y : y + 1,
@@ -921,18 +921,18 @@ private:
             isTransposed);
     }
 
-    inline static int convert2index(const int& index, const bool& isTransposed)
+    inline static int convert2index(const int index, const bool isTransposed)
     {
         auto [row, column] = Matrix::index2pair(index, isTransposed);
         return Cofactor::convert2index(row, column, isTransposed);
     }
 
-    inline int convert2index(const int& row, const int& column) const
+    inline int convert2index(const int row, const int column) const
     {
         return Cofactor::convert2index(row, column, parent.IsTransposed());
     }
 
-    inline int convert2index(const int& index) const
+    inline int convert2index(const int index) const
     {
         return Cofactor::convert2index(index, parent.IsTransposed());
     }
@@ -960,32 +960,32 @@ public:
 
     // Access data
 
-    inline void SetElement(const int& index, const _Ty& value)
+    inline void SetElement(const int index, const _Ty& value)
     {
         this->parent.SetElement(this->convert2index(index), value);
     }
 
-    inline const _Ty& GetElement(const int& index) const
+    inline const _Ty& GetElement(const int index) const
     {
         return this->parent.GetElement(this->convert2index(index));
     }
 
-    inline void SetElement(const int& row, const int& column, const _Ty& value)
+    inline void SetElement(const int row, const int column, const _Ty& value)
     {
         this->parent.SetElement(this->convert2index(row, column), value);
     }
 
-    inline const _Ty& GetElement(const int& row, const int& column) const
+    inline const _Ty& GetElement(const int row, const int column) const
     {
         return this->parent.GetElement(this->convert2index(row, column));
     }
 
-    inline _Ty& GetElement(const int& index)
+    inline _Ty& GetElement(const int index)
     {
         return this->parent.GetElement(this->convert2index(index));
     }
 
-    inline _Ty& GetElement(const int& row, const int& column)
+    inline _Ty& GetElement(const int row, const int column)
     {
         return this->parent.GetElement(this->convert2index(row, column));
     }
@@ -1332,12 +1332,12 @@ public:
     Matrix(const Matrix&& other);
     Matrix(const std::initializer_list<_Ty>& init);
 
-    inline void SetElement(const int& index, const _Ty& value);
-    inline void SetElement(const int& row, const int& column, const _Ty& value);
-    inline const _Ty& GetElement(const int& index) const;
-    inline const _Ty& GetElement(const int& row, const int& column) const;
-    inline _Ty& GetElement(const int& index);
-    inline _Ty& GetElement(const int& row, const int& column);
+    inline void SetElement(const int index, const _Ty& value);
+    inline void SetElement(const int row, const int column, const _Ty& value);
+    inline const _Ty& GetElement(const int index) const;
+    inline const _Ty& GetElement(const int row, const int column) const;
+    inline _Ty& GetElement(const int index);
+    inline _Ty& GetElement(const int row, const int column);
 
     const std::string ToString() const;
 };
@@ -1373,7 +1373,7 @@ Matrix(const std::initializer_list<_Ty>& init)
 template <typename _Ty, int N, typename order>
 inline void
 MatrixMath::Matrix<_Ty, N, 1, order>::
-SetElement(const int& index, const _Ty& value)
+SetElement(const int index, const _Ty& value)
 {
     auto& data{ this->GetData() };
     data[index] = value;
@@ -1382,7 +1382,7 @@ SetElement(const int& index, const _Ty& value)
 template <typename _Ty, int N, typename order>
 inline void
 MatrixMath::Matrix<_Ty, N, 1, order>::
-SetElement(const int& row, const int& column, const _Ty& value)
+SetElement(const int row, const int column, const _Ty& value)
 {
     this->SetElement(row, value);
 }
@@ -1390,7 +1390,7 @@ SetElement(const int& row, const int& column, const _Ty& value)
 template <typename _Ty, int N, typename order>
 inline const _Ty&
 MatrixMath::Matrix<_Ty, N, 1, order>::
-GetElement(const int& index) const
+GetElement(const int index) const
 {
     auto& data{ this->GetData() };
     return data[index];
@@ -1399,7 +1399,7 @@ GetElement(const int& index) const
 template <typename _Ty, int N, typename order>
 inline const _Ty&
 MatrixMath::Matrix<_Ty, N, 1, order>::
-GetElement(const int& row, const int& column) const
+GetElement(const int row, const int column) const
 {
     return this->GetElement(row);
 }
@@ -1407,7 +1407,7 @@ GetElement(const int& row, const int& column) const
 template <typename _Ty, int N, typename order>
 inline _Ty&
 MatrixMath::Matrix<_Ty, N, 1, order>::
-GetElement(const int& index)
+GetElement(const int index)
 {
     auto& data{ this->GetData() };
     return data[index];
@@ -1416,7 +1416,7 @@ GetElement(const int& index)
 template <typename _Ty, int N, typename order>
 inline _Ty&
 MatrixMath::Matrix<_Ty, N, 1, order>::
-GetElement(const int& row, const int& column)
+GetElement(const int row, const int column)
 {
     return this->GetElement(row);
 }
@@ -1729,8 +1729,8 @@ operator*(const Scalar<_Ty, order>& lhs, const Matrix<_Ty, Height, Width, order>
 
 inline int
 MatrixMath::StorageOrder::RowMajor::
-convert2index(const int& Height, const int& Width,
-    const int& row, const int& column, const bool& isTransposed)
+convert2index(const int Height, const int Width,
+    const int row, const int column, const bool isTransposed)
 {
     if (isTransposed)   return row + column * Height;
     else                return column + row * Width;
@@ -1752,8 +1752,8 @@ IsColumnMajor()
 
 inline int
 MatrixMath::StorageOrder::ColumnMajor::
-convert2index(const int& Height, const int& Width,
-    const int& row, const int& column, const bool& isTransposed)
+convert2index(const int Height, const int Width,
+    const int row, const int column, const bool isTransposed)
 {
     if (isTransposed)   return column + row * Width;
     else                return row + column * Height;
@@ -1776,8 +1776,8 @@ IsColumnMajor()
 template <typename order>
 inline int
 MatrixMath::StorageOrder::CofactorOrder<order>::
-convert2index(const int& Height, const int& Width,
-    const int& row, const int& column, const bool& isTransposed,
+convert2index(const int Height, const int Width,
+    const int row, const int column, const bool isTransposed,
     int RowSrc, int RowDst, int ColSrc, int ColDst)
 {
     return order::convert2index(Height, Width, row + RowSrc, column + ColSrc, isTransposed);
@@ -1786,8 +1786,8 @@ convert2index(const int& Height, const int& Width,
 template <typename order>
 inline int
 MatrixMath::StorageOrder::CofactorOrder<order>::
-convert2index(const int& Height, const int& Width,
-    const int& row, const int& column, const bool& isTransposed)
+convert2index(const int Height, const int Width,
+    const int row, const int column, const bool isTransposed)
 {
     return convert2index(Height, Width, row, column, isTransposed,
         0, Height, 0, Width);
@@ -1823,13 +1823,13 @@ namespace detail
             }
 #pragma warning(pop)
 
-            constexpr void swap(const int& lhs, const int& rhs)
+            constexpr void swap(const int lhs, const int rhs)
             {
                 std::swap(data[lhs], data[rhs]);
                 ++inverse;
             }
 
-            constexpr void sort(const int& src, const int& dst)
+            constexpr void sort(const int src, const int dst)
             {
                 const int len{ dst - src };
                 for (int i = 0; i < len; i++)
@@ -1841,7 +1841,7 @@ namespace detail
                 }
             }
 
-            constexpr int& operator[](const int& index)
+            constexpr int& operator[](const int index)
             {
                 return data[index];
             }
