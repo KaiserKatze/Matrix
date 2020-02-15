@@ -2261,6 +2261,10 @@ namespace detail
             return entry;
         }
 
+        const std::string ToString() const
+        {
+            return MatrixMath::ToString(*this);
+        }
     };
 
     template <typename _LMatrixType, typename _RMatrixType, MatrixMath::MergeMode _MergeMode, typename _NewStorageOrder>
@@ -2296,6 +2300,11 @@ namespace detail
         {
             // TODO copy the entries of two matrices
             // into the newly created data container
+        }
+
+        const std::string ToString() const
+        {
+            return MatrixMath::ToString(*this);
         }
     };
 
