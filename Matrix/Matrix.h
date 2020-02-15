@@ -2318,4 +2318,14 @@ namespace MatrixMath
 {
     template <typename _LMatrixType, typename _RMatrixType, MatrixMath::MergeMode _MergeMode, typename _NewStorageOrder>
     using MergeResult = typename detail::_MergeResult<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder>::type;
+
+    template <typename _LMatrixType, typename _RMatrixType, MatrixMath::MergeMode _MergeMode, typename _NewStorageOrder>
+    MergeResult<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder> Merge(const _LMatrixType& lhs, const _RMatrixType& rhs);
+}
+
+template <typename _LMatrixType, typename _RMatrixType, MatrixMath::MergeMode _MergeMode, typename _NewStorageOrder>
+MatrixMath::MergeResult<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder>
+MatrixMath::Merge(const _LMatrixType& lhs, const _RMatrixType& rhs)
+{
+    return MergeResult<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder>(lhs, rhs);
 }
