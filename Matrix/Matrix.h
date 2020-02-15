@@ -2148,8 +2148,7 @@ namespace detail
     public:
         using _lmt = _LMatrixType;
         using _rmt = _RMatrixType;
-        using ElementType = typename _lmt::ElementType;
-        using _Ty = ElementType;
+        using _Ty = typename MergeResultProxy::ElementType;
 
         constexpr static int LHeight{ _lmt::Height };
         constexpr static int LWidth{ _lmt::Width };
