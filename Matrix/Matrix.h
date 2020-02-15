@@ -175,6 +175,7 @@ namespace MatrixMath
     template <typename _Ty>
     class IMatrix
     {
+    public:
         virtual inline void SetElement(const int index, const _Ty& value) = 0;
         virtual inline void SetElement(const int row, const int column, const _Ty& value) = 0;
         virtual inline const _Ty& GetElement(const int index) const = 0;
