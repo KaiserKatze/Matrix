@@ -2225,37 +2225,37 @@ namespace detail
         {
         }
 
-        virtual inline void SetElement(const int& index, const _Ty& value)
+        inline void SetElement(const int index, const _Ty& value)
         {
             _Ty& entry{ get(index) };
             entry = value;
         }
 
-        virtual inline void SetElement(const int& row, const int& column, const _Ty& value)
+        inline void SetElement(const int row, const int column, const _Ty& value)
         {
             _Ty& entry{ get(row, column) };
             entry = value;
         }
 
-        virtual inline const _Ty& GetElement(const int& index) const
+        inline const _Ty& GetElement(const int index) const
         {
             _Ty& entry{ get(index) };
             return entry;
         }
 
-        virtual inline const _Ty& GetElement(const int& row, const int& column) const
+        inline const _Ty& GetElement(const int row, const int column) const
         {
             _Ty& entry{ get(row, column) };
             return entry;
         }
 
-        virtual inline _Ty& GetElement(const int& index)
+        inline _Ty& GetElement(const int index)
         {
             _Ty& entry{ get(index) };
             return entry;
         }
 
-        virtual inline _Ty& GetElement(const int& row, const int& column)
+        inline _Ty& GetElement(const int row, const int column)
         {
             _Ty& entry{ get(row, column) };
             return entry;
@@ -2317,5 +2317,5 @@ namespace detail
 namespace MatrixMath
 {
     template <typename _LMatrixType, typename _RMatrixType, MatrixMath::MergeMode _MergeMode, typename _NewStorageOrder>
-    using MergeResult = detail::_MergeResult<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder>;
+    using MergeResult = typename detail::_MergeResult<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder>::type;
 }
