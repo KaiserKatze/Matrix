@@ -441,7 +441,11 @@ int main()
             1, 1, 1, 1,
             2, 3, 4, 5,
         };
-        MatrixMath::Merge<MatrixMath::Matrix<int, 3, 4>, MatrixMath::Matrix3i<>, MatrixMath::MergeMode::ROW, MatrixMath::StorageOrder::RowMajor>(left, identity);
+        auto mrgres = MatrixMath::Merge<MatrixMath::Matrix<int, 3, 4>, MatrixMath::Matrix3i<>, MatrixMath::MergeMode::ROW, MatrixMath::StorageOrder::RowMajor>(left, identity);
+        std::cout
+            << "Merge Result = " << std::endl
+            << mrgres.ToString()
+            << std::endl;
     }
 #endif
 
