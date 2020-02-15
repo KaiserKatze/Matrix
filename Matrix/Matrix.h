@@ -2262,4 +2262,40 @@ namespace detail
         }
 
     };
+
+    template <typename _LMatrixType, typename _RMatrixType, MatrixMath::MergeMode _MergeMode, typename _NewStorageOrder>
+    class AbstractMergeResult
+        : public MatrixMath::IMatrix<typename _LMatrixType::ElementType>
+    {
+    public:
+        using _lmt = _LMatrixType;
+        using _rmt = _RMatrixType;
+        using _Ty = typename AbstractMergeResult::ElementType;
+
+        constexpr static int LHeight{ _lmt::Height };
+        constexpr static int LWidth{ _lmt::Width };
+        constexpr static int RHeight{ _rmt::Height };
+        constexpr static int RWidth{ _rmt::Width };
+        constexpr static int Height{ (_MergeMode == MatrixMath::MergeMode::ROW_MEG) ? (LHeight) : (LHeight + RHeight) };
+        constexpr static int Width{ (_MergeMode == MatrixMath::MergeMode::ROW_MEG) ? (LWidth + RWidth) : (LWidth) };
+
+        using DataType = MatrixMath::ProtoMatrixData<_Ty, Height, Width, _NewStorageOrder>;
+    };
+
+    template <typename _LMatrixType, typename _RMatrixType, MatrixMath::MergeMode _MergeMode, typename _NewStorageOrder>
+    class MergeResultImpl
+        : public AbstractMergeResult<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder>
+        , public AbstractMergeResult<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder>::DataType
+    {
+    private:
+        using BaseType = AbstractMergeResult<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder>;
+
+    public:
+        MergeResultImpl(const _LMatrixType& lhs, const _RMatrixType& rhs)
+            : BaseType::DataType()
+        {
+            // TODO copy the entries of two matrices
+            // into the newly created data container
+        }
+    };
 }
