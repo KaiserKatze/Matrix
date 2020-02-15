@@ -176,6 +176,8 @@ namespace MatrixMath
     class IMatrix
     {
     public:
+        using ElementType = _Ty;
+
         virtual inline void SetElement(const int index, const _Ty& value) = 0;
         virtual inline void SetElement(const int row, const int column, const _Ty& value) = 0;
         virtual inline const _Ty& GetElement(const int index) const = 0;
@@ -192,7 +194,6 @@ namespace MatrixMath
         static_assert(std::is_base_of_v<StorageOrder, _StorageOrder>, "Template argument 'order' is invalid type!");
 
     public:
-        using ElementType = _Ty;
         constexpr static int Width{ _Width };
         constexpr static int Height{ _Height };
 
