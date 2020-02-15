@@ -249,6 +249,7 @@ namespace MatrixMath
         Matrix(const Matrix& other);
         Matrix(const Matrix&& other);
         Matrix(const std::initializer_list<_Ty>& init);
+        explicit Matrix(const std::shared_ptr<std::array<_Ty, Width * Height>>& pData, bool isTransposed);
 
         // Access data
 
@@ -705,6 +706,13 @@ template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 Matrix(const std::initializer_list<_Ty>& init)
     : DataType(init)
+{
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+MatrixMath::Matrix<_Ty, Height, Width, order>::
+Matrix(const std::shared_ptr<std::array<_Ty, Width * Height>>& pData, bool isTransposed)
+    : DataType(pData, isTransposed)
 {
 }
 
