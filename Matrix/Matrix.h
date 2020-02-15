@@ -269,11 +269,11 @@ namespace MatrixMath
         template <int RowSrc, int RowDst, int ColSrc, int ColDst>
         SubMatrix<RowSrc, RowDst, ColSrc, ColDst> GetSubMatrix();
 
-        template <int Row, int Column>
+        template <int _Row, int _Column>
         class Cofactor;
 
-        template <int Row, int Column>
-        Cofactor<Row, Column> GetCofactor();
+        template <int _Row, int _Column>
+        Cofactor<_Row, _Column> GetCofactor();
     };
 
     // Vector
@@ -461,7 +461,7 @@ namespace MatrixMath
         std::enable_if_t<MatrixType::Width == MatrixType::Height, int> = 0>
     class Determinant;
 
-    template <int Row, int Column, typename MatrixType,
+    template <int _Row, int _Column, typename MatrixType,
         std::enable_if_t<MatrixType::Width == MatrixType::Height, int> = 0>
     typename MatrixType::ElementType AlgebraicCofactor(const MatrixType& square);
 
@@ -897,18 +897,20 @@ GetSubMatrix()
 
 
 template <typename _Ty, int Height, int Width, typename order>
-template <int Row, int Column>
+template <int _Row, int _Column>
 class MatrixMath::Matrix<_Ty, Height, Width, order>::Cofactor
     : public ProtoMatrix<_Ty, Height - 1, Width - 1, order>
     , public IMatrix<_Ty>
 {
-    static_assert(Row >= 0, "Invalid template argument: Row < 0!");
-    static_assert(Row < Height, "Invalid template argument: Row >= Height!");
-    static_assert(Column >= 0, "Invalid template argument: Column < 0!");
-    static_assert(Column < Width, "Invalid template argument: Column < Width!");
+    static_assert(_Row >= 0, "Invalid template argument: _Row < 0!");
+    static_assert(_Row < Height, "Invalid template argument: _Row >= Height!");
+    static_assert(_Column >= 0, "Invalid template argument: _Column < 0!");
+    static_assert(_Column < Width, "Invalid template argument: _Column < Width!");
 
 public:
     using ParentType = Matrix<_Ty, Height, Width, order>;
+    constexpr static int Row{ _Row };
+    constexpr static int Column{ _Column };
 
 private:
     ParentType& parent;
@@ -916,8 +918,8 @@ private:
     inline static int convert2index(const int y, const int x, const bool isTransposed)
     {
         return order::convert2index(Height, Width,
-            y < Row ? y : y + 1,
-            x < Column ? x : x + 1,
+            y < _Row ? y : y + 1,
+            x < _Column ? x : x + 1,
             isTransposed);
     }
 
@@ -998,12 +1000,12 @@ public:
 };
 
 template <typename _Ty, int Height, int Width, typename order>
-template <int Row, int Column>
-MatrixMath::Matrix<_Ty, Height, Width, order>::Cofactor<Row, Column>
+template <int _Row, int _Column>
+MatrixMath::Matrix<_Ty, Height, Width, order>::Cofactor<_Row, _Column>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
 GetCofactor()
 {
-    return Cofactor<Row, Column>(*this);
+    return Cofactor<_Row, _Column>(*this);
 }
 
 
@@ -1956,7 +1958,7 @@ public:
     }
 };
 
-template <int Row, int Column, typename MatrixType,
+template <int _Row, int _Column, typename MatrixType,
     std::enable_if_t<MatrixType::Width == MatrixType::Height, int>>
 typename MatrixType::ElementType
 MatrixMath::
@@ -1964,14 +1966,14 @@ AlgebraicCofactor(const MatrixType& square)
 {
     using Nude = std::remove_cv_t<std::remove_reference_t<MatrixType>>;
     using ResultType = typename Nude::ElementType;
-    using CofactorType = typename Nude::template Cofactor<Row, Column>;
+    using CofactorType = typename Nude::template Cofactor<_Row, _Column>;
     using NudeRef = std::add_lvalue_reference_t<Nude>;
     // function `GetConfactor` is non-const member function
     // const_cast the reference in case of const-reference
-    CofactorType cofactor{ const_cast<NudeRef>(square).template GetCofactor<Row, Column>() };
+    CofactorType cofactor{ const_cast<NudeRef>(square).template GetCofactor<_Row, _Column>() };
     Determinant detA(cofactor);
     ResultType result{ static_cast<ResultType>(detA) };
-    const bool IsOdd{ ((Row + Column) & 1) == 1 };
+    const bool IsOdd{ ((_Row + _Column) & 1) == 1 };
     result *= (IsOdd ? -1 : 1);
     return result;
 }
