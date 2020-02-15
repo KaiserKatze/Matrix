@@ -427,12 +427,13 @@ int main()
             << "m3i2 = Adjoint(m3i1) = "
             << std::endl
             << m3i2.ToString()
+            << std::endl
             << std::endl;
     }
 #endif
 
     //==============================================
-    // ChangeOrder
+    // Merge Matrix
 #if ACTIVATE_MATRIX_TEST
     {
         MatrixMath::Matrix3i<> identity = MatrixMath::IdentityMatrix<int, 3>();
