@@ -431,6 +431,20 @@ int main()
     }
 #endif
 
+    //==============================================
+    // ChangeOrder
+#if ACTIVATE_MATRIX_TEST
+    {
+        MatrixMath::Matrix3i<> identity = MatrixMath::IdentityMatrix<int, 3>();
+        MatrixMath::Matrix<int, 3, 4> left{
+            1, 2, 3, 4,
+            1, 1, 1, 1,
+            2, 3, 4, 5,
+        };
+        MatrixMath::Merge<MatrixMath::Matrix<int, 3, 4>, MatrixMath::Matrix3i<>, MatrixMath::MergeMode::ROW, MatrixMath::StorageOrder::RowMajor>(left, identity);
+    }
+#endif
+
     return 0;
 }
 
