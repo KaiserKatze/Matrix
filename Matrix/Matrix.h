@@ -262,6 +262,8 @@ namespace MatrixMath
         inline _Ty& GetElement(const int index);
         inline _Ty& GetElement(const int row, const int column);
 
+        Transposed Transpose() const;
+
         // Always output a string representing the matrix in row-major order
         const std::string ToString() const;
 
@@ -777,6 +779,14 @@ GetElement(const int row, const int column)
 {
     const int index{ Matrix::convert2index(row, column, this->IsTransposed()) };
     return this->GetElement(index);
+}
+
+template <typename _Ty, int Height, int Width, typename order>
+typename MatrixMath::Matrix<_Ty, Height, Width, order>::Transposed
+MatrixMath::Matrix<_Ty, Height, Width, order>::
+Transpose() const
+{
+    return Transposed{ this->GetDataPointer(), !this->IsTransposed() };
 }
 
 template <typename _Ty, int Height, int Width, typename order>
