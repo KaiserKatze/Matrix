@@ -2298,4 +2298,24 @@ namespace detail
             // into the newly created data container
         }
     };
+
+    template <typename _LMatrixType, typename _RMatrixType, MatrixMath::MergeMode _MergeMode, typename _NewStorageOrder>
+    struct _MergeResult
+    {
+        static_assert(MergingMatricesTypeCheck<_LMatrixType, _RMatrixType, _MergeMode>::value,
+            "Invalid template argument!");
+        using type = std::conditional_t<_MergeMode == MatrixMath::MergeMode::ROW
+            || _MergeMode == MatrixMath::MergeMode::COL,
+            MergeResultProxy<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder>,
+            std::conditional_t<_MergeMode == MatrixMath::MergeMode::ROW_MEG
+            || _MergeMode == MatrixMath::MergeMode::COL_MEG,
+            MergeResultImpl<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder>,
+            void>>;
+    };
+}
+
+namespace MatrixMath
+{
+    template <typename _LMatrixType, typename _RMatrixType, MatrixMath::MergeMode _MergeMode, typename _NewStorageOrder>
+    using MergeResult = detail::_MergeResult<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder>;
 }
