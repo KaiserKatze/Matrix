@@ -53,13 +53,13 @@ int main()
             << std::endl
             << std::endl;
 
-        m2i3.Transpose();
+        typename decltype(m2i3)::Transposed m2i3t = m2i3.Transpose();
         std::cout
             << "m2i3.Transpose(); <--" << std::endl
-            << "m2i3 = " << std::endl
-            << m2i3.ToString()
+            << "m2i3t = " << std::endl
+            << m2i3t.ToString()
             << "isTransposed: "
-            << std::boolalpha << m2i3.IsTransposed() << std::noboolalpha
+            << std::boolalpha << m2i3t.IsTransposed() << std::noboolalpha
             << std::endl
             << std::endl;
 
