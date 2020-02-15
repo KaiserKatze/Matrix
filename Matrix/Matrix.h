@@ -2181,7 +2181,7 @@ namespace detail
                 }
                 else
                 {
-                    row -= LWidth;
+                    column -= LWidth;
                     const int index{ _rmt::convert2index(row, column, rTrans) };
                     return const_cast<_Ty&>(rmat.GetElement(index));
                 }
@@ -2197,7 +2197,7 @@ namespace detail
                 }
                 else
                 {
-                    column -= LHeight;
+                    row -= LHeight;
                     const int index{ _rmt::convert2index(row, column, rTrans) };
                     return const_cast<_Ty&>(rmat.GetElement(index));
                 }
