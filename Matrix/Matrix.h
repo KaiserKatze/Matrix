@@ -261,6 +261,7 @@ namespace MatrixMath
         inline _Ty& GetElement(const int index);
         inline _Ty& GetElement(const int row, const int column);
 
+        [[nodiscard]]
         Transposed Transpose() const;
 
         // Always output a string representing the matrix in row-major order
