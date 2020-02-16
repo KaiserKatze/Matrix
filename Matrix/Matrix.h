@@ -206,7 +206,6 @@ namespace MatrixMath
 
     template <typename _Ty, int Height, int Width, typename order>
     class ProtoMatrixData
-        : public ProtoMatrix<_Ty, Height, Width, order>
     {
     private:
         std::shared_ptr<std::array<_Ty, Width * Height>> pData; // 'Width * Height' here cannot be replaced by 'Size',
@@ -240,6 +239,7 @@ namespace MatrixMath
     template <typename _Ty, int Height, int Width, typename order = StorageOrder::RowMajor>
     class Matrix
         : public ProtoMatrixData<_Ty, Height, Width, order>
+        , public ProtoMatrix<_Ty, Height, Width, order>
         , public IMatrix<_Ty>
     {
     public:
@@ -1344,6 +1344,7 @@ operator*(const MatrixQ<_Ty, 4, order>& lhs, const MatrixQ<_Ty, 4, order>& rhs)
 template <typename _Ty, int N, typename order>
 class MatrixMath::Matrix<_Ty, N, 1, order>
     : public MatrixMath::ProtoMatrixData<_Ty, N, 1, order>
+    , public MatrixMath::ProtoMatrix<_Ty, N, 1, order>
     , public IMatrix<_Ty>
 {
 public:
