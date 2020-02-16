@@ -2307,12 +2307,55 @@ namespace detail
             : public DataType
             , public AbstractMergeResult // placebo of IMatrix
         {
+        private:
+            inline static int convert2index(int row, int column, bool isTransposed)
+            {
+                const int index{ _NewStorageOrder::convert2index(Height, Width, row, column, isTransposed) };
+                return index;
+            }
+
         public:
             MergeResultImpl(const _LMatrixType& lhs, const _RMatrixType& rhs)
                 : DataType()
             {
                 // TODO copy the entries of two matrices
                 // into the newly created data container
+            }
+
+            inline void SetElement(const int index, const _Ty& value)
+            {
+                auto& data{ this->GetData() };
+                data[index] = value;
+            }
+
+            inline const _Ty& GetElement(const int index) const
+            {
+                auto& data{ this->GetData() };
+                return data[index];
+            }
+
+            inline void SetElement(const int row, const int column, const _Ty& value)
+            {
+                const int index{ convert2index(row, column, this->IsTransposed()) };
+                this->SetElement(index, value);
+            }
+
+            inline const _Ty& GetElement(const int row, const int column) const
+            {
+                const int index{ convert2index(row, column, this->IsTransposed()) };
+                return this->GetElement(index);
+            }
+
+            inline _Ty& GetElement(const int index)
+            {
+                auto& data{ this->GetData() };
+                return data[index];
+            }
+
+            inline _Ty& GetElement(const int row, const int column)
+            {
+                const int index{ convert2index(row, column, this->IsTransposed()) };
+                return this->GetElement(index);
             }
         };
 
