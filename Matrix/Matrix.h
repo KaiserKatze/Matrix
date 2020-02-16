@@ -2285,6 +2285,8 @@ namespace detail
             return static_cast<MatrixMath::MergeMode>(static_cast<byte>(mode) ^ static_cast<byte>(MatrixMath::MergeMode::MEG));
         }
 
+        constexpr static MatrixMath::MergeMode ReducedMode{ reduce(_MergeMode) };
+
     public:
         using _lmt = _LMatrixType;
         using _rmt = _RMatrixType;
