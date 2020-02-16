@@ -2292,23 +2292,19 @@ namespace detail
         constexpr static int Width{ (_MergeMode == MatrixMath::MergeMode::ROW_MEG) ? (LWidth + RWidth) : (LWidth) };
 
         using DataType = MatrixMath::ProtoMatrixData<_Ty, Height, Width, _NewStorageOrder>;
-    };
 
-    template <typename _LMatrixType, typename _RMatrixType, MatrixMath::MergeMode _MergeMode, typename _NewStorageOrder>
-    class MergeResultImpl
-        : public AbstractMergeResult<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder>
-        , public AbstractMergeResult<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder>::DataType
-    {
-    private:
-        using BaseType = AbstractMergeResult<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder>;
-
-    public:
-        MergeResultImpl(const _LMatrixType& lhs, const _RMatrixType& rhs)
-            : BaseType::DataType()
+        class MergeResultImpl
+            : public DataType
+            , public AbstractMergeResult // placebo of IMatrix
         {
-            // TODO copy the entries of two matrices
-            // into the newly created data container
-        }
+        public:
+            MergeResultImpl(const _LMatrixType& lhs, const _RMatrixType& rhs)
+                : DataType()
+            {
+                // TODO copy the entries of two matrices
+                // into the newly created data container
+            }
+        };
 
         const std::string ToString() const
         {
