@@ -2075,6 +2075,30 @@ IsInvertible(const MatrixType& matrix)
     return Zero<_Ty> != Determinant(matrix).value();
 }
 
+template <typename _LMatrixType, typename _RMatrixType,
+    std::enable_if_t<_LMatrixType::Height = _RMatrixType::Height
+    && _LMatrixType::Width == _RMatrixType::Width
+    && _LMatrixType::ElementType == _RMatrixType::ElementType, int>>
+void
+MatrixMath::
+Copy(const _LMatrixType& src, _RMatrixType& dst)
+{
+    static_assert(!std::is_const_v<_RMatrixType>,
+        "Invalid argument: 'dst' must not be const reference!");
+    using _Ty = typename _LMatrixType::ElementType;
+    int Width{ _LMatrixType::Width };
+    int Height{ _LMatrixType::Height };
+
+    for (int row = 0; row < Height; row++)
+    {
+        for (int column = 0; column < Width; column++)
+        {
+            const _Ty& value{ src.GetElement(row, column) };
+            dst.SetElement(row, column, value);
+        }
+    }
+}
+
 template <typename MatrixType>
 const std::string
 MatrixMath::
@@ -2324,6 +2348,8 @@ namespace detail
             {
                 // TODO copy the entries of two matrices
                 // into the newly created data container
+                auto proxy{ MergeResultProxy<_LMatrixType, _RMatrixType, reduce(_MergeMode), _NewStorageOrder>(lhs, rhs) };
+                MatrixMath::Copy(proxy, *this);
             }
 
             inline void SetElement(const int index, const _Ty& value)
