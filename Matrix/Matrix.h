@@ -2287,7 +2287,7 @@ namespace detail
 
         constexpr static MatrixMath::MergeMode ReducedMode{ reduce(_MergeMode) };
 
-    public:
+    private:
         using _lmt = _LMatrixType;
         using _rmt = _RMatrixType;
         using ElementType = typename _LMatrixType::ElementType;
@@ -2302,10 +2302,14 @@ namespace detail
         constexpr static int Width{ (IsModeRow) ? (LWidth + RWidth) : (LWidth) };
 
         using DataType = MatrixMath::ProtoMatrixData<_Ty, Height, Width, _NewStorageOrder>;
+        using ProtoType = MatrixMath::ProtoMatrix<_Ty, Height, Width, _NewStorageOrder>;
+        using IMatrix = MatrixMath::IMatrix<_Ty>;
 
+    public:
         class MergeResultImpl
             : public DataType
-            , public AbstractMergeResult // placebo of IMatrix
+            , public ProtoType
+            , public IMatrix
         {
         private:
             inline static int convert2index(int row, int column, bool isTransposed)
