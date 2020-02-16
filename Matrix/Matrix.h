@@ -2357,12 +2357,12 @@ namespace detail
                 const int index{ convert2index(row, column, this->IsTransposed()) };
                 return this->GetElement(index);
             }
-        };
 
-        const std::string ToString() const
-        {
-            return MatrixMath::ToString(*this);
-        }
+            const std::string ToString() const
+            {
+                return MatrixMath::ToString(*this);
+            }
+        };
     };
 
     template <typename _LMatrixType, typename _RMatrixType, MatrixMath::MergeMode _MergeMode, typename _NewStorageOrder>
