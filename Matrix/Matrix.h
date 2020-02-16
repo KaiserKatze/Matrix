@@ -2322,7 +2322,7 @@ namespace detail
             MergeResultProxy<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder>,
             std::conditional_t<_MergeMode == MatrixMath::MergeMode::ROW_MEG
             || _MergeMode == MatrixMath::MergeMode::COL_MEG,
-            MergeResultImpl<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder>,
+            typename AbstractMergeResult<_LMatrixType, _RMatrixType, _MergeMode, _NewStorageOrder>::MergeResultImpl,
             void>>;
     };
 }
