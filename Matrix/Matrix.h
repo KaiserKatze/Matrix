@@ -2297,8 +2297,9 @@ namespace detail
         constexpr static int LWidth{ _lmt::Width };
         constexpr static int RHeight{ _rmt::Height };
         constexpr static int RWidth{ _rmt::Width };
-        constexpr static int Height{ (_MergeMode == MatrixMath::MergeMode::ROW_MEG) ? (LHeight) : (LHeight + RHeight) };
-        constexpr static int Width{ (_MergeMode == MatrixMath::MergeMode::ROW_MEG) ? (LWidth + RWidth) : (LWidth) };
+        constexpr static bool IsModeRow{ _MergeMode == MatrixMath::MergeMode::ROW_MEG };
+        constexpr static int Height{ (IsModeRow) ? (LHeight) : (LHeight + RHeight) };
+        constexpr static int Width{ (IsModeRow) ? (LWidth + RWidth) : (LWidth) };
 
         using DataType = MatrixMath::ProtoMatrixData<_Ty, Height, Width, _NewStorageOrder>;
 
