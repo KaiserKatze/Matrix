@@ -2277,7 +2277,6 @@ namespace detail
 
     template <typename _LMatrixType, typename _RMatrixType, MatrixMath::MergeMode _MergeMode, typename _NewStorageOrder>
     class AbstractMergeResult
-        : public MatrixMath::IMatrix<typename _LMatrixType::ElementType>
     {
     public:
         using _lmt = _LMatrixType;
