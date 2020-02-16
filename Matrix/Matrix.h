@@ -2278,6 +2278,13 @@ namespace detail
     template <typename _LMatrixType, typename _RMatrixType, MatrixMath::MergeMode _MergeMode, typename _NewStorageOrder>
     class AbstractMergeResult
     {
+    private:
+        constexpr inline static MatrixMath::MergeMode reduce(MatrixMath::MergeMode mode)
+        {
+            using byte = unsigned char;
+            return static_cast<MatrixMath::MergeMode>(static_cast<byte>(mode) ^ static_cast<byte>(MatrixMath::MergeMode::MEG));
+        }
+
     public:
         using _lmt = _LMatrixType;
         using _rmt = _RMatrixType;
