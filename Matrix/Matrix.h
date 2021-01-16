@@ -250,12 +250,13 @@ namespace MatrixMath
     public:
         using DataType = ProtoMatrixData<_Ty, Height, Width, order>;
         using Transposed = Matrix<_Ty, Width, Height, order>;
+        using data_ptr_t = typename DataType::data_ptr_t;
 
         Matrix();
         Matrix(const Matrix& other);
         Matrix(Matrix&& other);
         Matrix(const std::initializer_list<_Ty>& init);
-        explicit Matrix(const std::shared_ptr<std::array<_Ty, Width * Height>>& pData, bool isTransposed);
+        explicit Matrix(const data_ptr_t& pData, bool isTransposed);
 
         // Access data
 
@@ -712,7 +713,7 @@ Matrix(const std::initializer_list<_Ty>& init)
 
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
-Matrix(const std::shared_ptr<std::array<_Ty, Width * Height>>& pData, bool isTransposed)
+Matrix(const data_ptr_t& pData, bool isTransposed)
     : DataType(pData, isTransposed)
 {
 }
