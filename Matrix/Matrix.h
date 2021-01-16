@@ -580,6 +580,7 @@ ProtoMatrixData(ProtoMatrixData&& other)            // move ctor
     : pData{ other.pData }
     , isTransposed{ other.isTransposed }
 {
+    other.pData = nullptr;
 }
 
 template <typename _Ty, int Height, int Width, typename order>
