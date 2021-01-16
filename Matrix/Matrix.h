@@ -207,10 +207,15 @@ namespace MatrixMath
     template <typename _Ty, int Height, int Width, typename order>
     class ProtoMatrixData
     {
+    public:
+        using data_t = std::array<_Ty, Width * Height>;
+        using data_ptr_t = std::shared_ptr<data_t>;
+
     private:
-        std::shared_ptr<std::array<_Ty, Width * Height>> pData; // 'Width * Height' here cannot be replaced by 'Size',
-                                                                // otherwise a compiler error (C2244) will be thrown at compile time
-                                                                // if the project is compiled with Microsoft VC++
+        // 'Width * Height' here cannot be replaced by 'Size',
+        // otherwise a compiler error (C2244) will be thrown at compile time
+        // if the project is compiled with Microsoft VC++
+        data_ptr_t pData;
         bool isTransposed;
 
     protected:
@@ -218,16 +223,16 @@ namespace MatrixMath
         ProtoMatrixData(const ProtoMatrixData& other);
         ProtoMatrixData(ProtoMatrixData&& other);
         ProtoMatrixData(const std::initializer_list<_Ty>& init);
-        explicit ProtoMatrixData(const std::shared_ptr<std::array<_Ty, Width * Height>>& pData, bool isTransposed);
+        explicit ProtoMatrixData(const data_ptr_t& pData, bool isTransposed);
         ~ProtoMatrixData();
 
-        inline const std::shared_ptr<std::array<_Ty, Width * Height>>& GetDataPointer() const;
-        inline std::shared_ptr<std::array<_Ty, Width * Height>>& GetDataPointer();
+        inline const data_ptr_t& GetDataPointer() const;
+        inline data_ptr_t& GetDataPointer();
 
     public:
         bool IsTransposed() const;
-        inline const std::array<_Ty, Width * Height>& GetData() const;
-        inline std::array<_Ty, Width * Height>& GetData();
+        inline const data_t& GetData() const;
+        inline data_t& GetData();
 
         static inline std::pair<int, int> index2pair(const int index, const bool isTransposed);
 
@@ -591,7 +596,7 @@ ProtoMatrixData(const std::initializer_list<_Ty>& init)
 
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
-ProtoMatrixData(const std::shared_ptr<std::array<_Ty, Width * Height>>& pData, bool isTransposed)
+ProtoMatrixData(const data_ptr_t& pData, bool isTransposed)
     : pData{ pData }
     , isTransposed{ isTransposed }
 {
@@ -612,7 +617,7 @@ MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
 
 template <typename _Ty, int Height, int Width, typename order>
 inline
-const std::shared_ptr<std::array<_Ty, Width * Height>>&
+const typename MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::data_ptr_t&
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
 GetDataPointer() const
 {
@@ -621,7 +626,7 @@ GetDataPointer() const
 
 template <typename _Ty, int Height, int Width, typename order>
 inline
-std::shared_ptr<std::array<_Ty, Width * Height>>&
+typename MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::data_ptr_t&
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
 GetDataPointer()
 {
