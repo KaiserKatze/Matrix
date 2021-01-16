@@ -248,7 +248,7 @@ namespace MatrixMath
 
         Matrix();
         Matrix(const Matrix& other);
-        Matrix(const Matrix&& other);
+        Matrix(Matrix&& other);
         Matrix(const std::initializer_list<_Ty>& init);
         explicit Matrix(const std::shared_ptr<std::array<_Ty, Width * Height>>& pData, bool isTransposed);
 
@@ -693,7 +693,7 @@ Matrix(const Matrix& other)
 
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::Matrix<_Ty, Height, Width, order>::
-Matrix(const Matrix&& other)
+Matrix(Matrix&& other)
     : DataType(std::move(other))
 {
 }
