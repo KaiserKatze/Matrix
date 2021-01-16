@@ -216,7 +216,7 @@ namespace MatrixMath
     protected:
         ProtoMatrixData();
         ProtoMatrixData(const ProtoMatrixData& other);
-        ProtoMatrixData(const ProtoMatrixData&& other);
+        ProtoMatrixData(ProtoMatrixData&& other);
         ProtoMatrixData(const std::initializer_list<_Ty>& init);
         explicit ProtoMatrixData(const std::shared_ptr<std::array<_Ty, Width * Height>>& pData, bool isTransposed);
         ~ProtoMatrixData();
@@ -570,7 +570,7 @@ ProtoMatrixData(const ProtoMatrixData& other)       // copy ctor
 
 template <typename _Ty, int Height, int Width, typename order>
 MatrixMath::ProtoMatrixData<_Ty, Height, Width, order>::
-ProtoMatrixData(const ProtoMatrixData&& other)      // move ctor
+ProtoMatrixData(ProtoMatrixData&& other)            // move ctor
     : pData{ other.pData }
     , isTransposed{ other.isTransposed }
 {
