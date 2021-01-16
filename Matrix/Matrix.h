@@ -481,12 +481,6 @@ namespace MatrixMath
 
     // Utilities
 
-    template <typename _LMatrixType, typename _RMatrixType,
-        std::enable_if_t<_LMatrixType::Height = _RMatrixType::Height
-        && _LMatrixType::Width == _RMatrixType::Width
-        && _LMatrixType::ElementType == _RMatrixType::ElementType, int> = 0>
-    void Copy(const _LMatrixType& src, _RMatrixType& dst);
-
     template <typename MatrixType>
     const std::string ToString(const MatrixType& matrix);
 
