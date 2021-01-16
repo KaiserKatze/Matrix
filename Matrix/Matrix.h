@@ -1359,7 +1359,7 @@ public:
 
     Matrix();
     Matrix(const Matrix& other);
-    Matrix(const Matrix&& other);
+    Matrix(Matrix&& other);
     Matrix(const std::initializer_list<_Ty>& init);
 
     inline void SetElement(const int index, const _Ty& value);
@@ -1388,7 +1388,7 @@ Matrix(const Matrix& other)
 
 template <typename _Ty, int N, typename order>
 MatrixMath::Matrix<_Ty, N, 1, order>::
-Matrix(const Matrix&& other)
+Matrix(Matrix&& other)
     : DataType(std::move(other))
 {
 }
